@@ -14,7 +14,7 @@
 
 1. **O ativo central do projeto é único no mercado:** 76 géis comerciais de ácido hialurônico do mercado brasileiro, de 21 marcas, medidos **sob protocolo único** (reômetro TA Instruments AR-1500ex, 25 °C, varredura de 10 a 0,01 Hz) pela BioSmart Nanotechnology, com lote rastreado. Nenhum aplicativo, livro ou publicação disponível oferece comparação equivalente.
 2. **O sistema interpretativo já existe e está maduro:** o "Mapa da Reologia" evoluiu em três camadas coerentes — (A) 5 classes de necessidade clínica, (B) 4 fenótipos visuais de produto, (C) sistema visual final por cor-base de G′ (🔵 <200 Pa · 🟡 200–300 · 🟣 ≥300) com modificadores — sob o lema **"A COR CLASSIFICA. O NÚMERO POSICIONA."**
-3. **O conteúdo por produto está ~90% produzido:** as fichas de app dos produtos 1–71 existem; as monografias longas cobrem do 1 ao 71 (com pendências pontuais listadas no §13); o método de produção (questionários + áudios) está operando.
+3. **O conteúdo por produto está ~92% produzido:** 70 dos 76 produtos têm monografia (PT 1: nos 1–62; PT 2: nos 63–71) e ficha de app. Faltam apenas 6: Neauvia Intense, Neauvia Stimulate, Finahfil Intense, Restylane Skinbooster, Sofiderm Derm Sub-Skin e o 2º lote de Restylane Lido (27003). O método de produção (questionários + áudios) está operando.
 4. **O livro tem esqueleto completo (7 partes, 23 capítulos + atlas):** capítulos 1–2 escritos, 3 semi-escrito, material bruto forte para a Parte II; as Partes IV–VI dependem diretamente do conteúdo que o app também usará.
 5. **Governança de dados é o próximo passo crítico:** a auditoria feita neste documento encontrou 3 pares de produtos com valores idênticos (provável erro de transcrição do laudo), 2 erros de tan δ impresso, 8 divergências de η* (incluindo uma troca de linhas entre Belotero Intense e Volume+ a 1 Hz) e divergências internas entre listas e fichas. Nada disso compromete o projeto — mas deve ser resolvido com a BioSmart **antes da publicação**.
 6. **Recomendação de sequência:** (1º) fechar o banco de dados canônico auditado → (2º) MVP do app com Mapa interativo + fichas → (3º) motor de decisão guiada → (4º) 2ª rodada laboratorial (coesividade, swelling, amplitude) → (5º) livro completo, alimentado pelo mesmo banco.
@@ -164,7 +164,8 @@ O caso Skinvive (tan δ > 1 em repouso) demonstra por que **um único número n�
 2. **G′ e tan δ são eixos independentes**: Restylane Volyme (137,7 Pa / 0,16) é pouco rígido porém francamente elástico; Hyafilia V (840,5 Pa / 0,15) é rígido com a mesma proporção. O par informa mais que qualquer número isolado.
 3. **Famílias comerciais têm escada interna visível e verificável**: Milimetric PRO Leve → Moderado → Intenso (56 → 72 → 170 Pa); e.p.t.q S100 → S300 → S500 (70 → 226 → 355 Pa); Saypha Filler → Volume → Volume Plus (143 → 252 → 489 Pa, com tan δ 0,24 → 0,12 → 0,07); Stylage Lips → L → XL (167 → 260 → 305 Pa); Hyafilia Soft → Mold → Volume (284 → 526 → 841 Pa — mesma concentração de 20 mg/mL, três magnitudes: "MESMA CONCENTRAÇÃO. TRÊS MAGNITUDES MECÂNICAS COMPLETAMENTE DIFERENTES").
 4. **A escada nem sempre segue o marketing**: Sofiderm Derm Plus tem a 2ª maior partícula declarada da família (1500 µm) e o **menor** G′ da família (122 Pa) — "PARTÍCULA MAIOR NÃO SIGNIFICA MAIOR ELASTICIDADE".
-5. **Posicionamentos idênticos escondem físicas diferentes**: os "volumizadores" variam de 252 Pa (Belotero Volume+) a 936 Pa (Shaype) — quase 4×. E assinaturas quase idênticas aparecem em produtos de propostas distintas (Hyafilia Soft 283,77/59,07/0,21 × Cutegel CL-Max 282,48/56,87/0,20 — G′ difere <0,5%): "MESMA ASSINATURA NÃO SIGNIFICA MESMO PRODUTO", pois coesividade, SF, arquitetura e partícula podem diferir.
+5. **Posicionamentos idênticos escondem físicas diferentes**: os "volumizadores" variam de 252 Pa (Belotero Volume+) a 936 Pa (Shaype) — quase 4×. E "Fine Lines" não é categoria reológica: entre os quatro "fine lines" do banco, o G′ varia mais de 5× (UP Fine 33,66 · Rennova 81,53 · Sofiderm 151,88 · Biogelis 176,94) e o tan δ de 0,20 a 0,53.
+6. **Pares quase idênticos multimarcas** — assinaturas sobrepostas em produtos de tecnologias distintas: Rennova Lift Plus ≈ Saypha Volume Plus (475,85/34,33/0,07 × 488,91/35,54/0,07 — diferenças <3%); Sofiderm Derm ≈ Revanesse Outline+; Rennova Fill ≈ Juvéderm Ultra XC; Milimetric Intenso ≈ Neuramis Deep; Milimetric Moderado ≈ e.p.t.q S100; Hyafilia Soft ≈ Cutegel CL-Max (283,77/59,07/0,21 × 282,48/56,87/0,20 — G′ difere <0,5%). Lição dupla: "MESMA ASSINATURA NÃO SIGNIFICA MESMO PRODUTO" (coesividade, SF, arquitetura e partícula podem diferir) — e, para o clínico, esses pares são as **alternativas de substituição** mais racionais quando um produto falta.
 
 ### 5.3 Extremos do banco (0,7 Hz)
 
@@ -210,7 +211,9 @@ Lote 22647: G′ 617,71 Pa · lote 27003: G′ 800,09 Pa (0,7 Hz) — **~30% de 
 3. **Não mensurado (proibido deduzir):** coesividade, swelling, extrusão, strain, compressão, duração real, integração — entram apenas como camada qualitativa declarada/opinião do autor, com marcador 💧 "SF NÃO MEDIDO" e congêneres.
 
 ### 6.5 Divergências internas listas × fichas (resolver na consolidação do banco)
-O documento do app contém, em alguns produtos, valores diferentes entre a lista inicial de classes e a ficha individual: Belotero Balance (tan δ 0,69 na lista × 0,37 na ficha), Biogelis Global (177,40/0,19 × 166,98/0,25), Restylane Kysse (178,82/0,14 × 230,00/0,26), Yvoire Classic+ (319,88/0,14 × 392,35/0,19), Yvoire Volume+ (358,50/0,16 × 524,61/0,17). **Fonte da verdade = planilha/laudo Anexo 2 a 0,7 Hz** (colunas conferidas nesta auditoria): Balance 33,64/23,23/**0,69** · Biogelis Global **177,40/33,77/0,19** · Kysse **178,82/24,53/0,14** · Yvoire Classic+ **319,88/45,65/0,14** · Yvoire Volume+ **358,50/55,99/0,16**. As fichas divergentes provavelmente absorveram valores de outra frequência (ex.: Kysse a 10 Hz = 230,00/60,65/0,26; Yvoire Classic+ a 10 Hz = 392,35/75,78/0,19) — corrigir todas para o Anexo 2 @ 0,7 Hz.
+As monografias/fichas contêm, em alguns produtos, valores diferentes da tabela do mapa: Belotero Balance (tan δ 0,69 na tabela × 0,37 na ficha do app), Biogelis Global (177,40/33,77/0,19 × 166,98/42,28/0,25), Restylane Kysse (178,82/24,53/0,14 × 230,00/60,65/0,26), Yvoire Classic+ (319,88/45,65/0,14 × 392,35/75,78/0,19), Yvoire Volume+ (358,50/55,99/0,16 × 524,61/90,07/0,17). **Fonte da verdade = laudo Anexo 2 a 0,7 Hz** (conferido nesta auditoria — os valores corretos são os primeiros de cada par). Origem rastreada: as fichas do Kysse e do Yvoire Classic+ absorveram a linha de **10 Hz** do Anexo 1 (230,00/60,65/0,26 e 392,35/75,78/0,19 são exatamente os valores de 10 Hz); os valores das fichas do Biogelis Global (166,98) e do Yvoire Volume+ (524,61) **não correspondem a nenhuma frequência do laudo** — origem a esclarecer com o autor. Corrigir todas para o Anexo 2 @ 0,7 Hz.
+
+Nota positiva de disciplina editorial: as monografias 9–19 (e.p.t.q S300/S500, Neuramis, Perfectha) mantêm campos deliberadamente vazios ("confirmar na tabela original", "inserir valor do estudo") em vez de inventar números — *"Nenhum número deve ser preenchido apenas porque 'faz sentido'."* Todos esses valores existem no laudo e estão prontos para preenchimento (§13, Fase 0).
 
 ### 6.6 Erros menores a corrigir
 - Lote do Juvéderm Skinvive gravado como notação científica ("1,00309E+11") — recuperar o literal da caixa.
@@ -218,7 +221,8 @@ O documento do app contém, em alguns produtos, valores diferentes entre a lista
 - Yvoire Volume+ presente nos Anexos com dados, mas ausente da Tabela 1 do laudo e sem lote ("N/D") — pedir errata.
 - Grafia oficial "Restylane Shaype™" (produto novo, NASHA HD) — manter, não "Shape".
 - Concentração do Rennova Lift Plus divergente entre fontes oficiais (24 × 25 mg/mL; lido 0,3 × 0,32%) — fixar pela IFU do lote ensaiado.
-- Documento PT 2: não existe monografia nº 62 e os caps. 66–67 são duplicatas verbatim (Stylage Special Lips) — renumerar.
+- Documento PT 1: monografia 62 (Sofiderm Derm) termina truncada no meio da frase final; monografias 1–8 seguem o template antigo (sem lote e sem rodapé de rastreabilidade) — padronizar pelo template maduro.
+- Documento PT 2: começa no nº 63 (não existe monografia nº 62 nele) e os caps. 66–67 são duplicatas verbatim (Stylage Special Lips); rodapé do cap. 71 (Hyafilia Volume) truncado — renumerar e completar.
 - Produtos citados sem ensaio BioSmart (não atribuir números): Evofill Fine Lines, Rennova Fill Soft Lips, Cutegel CL-S/CL-N/CL-Max 1400.
 
 ### 6.7 Frequência de referência — decisão formalizada
@@ -246,7 +250,21 @@ Classifica **o que a região/tarefa pede**, não o produto:
 Regras: a classe 5 não depende de um único número; **uma região pode pertencer a mais de uma classe conforme o objetivo** (bochecha volumétrica ≠ zigoma projetivo; corpo do mento ≠ vértice do mento).
 
 ### 7.2 Camada B — Fenótipos visuais dos produtos
-Classifica **os 76 produtos** pelo comportamento medido. Das 9 combinações teóricas de cores, o banco real ocupa apenas 4 famílias:
+Classifica **os 76 produtos** pelo comportamento medido, em duas iterações documentadas:
+
+**Iteração 1 (REOLOGY MAP PT 1) — 5 grupos visuais**, reproduzindo a coloração marcada pelo autor na tabela (ordem de leitura: G′ | G″ | tan δ | η*):
+
+| Grupo | Assinatura | Leitura | N | % |
+|---|---|---|---|--:|
+| 1. 🔵🌸 | baixo G′ + dinâmico | "MENOR ESTRUTURA + MAIOR CARÁTER INTEGRATIVO/DINÂMICO" — 1º fenótipo labial (natural/integrador) | 28 | 36,8% |
+| 2. 🔵🟡🌸 | baixo G′ + mais corpo (G″/η* amarelos) | "INTEGRA + ACOMPANHA + DÁ MAIS CORPO" — 2º fenótipo labial (Skinvive, Kiss, Evofill Derm, Up Deep, Intense, Evofill Ultra Deep) | 6 | 7,9% |
+| 3. 🟡 | G′ intermediário | "PREENCHE + GERA CORPO + EQUILIBRA" — o território do vale | 14 | 18,4% |
+| 4. 🟣 completo | roxo nos 4 parâmetros | "ESTRUTURA + SUSTENTAÇÃO + PROJEÇÃO" — vértice puro | **2** | **2,6%** |
+| 5. 🟣+mod. | alto G′ + moduladores 🔵/🟡/🟢 | "SEMPRE COMEÇA ROXO" — estrutural focal (+🔵: Volux, Lift Plus, Saypha V. Plus), com magnitude secundária (+🟡: Yvoire Contour, Perfectha, Neuramis Volume, UP Contour) ou modelável (+🟢: Hyafilia Mold, Lyft, Restylane) | 26 | 34,2% |
+
+Achado central da iteração 1: **dos 76 produtos, apenas 2 são "roxo completo"** (Hyafilia V Plus e Restylane Shaype) — *"alto G′ é frequente, mas alto G′ acompanhado de uma assinatura completamente roxa é raro."* Progressão-mãe: **INTEGRA → INTEGRA + DÁ CORPO → PREENCHE → MODELA/SUSTENTA/VOLUMIZA → PROJETA**.
+
+**Iteração 2 (doc do APP) — consolidação em 4 famílias** para simplicidade de interface (funde os grupos 1+2 e reparticiona o roxo em "estrutural" × "estrutural maleável"):
 
 | Fenótipo | Nome | Frase-verbo | N | % |
 |---|---|---|---|--:|
@@ -254,8 +272,6 @@ Classifica **os 76 produtos** pelo comportamento medido. Das 9 combinações te�
 | 🟡 G′ intermediário | PREENCHEDOR | **PREENCHE** | 14 | 18,4% |
 | 🟣 alto G′ | ESTRUTURAL | **SUSTENTA / PROJETA** | 18 | 23,7% |
 | 🟣🟢 alto G′ + maleável | ESTRUTURAL MALEÁVEL | **SUSTENTA + MOLDA** | 10 | 13,2% |
-
-Na 1ª iteração (REOLOGY MAP PT 1) o grupo azul era subdividido em 🔵🌸 puro (28 produtos) e 🔵🟡🌸 "com mais corpo" (6: Skinvive, Revanesse Kiss, Evofill Derm, Up Deep, Belotero Intense, Evofill Ultra Deep) — os **dois fenótipos labiais** (natural/integrador × dinâmico com mais corpo). A consolidação em 4 famílias foi decisão posterior de simplificação para o app; a nuance labial permanece nas fichas.
 
 Achado conceitual do fenótipo 🟣🟢: **"ALTO G′ NÃO SIGNIFICA NECESSARIAMENTE UM GEL EXCLUSIVAMENTE PROJETOR"** — existe estrutura modelável (Lyft, Restylane clássico, Restylane Skinbooster, Hyafilia M, e.p.t.q S500, Biogelis Volumax, Perfectha Subskin, UP Max, Yvoire Volume+).
 
@@ -298,9 +314,13 @@ No corpo: DEPRESSÃO / TRANSIÇÃO / CURVA / RELEVO / VÉRTICE. Dicotomias estru
 
 ### 7.5 Sequência decisória canônica
 
-> **ANATOMIA → DEFEITO → OBJETIVO → PLANO → PRODUTO → VOLUME → TÉCNICA**
+> **ANATOMIA → DEFEITO → OBJETIVO → PLANO → PRODUTO → (DISTRIBUIÇÃO) → VOLUME → TÉCNICA**
 
-O produto é a 5ª decisão, não a 1ª. O app impõe essa ordem na jornada de decisão guiada.
+O produto é a 5ª decisão, não a 1ª — e o resultado é multiplicativo, nunca de um fator só:
+
+> **"RESULTADO = PRODUTO × VOLUME × PLANO × TÉCNICA × TECIDO"**
+
+Complementa-a a **filosofia dos pequenos volumes** (<5 mL por face): vértices e pontos de luz mudam luz-sombra-contorno-proporção com volumes mínimos — "1 mL não é uma técnica. 1 mL não é um resultado". O app impõe essa ordem na jornada de decisão guiada.
 
 ### 7.6 As anti-inferências (o "código de honestidade" do sistema)
 O que um número NÃO diz — regras repetidas monografia a monografia:
@@ -313,6 +333,9 @@ O que um número NÃO diz — regras repetidas monografia a monografia:
 - evidência clínica ≠ causalidade reológica · indicação comercial ≠ adequação reológica · registro de estudo ≠ resultado publicado
 - correlação intramarca ≠ causalidade universal · "reologia ajuda a escolher a ferramenta; não calcula os mililitros necessários"
 
+E três frases-fundamento que atravessam todo o material:
+> "O objetivo não é mostrar o preenchedor. É fazer desaparecer a depressão." · "Entre espalhar e projetar existe uma terceira função extremamente importante: sustentar." · "O melhor produto utilizado na indicação errada continua sendo uma escolha errada."
+
 ---
 
 ## 8. Reologia clínica: região × exigência × produtos
@@ -323,7 +346,7 @@ Síntese do mapeamento região → classe de necessidade → produtos nomeados n
 |---|---|---|
 | Fronte / glabela / supercílio | 🔵 baixo relevo | Neuramis Lido (1ª fronte), Restylane Refyne (1ª reológica), Biogelis Fine Lines, UP Fine — glabela sempre com alerta vascular máximo |
 | Têmporas | 🔵/🟡 + coesividade | Belotero Volume+ (1ª), Refyne (fanning SC), Volyme, Voluma, Stylage XL |
-| Olheiras | 🟡 baixo SF + precisão volumétrica | Yvoire Contour+ (1ª), Perfectha Subskin (1ª), Restylane Lyft (projeção + precisão), Rennova Fill Eyes Lines (1ª da linha) — concentração ideal ~20 mg/mL; **nunca escolher pelo G′**; "o tamanho da partícula ajuda a explicar; o SF medido é o que confirma" |
+| Olheiras | 🟡 baixo SF + precisão volumétrica | Yvoire Contour+ (1ª), Perfectha Subskin (1ª), Restylane Lyft (projeção + precisão), Rennova Fill Eyes Lines (1ª da linha); membros adicionais da classe SF citados: Juvéderm Voluma, UP Contour — concentração ideal ~20 mg/mL; **nunca escolher pelo G′**; "o tamanho da partícula ajuda a explicar; o SF medido é o que confirma" |
 | Lábios — dinâmica/integração | 🔴 alto tan δ | Restylane Kysse (1ª), Neuramis Deep (1ª da linha), Revanesse Kiss (1ª), e.p.t.q S100 (delicado), Belotero Intense (1ª), Stylage Special Lips, Evofill Derm, Juvéderm Ultra XC |
 | Lábios — estrutura/contorno | 🟣 seletivo | Rennova Lips Plus (contorno/arco/projeção), Volbella (precisão elástica) — "FILLER LABIAL PODE SER AZUL OU ROXO"; "NÃO EXISTE UM ÚNICO tan δ 'LABIAL'" (banco labial: tan δ 0,14 a 0,39) |
 | Sulco nasolabial | 🟢 vale + coesividade | Biogelis Volume (1ª), Rennova Deep Line (1ª), Rennova Lift (1ª), Stylage L (1ª — RCT NICE de não-inferioridade vs Juvéderm Ultra 3), Cutegel CL-Max (1ª), Sofiderm Derm (1ª), Defyne, Singderm, S300; alternativa estratégica: tratar o suporte adjacente (fossa piriforme/terço médio) |
@@ -462,7 +485,7 @@ Princípios: **nenhuma recomendação sem justificativa visível**; empates most
 
 **PARTE IV — Reologia Clínica** ("agora entra sua contribuição"): 19 Como escolher o produto · 20 Por plano (superficial → SMAS → profundo → supraperiostal) · 21 Por região (olheira, nariz, lábios, malar, mandíbula, têmpora, testa, queixo, pré-jowl, pescoço, mãos) · 22 Por técnica (bolus, retro, leque, cross-hatching, microbolus, wash, skinbooster) · 23 Full Face ("praticamente sua técnica"). Status: ❌ — **mas o conteúdo do app (§8, fichas 1–71) É a matéria-prima destes capítulos.**
 
-**PARTE V — Atlas dos Preenchedores** ("um diferencial absurdo — cada laboratório, mesmo padrão"): as monografias PT 1/PT 2 são o Atlas em produção (≈71/76 produzidas em alguma versão). Marcas previstas além do banco atual: MaiLi, Teosyal, Profhilo, SoftFil, Fillmed — candidatas à 2ª rodada de ensaios.
+**PARTE V — Atlas dos Preenchedores** ("um diferencial absurdo — cada laboratório, mesmo padrão"): as monografias PT 1/PT 2 são o Atlas em produção — **70 dos 76 produtos já monografados** (§13, Fase 1 lista os 6 restantes). Marcas previstas além do banco atual: MaiLi, Teosyal, Profhilo, SoftFil, Fillmed — candidatas à 2ª rodada de ensaios.
 
 **PARTE VI — Casos Clínicos:** fluxo padronizado paciente → análise → escolha → por quê → plano → resultado → follow-up → **ultrassom**. ❌ a produzir.
 
@@ -547,8 +570,8 @@ Analogias oficiais: mola (G′), líquido espesso (G″), espaguete cozido (enta
 
 ### Fase 1 — MVP do app (4–8 semanas)
 5. PWA com Mapa interativo (scatter G′ × tan δ, cores das famílias), fichas 1–76, busca, "Sobre o estudo".
-6. Renumerar/deduplicar monografias (não há nº 62; caps. 66–67 duplicados; completar rodapé truncado do 71 — Hyafilia Volume).
-7. Produzir as ~5 fichas ainda sem monografia dedicada (Neauvia Intense, Neauvia Stimulate, Finahfil Intense, Restylane Skinbooster, Restylane lote 27003).
+6. Higienizar as monografias: completar a nº 62 (Sofiderm Derm, truncada) e o rodapé da nº 71 (Hyafilia Volume, truncado); deduplicar 66–67 (Stylage Special Lips) e renumerar; elevar as monografias 1–8 ao template maduro (lote + rodapé de rastreabilidade).
+7. Produzir as 6 monografias faltantes: Neauvia Intense, Neauvia Stimulate, Finahfil Intense, Restylane Skinbooster, Sofiderm Derm Sub-Skin e o 2º lote de Restylane Lido (27003 — pode ser seção da monografia 25, como estudo de variabilidade de lote).
 
 ### Fase 2 — Decisão guiada (v1.0)
 8. Fundir §8 + §10.2 na matriz canônica região × exigência; implementar o motor §9.5; validar com casos reais do autor.
@@ -686,7 +709,7 @@ Analogias oficiais: mola (G′), líquido espesso (G″), espaguete cozido (enta
 | `BS_Clinica_Pithon_Napoli_04082026_assinado 4.pdf` | metodologia, lotes, Anexos 1–2 (dados completos) |
 | `Reologia_Preenchedores_Pithon_Napoli.xlsx` | dados tabulados nas 6 frequências, classificação 3 níveis, rankings |
 | Google Doc "APP: REOLOGY MAP" (~927 mil caracteres) | fichas 1–71, sistemas de classificação, regras editoriais, mapeamento por região |
-| Google Doc "REOLOGY MAP PT 1" | 1ª iteração do mapa (5 grupos) e monografias iniciais |
+| Google Doc "REOLOGY MAP PT 1" (~1,70 milhão de caracteres) | mapa dos 5 grupos visuais + 5 pilares clínicos + monografias 1–62 |
 | Google Doc "REOLOGY MAP PT 2 – 62 EM DIANTE" | monografias 63–71 (template maduro, evidência clínica, comparações) |
 | Google Doc "LIVRO DE REOLOGIA" | estrutura do livro, capítulos 1–3, Mapa Reológico Facial, validação vs literatura |
 | Google Doc "PRODUÇÃO NO CHAT" | roteiros de 6/8/25 perguntas |
