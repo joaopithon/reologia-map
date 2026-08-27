@@ -8,6 +8,7 @@ spec = importlib.util.spec_from_file_location('ebook_data', f'{BASE}/ebook_data.
 ed = importlib.util.module_from_spec(spec); spec.loader.exec_module(ed)
 DATA = {r['produto']: r for r in json.load(open(f'{BASE}/produtos_full.json'))}
 QR = json.load(open(f'{BASE}/qrs.json'))
+ILU = json.load(open(f'{BASE}/ilustracoes.json'))
 assert len(ed.PRODUTOS) == 76
 
 def td_of(k): return 0.15 if k == 'Perfectha Subskin' else DATA[k]['tand_0.7Hz']
@@ -202,11 +203,22 @@ def gel_icons():
     'rigido': '<svg viewBox="0 0 90 90" class="gelico"><path d="M20,70 L26,34 Q45,22 64,34 L70,70 Z" fill="var(--fam-r)" fill-opacity=".25" stroke="var(--fam-r)" stroke-width="2.5" stroke-linejoin="round"/><path d="M38,38 L34,68 M52,36 L58,68 M27,52 L63,50" stroke="var(--fam-r)" stroke-width="2" opacity=".65"/></svg>',
     }
 
-def box_pratica(titulo, texto, qr, url):
-    return (f'<aside class="pratica"><div class="bx-head">NA PRÁTICA</div><div class="bx-body"><div>'
-            f'<h4>{html.escape(titulo)}</h4><p>{texto}</p>'
+def box_qr(titulo, texto, qr, url, kind='pratica', ilus=None, ilus_cap=''):
+    """Box no padrão dos eBooks do autor: imagem ilustrativa | texto | QR."""
+    head = 'NA PRÁTICA' if kind == 'pratica' else 'SAIBA MAIS'
+    img = (f'<figure class="bx-ilus"><img src="{ilus}" alt="{html.escape(ilus_cap or titulo)}" loading="lazy">'
+           + (f'<figcaption>{html.escape(ilus_cap)}</figcaption>' if ilus_cap else '') + '</figure>') if ilus else ''
+    return (f'<aside class="qrbox {kind}"><div class="bx-head">{head}</div><div class="bx-body">{img}'
+            f'<div class="bx-txt"><h4>{html.escape(titulo)}</h4><p>{texto}</p>'
             f'<p class="bx-url"><a href="{html.escape(url)}">{html.escape(url)}</a></p></div>'
-            f'<img class="bx-qr" src="{qr}" alt="QR code — {html.escape(titulo)}" width="118" height="118"></div></aside>')
+            f'<div class="bx-qrwrap"><img class="bx-qr" src="{qr}" alt="QR code — {html.escape(titulo)}" width="122" height="122">'
+            f'<span>aponte a câmera</span></div></div></aside>')
+def box_pratica(titulo, texto, qr, url, ilus=None, ilus_cap=''):
+    return box_qr(titulo, texto, qr, url, 'pratica', ilus, ilus_cap)
+
+def figura(num, ilus, legenda, alt=''):
+    return (f'<figure class="figura-img"><img src="{ilus}" alt="{html.escape(alt or legenda[:80])}" loading="lazy">'
+            f'<figcaption><b>Figura {num}.</b> {legenda}</figcaption></figure>')
 
 # ---------------- card ----------------
 def card(p):
@@ -376,11 +388,16 @@ for gi,g in enumerate(['G1','G2','G3','G4','G5']):
     extra=''
     if g=='G5':
         extra='<p class="famdesc" style="margin-top:.3rem">Caso de borda com curadoria oficial: Restylane Defyne (292,62 Pa) permanece neste grupo, com o G′ marcado em roxo por decisão do mapa.</p>'
+    ilus = f'''<div class="iludupla">
+{figura(f'{G["num"]}.1', ILU[f'g{G["num"]}a'], f'<b>{G["nome"]}</b> — leitura conceitual do grupo: características, leitura clínica, comportamento e mensagem-chave. Ilustração oficial do Mapa da Reologia.')}
+{figura(f'{G["num"]}.2', ILU[f'g{G["num"]}b'], 'Exemplos do grupo com os valores medidos a 0,7 Hz, na linguagem de cores do Mapa. As fichas a seguir detalham cada produto.')}
+</div>'''
     fam_secs.append(f'''<section class="famsec" id="grupo-{G['num']}">
 <div class="fambanner bn-{G['fam']}"><div><p class="fam-eyebrow">CAPÍTULO {CH0+gi} · GRUPO {G['num']} · {html.escape(G['tec'])}</p><h2>{G['nome']}</h2>
 <p class="famchave">“{html.escape(G['chave'])}”</p></div>
 <div><p class="famdesc"><b>Faixas do grupo:</b> {G['bandas']}<br><b>Melhores contextos:</b> {html.escape(G['ctx'])} · <b>Produto-exemplo:</b> {html.escape(G['ex'])}</p>{extra}
 <p class="famdesc" style="margin-top:.3rem"><b>{len(prods)} produtos</b> · G′ de {br(gmin)} a {br(gmax)} Pa</p></div></div>
+{ilus}
 <div class="grid2">{cards}</div></section>''')
 
 SF=[('Yvoire Contour+ Lido','1ª escolha do autor para olheiras: G′ alto (580 Pa) com baixa expansão declarada — "projeção com precisão volumétrica". Plano subcutâneo superficial na técnica do autor.'),
@@ -396,6 +413,10 @@ sf_sec=f'''<section class="famsec" id="grupo-6">
 <p class="famchave">“Alta projeção + baixa expansão + mais precisão + melhor controle de edema.”</p></div>
 <div><p class="famdesc"><b>Padrão funcional:</b> alto G′ + AH em baixa concentração (20–22 mg/mL) + partículas grandes + maior estabilidade química. <b>Melhores contextos:</b> olheiras e áreas em que o controle de expansão é determinante. Regra do autor: <i>nunca escolher olheira pelo G′</i> — “o tamanho da partícula ajuda a explicar; o SF medido é o que confirma”.</p>
 <p class="famdesc" style="margin-top:.3rem"><b>⚠ SF ainda não foi medido em nenhum produto</b> — prioridade da 2ª rodada laboratorial. Até lá, grupo clínico-declarativo (💧); sem SF confiável, não existe “ranking definitivo” para olheiras.</p></div></div>
+<div class="iludupla">
+{figura('6.1', ILU['g6a'], '<b>Baixo Swelling Factor</b> — o padrão funcional: alto G′ + baixa concentração de AH + partículas grandes + estabilidade química. Ilustração oficial do Mapa da Reologia.')}
+{figura('6.2', ILU['g6b'], 'Os produtos do grupo com G′ medido e a concentração declarada de AH (20–22 mg/mL). O Swelling Factor em si ainda não foi medido — é a prioridade da 2ª rodada.')}
+</div>
 <div class="grid3">{sf_cards}</div></section>'''
 
 def radar_demo(k,cap):
@@ -430,78 +451,115 @@ FACE_GEO = face_svg(300, marks=[(196,268,'a','LINHA · perioral','R'),(178,222,'
 page=f'''<title>eBook Reology Map</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;600;700&display=swap">
 <style>
 :root {{
- --bg:#FAF9FC; --card:#FFFFFF; --ink:#1D1A23; --ink2:#554E63; --ink3:#8B849B;
- --line:#E5E1EE; --linesoft:#EFECF6; --accent:#6D3FB4; --accent-ink:#5A2F9E; --accent-soft:#F1EAFB;
- --fam-a:#2E7DBF; --fam-m:#A6801C; --fam-r:#7C3AED; --fam-v:#3E9B6E;
- --chip-rosa:#CE6E9E; --sf:#17808F; --sf-soft:rgba(23,128,143,.10);
- --warn:#B4572F; --flag:#C64F4F;
- --za:rgba(46,125,191,.055); --zm:rgba(166,128,28,.06); --zr:rgba(124,58,237,.05);
- --n1bg:#6D3FB4; --n1ink:#FFFFFF; --n2bg:#E8DDF8; --n2ink:#4A2B86; --n3bd:#B9A3DE; --n3ink:#5A3F94; --n4ink:#7A7290;
- --tint:14%;
+ /* identidade dos eBooks: navy profundo + dourado metálico */
+ --navy:#0A3557; --navy-2:#10486F; --navy-3:#2A6C9C; --navy-ink:#092C48;
+ --gold:#C08A2E; --gold-2:#E0A64B; --gold-3:#F5CE7B; --gold-soft:rgba(224,166,75,.13);
+ --bg:#FBF9F6; --card:#FFFFFF; --ink:#15293C; --ink2:#4C5C6B; --ink3:#8494A1;
+ --line:#E4DFD6; --linesoft:#F0EBE3; --accent:var(--navy-2); --accent-ink:#0E4269; --accent-soft:#EAF1F7;
+ --fam-a:#2E7DBF; --fam-m:#8F6D12; --fam-r:#7C3AED; --fam-v:#3E9B6E;
+ --chip-rosa:#C4557F; --sf:#0F7480; --sf-soft:rgba(15,116,128,.09);
+ --warn:#A8501F; --flag:#B23B3B;
+ --za:rgba(46,125,191,.05); --zm:rgba(143,109,18,.06); --zr:rgba(124,58,237,.045);
+ --title-ink:#10486F; --gold-ink:#10486F;
+ --n1bg:#10486F; --n1ink:#FFFFFF; --n2bg:#DCE8F1; --n2ink:#0E4269; --n3bd:#A9BFD1; --n3ink:#31536E; --n4ink:#7A8794;
+ --tint:12%;
 }}
 @media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{
- --bg:#161320; --card:#1E1A2A; --ink:#ECE9F3; --ink2:#B3ACC6; --ink3:#7E7692;
- --line:#332D44; --linesoft:#2A2439; --accent:#A98BE0; --accent-ink:#BCA3EA; --accent-soft:#2A2140;
- --fam-a:#3F87C4; --fam-m:#B18927; --fam-r:#8E68D8; --fam-v:#43A076;
- --chip-rosa:#C4789F; --sf:#4FB3C4; --sf-soft:rgba(79,179,196,.13);
+ --navy:#071F33; --navy-2:#0C2A42; --navy-3:#2A6C9C; --navy-ink:#DCE8F1;
+ --gold:#D6A048; --gold-2:#E9B968; --gold-3:#F7DA96; --gold-soft:rgba(233,185,104,.14);
+ --bg:#071F33; --card:#0C2A42; --ink:#E8EEF4; --ink2:#A9BCCB; --ink3:#728A9C;
+ --line:#1B3E5A; --linesoft:#16344C; --accent:#4E97D0; --accent-ink:#8CC0E8; --accent-soft:#123650;
+ --fam-a:#3F87C4; --fam-m:#AC831F; --fam-r:#8E68D8; --fam-v:#43A076;
+ --chip-rosa:#C96B92; --sf:#3DA0AC; --sf-soft:rgba(61,160,172,.15);
  --warn:#D08A5E; --flag:#DC7E7E;
- --za:rgba(63,135,196,.10); --zm:rgba(177,137,39,.10); --zr:rgba(142,104,216,.10);
- --n1bg:#8E68D8; --n1ink:#14101E; --n2bg:#332756; --n2ink:#CBB6F2; --n3bd:#6B549E; --n3ink:#B49BE6; --n4ink:#8F86A8;
- --tint:20%;
+ --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
+ --title-ink:#E8EEF4; --gold-ink:#E9B968;
+ --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
+ --tint:22%;
 }} }}
 :root[data-theme="dark"] {{
- --bg:#161320; --card:#1E1A2A; --ink:#ECE9F3; --ink2:#B3ACC6; --ink3:#7E7692;
- --line:#332D44; --linesoft:#2A2439; --accent:#A98BE0; --accent-ink:#BCA3EA; --accent-soft:#2A2140;
- --fam-a:#3F87C4; --fam-m:#B18927; --fam-r:#8E68D8; --fam-v:#43A076;
- --chip-rosa:#C4789F; --sf:#4FB3C4; --sf-soft:rgba(79,179,196,.13);
+ --navy:#071F33; --navy-2:#0C2A42; --navy-3:#2A6C9C; --navy-ink:#DCE8F1;
+ --gold:#D6A048; --gold-2:#E9B968; --gold-3:#F7DA96; --gold-soft:rgba(233,185,104,.14);
+ --bg:#071F33; --card:#0C2A42; --ink:#E8EEF4; --ink2:#A9BCCB; --ink3:#728A9C;
+ --line:#1B3E5A; --linesoft:#16344C; --accent:#4E97D0; --accent-ink:#8CC0E8; --accent-soft:#123650;
+ --fam-a:#3F87C4; --fam-m:#AC831F; --fam-r:#8E68D8; --fam-v:#43A076;
+ --chip-rosa:#C96B92; --sf:#3DA0AC; --sf-soft:rgba(61,160,172,.15);
  --warn:#D08A5E; --flag:#DC7E7E;
- --za:rgba(63,135,196,.10); --zm:rgba(177,137,39,.10); --zr:rgba(142,104,216,.10);
- --n1bg:#8E68D8; --n1ink:#14101E; --n2bg:#332756; --n2ink:#CBB6F2; --n3bd:#6B549E; --n3ink:#B49BE6; --n4ink:#8F86A8;
- --tint:20%;
+ --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
+ --title-ink:#E8EEF4; --gold-ink:#E9B968;
+ --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
+ --tint:22%;
 }}
 *{{box-sizing:border-box}} html{{scroll-behavior:smooth}}
 @media (prefers-reduced-motion:reduce){{html{{scroll-behavior:auto}}}}
-body{{margin:0;background:var(--bg);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:15.5px;line-height:1.6}}
-.pill,.lbl,.marca,.legend,.stat span,.famdesc,.fam-eyebrow,.sflink,.evite,.alts,.tech,.flags,.sfnum,.sigdots,.bx-url{{font-family:'Source Sans 3',system-ui,sans-serif}}
-.cap-eyebrow{{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-ink);margin:0 0 .25rem}}
+body{{margin:0;background:var(--bg);color:var(--ink);font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.62}}
+.pill,.lbl,.marca,.legend,.stat span,.famdesc,.fam-eyebrow,.sflink,.evite,.alts,.tech,.flags,.sfnum,.sigdots,.bx-url,.bx-qrwrap span,.a9q{{font-family:'Barlow',system-ui,sans-serif}}
+h1,h2,h3,h4,.famtag,.capa-brand,.bx-head{{font-family:'Barlow Condensed','Barlow',sans-serif}}
+h2,h3{{text-transform:uppercase;letter-spacing:.015em}}
+.cap-eyebrow{{font-family:'Barlow',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin:0 0 .2rem}}
+.cap-eyebrow::before{{content:"";display:inline-block;width:26px;height:2px;background:var(--gold);vertical-align:.28em;margin-right:.55rem}}
 main{{max-width:78rem;margin:0 auto;padding:2rem 1.2rem 5rem}}
 a{{color:var(--accent-ink)}} a:focus-visible{{outline:2px solid var(--accent);outline-offset:2px}}
 .chip{{display:inline-block;border-radius:50%;border:1.5px solid rgba(0,0,0,.16);margin-right:4px;vertical-align:-1px}}
-h1,h2,h3{{font-family:'Fraunces',Georgia,serif;text-wrap:balance;line-height:1.08}}
-.capa{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.4rem;margin-bottom:1.4rem}}
-.capa-frame{{position:relative;border:2px solid var(--ink);padding:2.6rem 1.6rem 2rem;text-align:center}}
-.capa-frame::after{{content:"";position:absolute;inset:7px;border:1px solid color-mix(in srgb,var(--ink) 45%,transparent);pointer-events:none}}
+h1,h2,h3,h4{{font-family:'Barlow Condensed','Barlow',sans-serif;text-wrap:balance;line-height:1.06}}
+.capa{{padding:0;margin-bottom:1.6rem;border:none;background:none;border-radius:0}}
+.capa-in{{background:linear-gradient(142deg,#0A3557 0%,#0E4269 46%,#2E76A8 100%);padding:clamp(1rem,3vw,2rem);position:relative;overflow:hidden}}
+.capa-in::before{{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 8%,rgba(255,255,255,.13),transparent 55%);pointer-events:none}}
+.capa-frame{{border:1.5px solid var(--gold-2);padding:clamp(1.6rem,4vw,2.8rem) clamp(1rem,3vw,2.2rem);text-align:center;position:relative}}
 .capa-frame p{{max-width:none}}
-.capa-top{{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--ink2);margin:0}}
-.capa-tag{{font-family:'Source Sans 3',sans-serif;font-size:.8rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-ink);margin:.4rem 0 0}}
-.capa-rule{{border:0;border-top:1px solid var(--ink3);width:130px;margin:1.1rem auto}}
-.capa-rule.sm{{width:70px;margin:.9rem auto}}
-.capa h1{{font-size:clamp(2.3rem,5.6vw,3.7rem);font-weight:900;margin:.2rem 0 .7rem;letter-spacing:-.01em}}
-.capa .sub{{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(1rem,2.2vw,1.25rem);color:var(--ink2);margin:0 auto 1.3rem;max-width:40ch}}
-.capa-visual{{display:flex;justify-content:center;align-items:center;gap:2.5rem;flex-wrap:wrap}}
-.capa-emb{{width:min(190px,48vw);height:auto}}
-.capa-face{{max-width:44vw}}
-.capa-autor{{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;margin:1.2rem 0 0}}
-.capa-imprint{{font-family:'Source Sans 3',sans-serif;font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink2);margin:.4rem 0 0}}
-.capa-band{{height:9px;margin-top:1.4rem;background:linear-gradient(90deg,var(--fam-a) 0 25%,var(--fam-m) 25% 50%,var(--fam-r) 50% 75%,var(--fam-v) 75% 100%)}}
-.fichatec{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem 1.3rem;margin-bottom:.4rem}}
+.capa-brand{{font-size:.8rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-3);margin:0 0 1.1rem}}
+.capa h1{{font-size:clamp(2.4rem,7.6vw,5rem);font-weight:700;line-height:.94;letter-spacing:.005em;margin:0 0 .2rem;text-transform:uppercase}}
+.capa h1 .gold{{background:linear-gradient(178deg,#F7DA96 4%,#E0A64B 42%,#C08A2E 74%,#F0C878 100%);-webkit-background-clip:text;background-clip:text;color:#E0A64B;-webkit-text-fill-color:transparent;display:block}}
+@supports not (-webkit-background-clip:text){{.capa h1 .gold{{-webkit-text-fill-color:#E0A64B;color:#E0A64B}}}}
+.capa h1 .wht{{color:#fff;font-weight:500;font-size:.5em;letter-spacing:.045em;display:block;margin-top:.2em}}
+.capa-grid{{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.5rem,1.6vw,1rem);margin:clamp(1.1rem,3vw,1.9rem) auto;max-width:660px}}
+.capa-grid figure{{margin:0;border:2px solid var(--gold-2);background:#08283F;overflow:hidden}}
+.capa-grid img{{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}}
+.capa-sub{{border:1px solid var(--gold-2);display:inline-block;padding:.5rem 1.4rem;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:clamp(.86rem,2.1vw,1.12rem);font-weight:500;letter-spacing:.075em;text-transform:uppercase;margin:.2rem auto 1.2rem}}
+.capa-autor{{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.15rem,3vw,1.6rem);font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);margin:0}}
+.capa-ed{{font-family:'Barlow',sans-serif;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);margin:.7rem 0 0}}
+.capa-band{{height:7px;background:linear-gradient(90deg,var(--fam-a) 0 25%,var(--fam-m) 25% 50%,var(--fam-r) 50% 75%,var(--fam-v) 75% 100%)}}
+/* figuras e ilustrações com moldura dourada */
+.figura-img{{margin:1.4rem 0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.7rem}}
+.figura-img>img{{display:block;width:100%;height:auto;border:2px solid var(--gold-2)}}
+.figura-img figcaption{{font-family:'Barlow',sans-serif;font-size:.86rem;color:var(--ink2);padding:.7rem .3rem .1rem;line-height:1.5}}
+.figura-img figcaption b{{color:var(--gold-ink);font-weight:700}}
+.iludupla{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1rem}}
+.iludupla .figura-img{{margin:0}}
+/* box QR no padrão do autor */
+.qrbox{{margin:1.6rem 0;border:1px solid var(--line);border-left:4px solid var(--gold-2);background:var(--card);border-radius:4px;overflow:hidden}}
+.bx-head{{font-size:.9rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;padding:.5rem 1.2rem;color:var(--gold-3);background:linear-gradient(100deg,var(--navy) 0%,var(--navy-2) 70%,var(--navy-3) 130%)}}
+.saibamais .bx-head{{background:linear-gradient(100deg,#08343A 0%,#0F7480 120%)}}
+.bx-body{{display:flex;gap:1.1rem;padding:1.1rem 1.2rem;align-items:center;flex-wrap:wrap}}
+.bx-ilus{{margin:0;flex:0 0 218px;max-width:100%}}
+.bx-ilus img{{display:block;width:100%;height:auto;border:2px solid var(--gold-2)}}
+.bx-ilus figcaption{{font-family:'Barlow',sans-serif;font-size:.72rem;color:var(--ink3);padding-top:.35rem;line-height:1.4}}
+.bx-txt{{flex:1;min-width:210px}}
+.bx-body h4{{margin:0 0 .35rem;font-size:1.16rem;font-weight:600;text-transform:uppercase;letter-spacing:.01em;color:var(--gold-ink)}}
+.bx-body p{{margin:.2rem 0;font-size:.93rem;max-width:56ch}}
+.bx-qrwrap{{flex:none;text-align:center}}
+.bx-qr{{border:2px solid var(--gold-2);background:#fff;padding:5px;display:block}}
+.bx-qrwrap span{{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);margin-top:.35rem}}
+.bx-url a{{font-size:.76rem;word-break:break-all;color:var(--ink3)}}
+.fichatec{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:1rem 1.3rem;margin-bottom:.4rem}}
 .fichatec .meta{{display:flex;flex-wrap:wrap;gap:.4rem 1.8rem;color:var(--ink2);font-size:.92rem;margin:0}}
 .fichatec .meta b{{color:var(--ink)}}
 .stats{{display:flex;flex-wrap:wrap;gap:1rem;margin-top:.9rem}}
-.stat{{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:8px;padding:.7rem 1.1rem;min-width:8.5rem}}
+.stat{{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:4px;padding:.7rem 1.1rem;min-width:8.5rem}}
 .stat:nth-child(1){{border-top-color:var(--fam-a)}} .stat:nth-child(2){{border-top-color:var(--fam-m)}}
 .stat:nth-child(3){{border-top-color:var(--fam-r)}} .stat:nth-child(4){{border-top-color:var(--sf)}}
-.stat b{{display:block;font-family:'JetBrains Mono',monospace;font-size:1.35rem;color:var(--accent-ink)}}
+.stat b{{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.75rem;line-height:1.05;color:var(--gold-ink)}}
 .stat span{{font-size:.8rem;color:var(--ink2)}}
 section{{margin-top:2.8rem}}
-h2{{font-size:1.65rem;font-weight:700;margin:0 0 .8rem}}
-h3{{font-size:1.15rem;margin:1.4rem 0 .5rem}}
+h2{{font-size:1.9rem;font-weight:700;margin:0 0 .8rem;color:var(--title-ink)}}
+.fambanner h2{{font-size:2.05rem}}
+h3{{font-size:1.28rem;font-weight:600;margin:1.6rem 0 .5rem;color:var(--title-ink);border-bottom:1px solid var(--line);padding-bottom:.3rem}}
 p{{max-width:76ch}} .lead{{color:var(--ink2)}}
-.box{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.3rem}}
-.qt{{border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 10px 10px 0;padding:.8rem 1.1rem;font-family:'Fraunces',serif;font-size:1.06rem;margin:1rem 0;max-width:70ch}}
+.box{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:1.1rem 1.3rem}}
+.qt{{border-left:4px solid var(--gold-2);background:var(--gold-soft);border-radius:0 4px 4px 0;padding:.85rem 1.15rem;font-family:'Source Serif 4',serif;font-style:italic;font-size:1.08rem;margin:1.1rem 0;max-width:70ch}}
 .fund{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem}}
 .fund .box{{border-top:4px solid var(--accent)}}
 .fund .box:nth-child(1){{border-top-color:var(--fam-r)}} .fund .box:nth-child(2){{border-top-color:var(--fam-a)}}
@@ -516,7 +574,7 @@ p{{max-width:76ch}} .lead{{color:var(--ink2)}}
 .passos{{counter-reset:passo}}
 .passo{{position:relative;padding-left:2.6rem}}
 .passo::before{{counter-increment:passo;content:counter(passo);position:absolute;left:.7rem;top:1rem;width:1.35rem;height:1.35rem;border-radius:50%;background:var(--accent);color:#fff;font:700 .85rem 'Source Sans 3',sans-serif;display:flex;align-items:center;justify-content:center}}
-.chart{{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-top:.6rem}}
+.chart{{width:100%;height:auto;background:var(--card);border:1px solid var(--line);border-radius:4px;margin-top:.6rem}}
 .grid{{stroke:var(--linesoft);stroke-width:1}} .za{{fill:var(--za)}} .zm{{fill:var(--zm)}} .zr{{fill:var(--zr)}}
 .ax{{fill:var(--ink3);font:11px 'JetBrains Mono',monospace}}
 .axt{{fill:var(--ink2);font:600 12px 'Source Sans 3',sans-serif}}
@@ -536,7 +594,7 @@ p{{max-width:76ch}} .lead{{color:var(--ink2)}}
 .rd-grid{{fill:none;stroke:var(--linesoft);stroke-width:1}} .rd-ax{{stroke:var(--linesoft);stroke-width:1}}
 .rd-lb{{fill:var(--ink3);font:600 8.5px 'JetBrains Mono',monospace}} .radar-lg .rd-lb{{font-size:10px}}
 .rdemos{{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin:.8rem 0}}
-.rdemo{{margin:0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.9rem;text-align:center}}
+.rdemo{{margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.9rem;text-align:center}}
 .rdemo figcaption{{font-size:.82rem;color:var(--ink2);margin-top:.4rem}} .rdemo b{{color:var(--ink)}}
 /* face / figuras */
 .fc-line{{fill:none;stroke:var(--ink2);stroke-width:2.6;stroke-linecap:round}}
@@ -548,9 +606,9 @@ figure.figura{{margin:1.2rem 0;background:var(--card);border:1px solid var(--lin
 figure.figura figcaption{{text-align:left;font-size:.85rem;color:var(--ink2);border-top:1px solid var(--linesoft);margin-top:.8rem;padding-top:.6rem}}
 figure.figura figcaption b{{color:var(--ink)}}
 .gelrow{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem;margin:1rem 0}}
-.gelcard{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem;text-align:center}}
+.gelcard{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:1rem;text-align:center}}
 .gelico{{width:88px;height:88px}}
-.gelcard h4{{font-family:'Fraunces',serif;margin:.4rem 0 .2rem}}
+.gelcard h4{{margin:.4rem 0 .2rem;font-size:1.12rem;font-weight:600;text-transform:uppercase;color:var(--title-ink)}}
 .gelcard p{{font-size:.88rem;color:var(--ink2);margin:.2rem 0}}
 .gelcard .gelsub{{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.14em;color:var(--ink3)}}
 /* boxes estilo aprovado */
@@ -558,38 +616,50 @@ figure.figura figcaption b{{color:var(--ink)}}
 .bx-head{{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.26em;padding:.45rem 1.1rem;color:#fff;background:var(--accent)}}
 .saibamais .bx-head{{background:var(--sf)}}
 .bx-body{{display:flex;gap:1.2rem;padding:1rem 1.2rem;align-items:center;flex-wrap:wrap}}
-.bx-body h4{{font-family:'Fraunces',serif;margin:0 0 .3rem;font-size:1.05rem}}
+.bx-body h4{{margin:0 0 .3rem;font-size:1.16rem}}
 .bx-body p{{margin:.2rem 0;font-size:.92rem;max-width:58ch}}
 .bx-body>div{{flex:1;min-width:230px}}
 .bx-qr{{border:1px solid var(--line);border-radius:8px;background:#fff;padding:4px;flex:none}}
 .bx-url a{{font-size:.78rem;word-break:break-all;color:var(--ink3)}}
 /* bandeiras */
 .fambanner{{display:flex;flex-wrap:wrap;gap:.6rem 2.5rem;align-items:center;justify-content:space-between;border-radius:10px;padding:1.15rem 1.4rem;margin-bottom:1.1rem;border:1px solid var(--line)}}
-.bn-a{{background:linear-gradient(120deg,color-mix(in srgb,var(--fam-a) var(--tint),var(--card)),var(--card) 78%);border-left:8px solid var(--fam-a)}}
-.bn-m{{background:linear-gradient(120deg,color-mix(in srgb,var(--fam-m) var(--tint),var(--card)),var(--card) 78%);border-left:8px solid var(--fam-m)}}
-.bn-r{{background:linear-gradient(120deg,color-mix(in srgb,var(--fam-r) var(--tint),var(--card)),color-mix(in srgb,var(--fam-v) 8%,var(--card)));border-left:8px solid var(--fam-r)}}
-.bn-s{{background:linear-gradient(120deg,var(--sf-soft),var(--card) 78%);border-left:8px solid var(--sf)}}
+.fambanner{{border-radius:4px;color:#fff;border:none;position:relative}}
+.fambanner::after{{content:"";position:absolute;left:0;right:0;bottom:0;height:4px}}
+.bn-a{{background:linear-gradient(112deg,var(--navy) 0%,var(--navy-2) 62%,#2E76A8 128%)}}
+.bn-a::after{{background:var(--fam-a)}}
+.bn-m{{background:linear-gradient(112deg,var(--navy) 0%,var(--navy-2) 62%,#2E76A8 128%)}}
+.bn-m::after{{background:var(--fam-m)}}
+.bn-r{{background:linear-gradient(112deg,var(--navy) 0%,var(--navy-2) 62%,#2E76A8 128%)}}
+.bn-r::after{{background:var(--fam-r)}}
+.bn-s{{background:linear-gradient(112deg,#062A30 0%,#0A4A53 66%,#0F7480 130%)}}
+.bn-s::after{{background:var(--sf)}}
+.fambanner .fam-eyebrow{{color:var(--gold-3)}}
+.fambanner h2{{color:#fff}}
+.fambanner .famchave{{color:rgba(255,255,255,.9)}}
+.fambanner .famdesc{{color:rgba(255,255,255,.82)}}
+.fambanner .famdesc b{{color:var(--gold-3)}}
+.fambanner .chip{{border-color:rgba(255,255,255,.35)}}
 .fam-eyebrow{{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;color:var(--ink2);margin:0 0 .25rem}}
 .fambanner h2{{margin:0;font-size:1.7rem}}
-.famchave{{font-family:'Fraunces',serif;font-style:italic;color:var(--ink2);margin:.35rem 0 0;max-width:44ch}}
+.famchave{{font-family:'Source Serif 4',serif;font-style:italic;font-size:1.04rem;color:var(--ink2);margin:.4rem 0 0;max-width:46ch}}
 .famdesc{{margin:0;color:var(--ink2);font-size:.92rem;max-width:38rem}}
 .grid2{{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:1rem}}
 .grid3{{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}}
 /* cards */
-.card{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:0 1.1rem 1rem;display:flex;flex-direction:column;gap:.5rem;break-inside:avoid;border-left-width:6px;border-left-style:solid}}
+.card{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:0 1.1rem 1rem;display:flex;flex-direction:column;gap:.5rem;break-inside:avoid;border-left-width:6px;border-left-style:solid}}
 .card.fam-a{{border-left-color:var(--fam-a)}} .card.fam-m{{border-left-color:var(--fam-m)}} .card.fam-r{{border-left-color:var(--fam-r)}}
 .card header{{display:flex;justify-content:space-between;gap:.6rem;align-items:flex-start;margin:0 -1.1rem;padding:.7rem 1.1rem .5rem}}
 .card.fam-a header{{background:linear-gradient(90deg,color-mix(in srgb,var(--fam-a) var(--tint),transparent),transparent 75%)}}
 .card.fam-m header{{background:linear-gradient(90deg,color-mix(in srgb,var(--fam-m) var(--tint),transparent),transparent 75%)}}
 .card.fam-r header{{background:linear-gradient(90deg,color-mix(in srgb,var(--fam-r) var(--tint),transparent),transparent 75%)}}
-.card h4{{font-family:'Fraunces',serif;font-size:1.1rem;margin:0;line-height:1.15}}
+.card h4{{font-size:1.2rem;font-weight:600;margin:0;line-height:1.12;text-transform:uppercase;letter-spacing:.005em;color:var(--title-ink)}}
 .c-right{{display:flex;flex-direction:column;align-items:flex-end;gap:.1rem}}
 .marca{{font-size:.72rem;color:var(--ink3);white-space:nowrap;letter-spacing:.03em}}
-.famtag{{font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:700;letter-spacing:.09em;white-space:nowrap}}
+.famtag{{font-size:.76rem;font-weight:700;letter-spacing:.07em;white-space:nowrap;text-transform:uppercase}}
 .sigdots{{display:flex;gap:.9rem;font-size:.72rem;color:var(--ink3);padding-bottom:.3rem}}
 .assin{{margin:0 0 .1rem;display:flex;flex-direction:column;gap:.1rem;border-bottom:1px solid var(--linesoft);padding-bottom:.45rem}}
 .assin-lbl{{font-family:'Source Sans 3',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}}
-.assin-v{{display:flex;align-items:center;gap:.3rem;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.02em}}
+.assin-v{{display:flex;align-items:center;gap:.3rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.02em}}
 .assin-v i{{width:13px;height:13px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.16)}}
 .assin-v .plus{{color:var(--ink3);font-size:.7rem}}
 .assin-v b{{color:var(--ink);font-weight:700}}
@@ -598,16 +668,16 @@ figure.figura figcaption b{{color:var(--ink)}}
 .lg-e{{stroke:var(--accent-ink);stroke-width:1.6;opacity:.5}}
 .lg-n{{fill:var(--accent-ink)}}
 .gram{{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.9rem;margin:.9rem 0}}
-.gramc{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem;display:flex;gap:.8rem;align-items:flex-start}}
-.gramc h4{{font-family:'Fraunces',serif;margin:0 0 .1rem;font-size:1.02rem}}
+.gramc{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:1rem;display:flex;gap:.8rem;align-items:flex-start}}
+.gramc h4{{margin:0 0 .1rem;font-size:1.14rem;font-weight:600;text-transform:uppercase;color:var(--title-ink)}}
 .gramc .verbo{{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.1em;display:block;margin-bottom:.25rem}}
 .gramc p{{margin:0;font-size:.85rem;color:var(--ink2)}}
 .a9{{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:.6rem;margin:.9rem 0}}
-.a9c{{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:.65rem .8rem;text-align:center}}
+.a9c{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.65rem .8rem;text-align:center}}
 .a9dots{{display:flex;align-items:center;justify-content:center;gap:.25rem;margin-bottom:.35rem}}
 .a9dots i{{width:16px;height:16px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.16)}}
 .a9dots span{{color:var(--ink3);font-size:.8rem}}
-.a9n{{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.04em;line-height:1.3;display:block}}
+.a9n{{font-family:'Barlow Condensed',sans-serif;font-size:.92rem;font-weight:700;letter-spacing:.03em;line-height:1.15;display:block;color:var(--title-ink)}}
 .a9q{{font-size:.72rem;color:var(--ink3);display:block;margin-top:.2rem}}
 .sd{{display:inline-flex;align-items:center;gap:.3rem}}
 .sd i{{width:12px;height:12px;border-radius:50%;display:inline-block;border:1.5px solid rgba(0,0,0,.16)}}
@@ -628,46 +698,50 @@ figure.figura figcaption b{{color:var(--ink)}}
 .n1{{background:var(--n1bg);color:var(--n1ink);font-weight:600}} .n2{{background:var(--n2bg);color:var(--n2ink);font-weight:600}}
 .n3{{border:1.5px solid var(--n3bd);color:var(--n3ink)}} .n4{{border:1.5px dashed var(--line);color:var(--n4ink)}}
 .evite{{margin:0;font-size:.85rem;color:var(--ink2)}} .lbl-ev{{color:var(--warn)}}
-.escolha{{margin:0;border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent-soft) 70%,transparent);padding:.5rem .7rem;border-radius:0 8px 8px 0;font-size:.9rem;font-style:italic}}
+.escolha{{margin:0;border-left:3px solid var(--gold-2);background:var(--gold-soft);padding:.5rem .7rem;border-radius:0 4px 4px 0;font-size:.92rem;font-style:italic}}
 .alts,.tech{{margin:0;font-size:.82rem;color:var(--ink2)}}
 .flags{{margin:0;font-size:.76rem;color:var(--flag);font-weight:600}}
-.sfcard{{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--sf);border-radius:10px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.45rem;break-inside:avoid}}
+.sfcard{{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--sf);border-radius:4px;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.45rem;break-inside:avoid}}
 .sfcard header{{display:flex;align-items:baseline;gap:.3rem;flex-wrap:wrap}}
-.sfcard h4{{font-family:'Fraunces',serif;font-size:1.02rem;margin:0}}
+.sfcard h4{{font-size:1.1rem;font-weight:600;text-transform:uppercase;margin:0;color:var(--title-ink)}}
 .sfcard .marca{{margin-left:auto}}
 .sfnum{{display:flex;align-items:center;gap:1rem;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ink2);background:var(--sf-soft);border-radius:10px;padding:.35rem .7rem}}
 .sfnum b{{color:var(--ink)}} .sfnum .radar-sm{{margin-left:auto}}
 .sfcard p{{margin:0;font-size:.88rem}}
 .sflink{{font-size:.8rem;text-decoration:none;font-weight:600;color:var(--sf)}}
 .sflink:hover{{text-decoration:underline}}
-.regtab{{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}}
+.regtab{{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--card)}}
 .regtab table{{border-collapse:collapse;width:100%;font-size:.88rem;min-width:720px}}
 .regtab th,.regtab td{{padding:.5rem .7rem;border-bottom:1px solid var(--linesoft);text-align:left;vertical-align:top}}
-.regtab th{{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}}
+.regtab th{{font-family:'Barlow',sans-serif;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--navy-2)}}
 .regtab .obs{{color:var(--ink3);font-size:.8rem}}
 .ix{{columns:3;column-gap:2rem}} @media(max-width:56rem){{.ix{{columns:2}}}} @media(max-width:38rem){{.ix{{columns:1}}}}
 .ixm{{break-inside:avoid;margin-bottom:.9rem;font-size:.88rem}}
-.ixm b{{display:block;font-family:'Fraunces',serif;margin-bottom:.15rem}}
+.ixm b{{display:block;font-family:'Barlow Condensed',sans-serif;font-size:1.06rem;font-weight:700;text-transform:uppercase;color:var(--gold-ink);margin-bottom:.15rem;border-bottom:1px solid var(--linesoft)}}
 .ixm a{{display:block;text-decoration:none;color:var(--ink2);padding:.06rem 0}}
 .ixm a:hover{{color:var(--accent-ink);text-decoration:underline}}
 .rodape{{margin-top:3rem;border-top:1px solid var(--line);padding-top:1rem;color:var(--ink3);font-size:.82rem}}
-@media print{{ body{{background:#fff;font-size:11px}} .famsec,#rankings,#regioes,#textura{{break-before:page}}
- .card,.sfcard,.rdemo,.pratica,.saibamais{{break-inside:avoid;border-color:#ccc}} #tip{{display:none}} .capa{{border:none}} }}
+@media print{{ body{{background:#fff;font-size:10.5px}} .famsec,#rankings,#regioes,#textura,#atlas{{break-before:page}}
+ .card,.sfcard,.rdemo,.qrbox,.figura-img,.gelcard,.gramc{{break-inside:avoid}} #tip{{display:none}}
+ .capa-in{{-webkit-print-color-adjust:exact;print-color-adjust:exact}} .fambanner,.bx-head,.regtab th{{-webkit-print-color-adjust:exact;print-color-adjust:exact}} }}
 @media(max-width:30rem){{.vis{{flex-direction:column;align-items:flex-start}}}}
 </style>
 <main>
 <header class="capa">
+<div class="capa-in">
 <div class="capa-frame">
-{logo(74)}
-<p class="capa-top">Reology Map</p>
-<p class="capa-tag">Ciência que guia escolhas</p>
-<hr class="capa-rule">
-<h1>Reologia do<br>Ácido Hialurônico</h1>
-<p class="sub">Guia Reológico dos Preenchedores do Mercado Brasileiro — 75 produtos canônicos · 76 ensaios</p>
-<div class="capa-visual">{FACE_CAPA}{emblema()}</div>
-<p class="capa-autor">Dr. João Pithon</p>
-<hr class="capa-rule sm">
-<p class="capa-imprint">Primeira edição · São Paulo · 2026</p>
+<p class="capa-brand">Reology Map · Ciência que guia escolhas</p>
+<h1><span class="gold">Reologia do<br>Ácido Hialurônico</span><span class="wht">Guia dos preenchedores do mercado brasileiro</span></h1>
+<div class="capa-grid">
+<figure><img src="{ILU['g1a']}" alt="Grupo 1 — fluidos dinâmicos" loading="eager"></figure>
+<figure><img src="{ILU['g3a']}" alt="Grupo 3 — equilibrados" loading="eager"></figure>
+<figure><img src="{ILU['g4a']}" alt="Grupo 4 — projetores puros" loading="lazy"></figure>
+<figure><img src="{ILU['g6a']}" alt="Grupo 6 — baixo swelling factor" loading="lazy"></figure>
+</div>
+<p class="capa-sub">75 produtos canônicos · 76 ensaios · 6 grupos · 9 assinaturas</p>
+<p class="capa-autor">Por Dr. João Pithon</p>
+<p class="capa-ed">Primeira edição · São Paulo · 2026</p>
+</div>
 </div>
 <div class="capa-band"></div>
 </header>
@@ -682,6 +756,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 <p class="cap-eyebrow">Capítulo 1</p><h2>Como ler este guia</h2>
 <div class="box">
 <p style="margin-top:0">Os preenchedores estão organizados nos <b>seis grupos oficiais do Mapa da Reologia</b>: <b style="color:var(--fam-a)">G1 Fluidos Dinâmicos</b> · <b style="color:var(--fam-a)">G2 Fluidos com Corpo</b> · <b style="color:var(--fam-m)">G3 Equilibrados</b> · <b style="color:var(--fam-r)">G4 Projetores Puros</b> · <b style="color:var(--fam-r)">G5 Estruturais Moldáveis</b> · <b style="color:var(--sf)">G6 Precisos (Baixo SF)</b>, o grupo funcional transversal. <i>“A primeira cor mostra quanto o gel estrutura. As demais cores mostram como essa estrutura se comporta.”</i></p>
+{figura('1', ILU['esquema'], 'O <b>Esquema de Descrição dos Ácidos Hialurônicos</b> — a leitura completa do perfil reológico em quatro passos: a 1ª cor (G′), a 2ª cor (comportamento), a assinatura resultante e a leitura clínica em três perguntas. Identidade oficial do Reology Map.')}
 <h3 style="margin-top:1.2rem">A gramática das cores — 1ª cor, 2ª cor, assinatura</h3>
 <p style="margin-top:.2rem"><b>A 1ª cor mostra quanto o gel estrutura</b> (o G′):</p>
 <div class="gram">
@@ -724,8 +799,9 @@ figure.figura figcaption b{{color:var(--ink)}}
 <tr><td>0,01 Hz</td><td>repouso (carga estática)</td><td>Skinvive tan δ <b>1,54</b> → líquido em repouso: espalha e hidrata, não sustenta</td></tr>
 </tbody></table></div>
 {box_pratica('Aulas de reologia do autor (FEP)',
- 'Acesse as aulas do Dr. João Pithon sobre reologia aplicada ao preenchimento — fundamentos, leitura de parâmetros e escolha do produto na prática clínica. Escaneie o QR Code com a câmera do celular para abrir a pasta de aulas no Drive.',
- QR['aulas'], 'https://drive.google.com/drive/folders/1ztwjgguHK3VdDHG-j2E5CL4ViGglwpv-')}
+ 'Acesse as aulas do Dr. João Pithon sobre reologia aplicada ao preenchimento — fundamentos, leitura dos parâmetros e escolha do produto na prática clínica. Escaneie o QR Code com a câmera do celular para abrir a pasta de aulas.',
+ QR['aulas'], 'https://drive.google.com/drive/folders/1ztwjgguHK3VdDHG-j2E5CL4ViGglwpv-',
+ ilus=ILU['g3b'], ilus_cap='Leitura de grupo na aula: os valores a 0,7 Hz na linguagem de cores.')}
 <h3>O que um número NÃO diz (anti-inferências)</h3>
 <div class="box"><ul class="anti">
 <li>G′ ≠ coesividade · G′ ≠ volumização · G′ ≠ lifting</li>
@@ -773,9 +849,10 @@ figure.figura figcaption b{{color:var(--ink)}}
 <div class="gelcard">{GEL['rigido']}<h4>Rígido / fraturado — estrutural</h4><p class="gelsub">TÍPICO DOS GRUPOS 4–5</p><p>Sai em cordão firme que mantém geometria — e, nos mais coesos, fratura em blocos em vez de escorrer.</p></div>
 </div>
 <p class="lead" style="font-size:.92rem"><b>Regra de honestidade:</b> a textura visual <i>sugere</i>; o reômetro <i>confirma</i>. Aparência translúcida ou particulada não prevê G′ (“nome, cor e aspecto não são reologia”) — por isso cada impressão visual deste capítulo remete à ficha numérica do produto.</p>
-{box_pratica('Vídeos e imagens de textura — galeria oficial do estudo',
+{box_pratica('Vídeos e imagens de textura — galeria oficial',
  'Assista aos vídeos ilustrativos de extrusão e textura dos géis (em gota, como mel, rígido/fraturado) e veja as imagens comparativas da galeria do Reology Map. O acervo é atualizado continuamente pelo autor — os vídeos de cada grupo entram nesta mesma pasta.',
- QR['galeria'], 'https://drive.google.com/drive/folders/1xcyZVRcnvkHyYFCXOlZf9pWmq-CVwlm1')}
+ QR['galeria'], 'https://drive.google.com/drive/folders/1xcyZVRcnvkHyYFCXOlZf9pWmq-CVwlm1',
+ ilus=ILU['g1b'], ilus_cap='Da textura ao número: o grupo mais fluido do banco e seus valores medidos.')}
 </section>
 
 <section id="atlas">
@@ -820,9 +897,10 @@ figure.figura figcaption b{{color:var(--ink)}}
 <p><b>Fichas com ⚑</b> aguardam errata/re-verificação laboratorial (pares idênticos, η* divergentes, tan δ do Perfectha Subskin corrigido por recálculo). <b>Fichas com ◌</b> aguardam a monografia do autor.</p>
 <p style="margin-bottom:0"><b>Aviso:</b> material educacional para profissionais habilitados; não substitui julgamento clínico, bula/IFU nem treinamento anatômico. Indicações refletem a experiência e a leitura reológica do autor sobre lotes específicos; os fabricantes não participaram nem endossam o estudo. Marcas citadas pertencem aos respectivos titulares.</p>
 </div>
-{box_pratica('Continue com o autor — aulas e atualizações',
+{box_qr('Continue com o autor — aulas e atualizações',
  'As aulas de reologia da FEP e os materiais complementares do Reology Map ficam na pasta oficial do autor. Escaneie para acessar; o conteúdo é atualizado continuamente.',
- QR['aulas'], 'https://drive.google.com/drive/folders/1ztwjgguHK3VdDHG-j2E5CL4ViGglwpv-')}
+ QR['aulas'], 'https://drive.google.com/drive/folders/1ztwjgguHK3VdDHG-j2E5CL4ViGglwpv-',
+ kind='saibamais', ilus=ILU['g5b'], ilus_cap='Material complementar: grupos, valores e leitura clínica.')}
 <p class="rodape">Reologia do Ácido Hialurônico — Guia Reology Map · Dr. João Pithon · 1ª edição (ago/2026). Gerado do banco canônico <code>data/reologia_produtos_full.json</code>. Para exportar PDF: imprimir pelo navegador (layout otimizado).</p>
 </section>
 </main>
