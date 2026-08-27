@@ -337,7 +337,7 @@ dict(k='Belotero Volume + Lido', m='Belotero · Merz', t='CPM*', c='M', fl=['ver
  alt='Biogelis Volume · Stylage L'),
 
 dict(k='Neauvia Intense', m='Neauvia · Matex Lab', t='plataforma não documentada no acervo*', c='M', fl=['verif','pend'],
- comp='253/57/0,23 — valores IDÊNTICOS ao Belotero Volume+ no laudo (provável duplicação de linha; re-verificar com a BioSmart antes de uso clínico do dado).',
+ comp='253/57/0,23 — valores IDÊNTICOS ao Belotero Volume+ no laudo (provável duplicação de linha; re-verificar com o laboratório antes de uso clínico do dado).',
  mp='— monografia pendente —',
  ind=[('Candidato da família amarela: vale/corpo/curva (a confirmar após re-verificação)',4)],
  ev=['Usar o dado atual como definitivo'],
