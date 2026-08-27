@@ -623,7 +623,7 @@ dict(k='Restylane Lido (lote 27003)', m='Restylane · Galderma', t='NASHA — ME
 REGIOES = [
  ('Fronte / glabela / supercílio','🔵 baixo relevo','Neuramis Lido · Restylane Refyne · Biogelis Fine Lines · UP Fine','Glabela: alerta vascular máximo — reologia não é segurança.'),
  ('Têmporas','🔵/🟡 + coesividade','Belotero Volume+ · Refyne (fanning) · Volyme · Voluma · Stylage XL','Critérios de SF/coesividade sempre exigidos.'),
- ('Olheiras','🟡 baixo SF','Yvoire Contour+ · Perfectha Subskin · Restylane Lyft · Rennova Eyes Lines','Nunca escolher pelo G′; concentração ideal ~20 mg/mL; SF ainda não medido (💧).'),
+ ('Olheiras','🟡 baixo SF','Yvoire Contour+ · Perfectha Subskin · Restylane Lyft · Juvéderm Voluma · UP Contour','Nunca escolher pelo G′; concentração ideal ~20 mg/mL; SF ainda não medido (💧).'),
  ('Lábios — dinâmica','🔴 alto tan δ','Kysse · Neuramis Deep · Kiss · S100 · Belotero Intense · Stylage Lips · Evofill Derm · Ultra XC','Não existe "a reologia do lábio": 4 tarefas (integração, corpo, contorno, arquitetura).'),
  ('Lábios — estrutura','🟣 seletivo','Rennova Lips Plus · Volbella','"Filler labial pode ser azul ou roxo."'),
  ('Sulco nasolabial','🟢 vale + coesividade','Biogelis Volume · Deep Line · Rennova Lift · Stylage L · Cutegel CL-Max · Sofiderm Derm · Defyne','Alternativa estratégica: tratar o suporte adjacente (terço médio).'),
