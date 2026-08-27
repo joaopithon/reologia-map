@@ -162,39 +162,62 @@ def regua(k, fam):
             f'<circle cx="{tx:.1f}" cy="24" r="5" fill="var(--fam-{fam})" class="rg-dot"/><text x="{W+6}" y="27" class="rg-lb">tanδ {br(td)}</text></svg>')
 
 # ---------------- ilustrações: face e gel ----------------
-FACE_PATH = ('M96,34 C142,16 190,34 202,86 C208,112 202,126 195,138 C191,145 191,150 197,155 '
-             'C209,167 219,183 219,196 C219,204 212,208 205,208 C200,213 201,219 208,222 '
-             'C215,227 215,235 206,239 C214,245 214,254 204,259 C197,263 195,269 199,275 '
-             'C209,283 211,299 200,312 C186,330 158,340 130,340 C107,340 90,330 82,312')
-def face_svg(width=250, marks=None, cls='facesvg', aria='perfil facial', vw=300, dx=0, leader=False):
-    m=''
+FACE_ART = """
+<g class="fc-hair">
+ <path d="M94,150 C100,116 122,99 150,99 C178,99 200,116 206,150"/>
+</g>
+<path class="fc-face" d="M150,324 C165,322 178,311 188,294 C198,276 207,250 211,222
+ C215,194 215,161 210,137 C204,111 187,96 165,90 C160,88.6 155,88 150,88
+ C145,88 140,88.6 135,90 C113,96 96,111 90,137 C85,161 85,194 89,222
+ C93,250 102,276 112,294 C122,311 135,322 150,324 Z"/>
+<g class="fc-feat">
+ <path d="M105,157 C113,147 130,145 142,153"/>
+ <path d="M158,153 C170,145 187,147 195,157"/>
+ <path d="M106,175 C114,164 132,164 140,175 C132,185 114,185 106,175 Z"/>
+ <path d="M160,175 C168,164 186,164 194,175 C186,185 168,185 160,175 Z"/>
+ <path d="M106,175 C101,171 99,167 100,163"/>
+ <path d="M194,175 C199,171 201,167 200,163"/>
+ <path d="M150,186 C149,202 148,214 146,223"/>
+ <path d="M140,229 C145,234 155,234 160,229"/>
+ <path d="M140,229 C135,225 137,219 141,218"/>
+ <path d="M160,229 C165,225 163,219 159,218"/>
+ <path d="M150,236 L150,253"/>
+ <path d="M132,266 C139,257 146,255 150,260 C154,255 161,257 168,266 C160,269 140,269 132,266 Z"/>
+ <path d="M132,266 C141,283 159,283 168,266"/>
+ <path d="M128,318 C127,338 124,354 121,370"/>
+ <path d="M172,318 C173,338 176,354 179,370"/>
+</g>
+<circle class="fc-iris" cx="123" cy="175" r="4.6"/>
+<circle class="fc-iris" cx="177" cy="175" r="4.6"/>
+"""
+
+def face_svg(width=250, marks=None, cls='facesvg', aria='rosto feminino em vista frontal',
+             vw=300, dx=0, leader=False, lx_l=112, lx_r=288):
+    """marks: (x, y, cor, label, lado). lado 'L'/'R' com leader até as colunas de rótulo."""
+    m = ''
     if marks:
         for mk in marks:
             if leader:
-                x,y,c,label,side = mk; x+=dx
-                lx = (vw-6) if side=='R' else 6
-                tx = lx - 4 if side=='R' else lx + 4
-                ex = x+10 if side=='R' else x-10
-                m += (f'<line x1="{ex}" y1="{y}" x2="{lx - (52 if side=="R" else -52)*0 - (0)}" y2="{y}" class="fc-ld" style="display:none"/>')
-                lend = lx - (4 if side=='R' else -4)
-                m += (f'<line x1="{ex}" y1="{y}" x2="{lx}" y2="{y}" class="fc-ld"/>'
-                      f'<circle cx="{x}" cy="{y}" r="6.5" fill="{CHIP[c]}" class="fc-dot"/>'
-                      f'<text x="{tx}" y="{y-4}" class="fc-lb" text-anchor="{"end" if side=="R" else "start"}">{html.escape(label)}</text>')
+                x, y, c, label, side = mk; x += dx
+                if side == 'R':
+                    m += (f'<line x1="{x+10}" y1="{y}" x2="{lx_r-5}" y2="{y}" class="fc-ld"/>'
+                          f'<text x="{lx_r}" y="{y+4}" class="fc-lb" text-anchor="start">{html.escape(label)}</text>')
+                else:
+                    m += (f'<line x1="{lx_l+5}" y1="{y}" x2="{x-10}" y2="{y}" class="fc-ld"/>'
+                          f'<text x="{lx_l}" y="{y+4}" class="fc-lb" text-anchor="end">{html.escape(label)}</text>')
             else:
-                x,y,c,label,anch = mk; x+=dx
-                lx = x + (12 if anch=='start' else -12)
+                x, y, c, label, anch = mk; x += dx
                 if label:
-                    m += (f'<line x1="{x}" y1="{y}" x2="{lx}" y2="{y}" class="fc-ld"/>'
-                          f'<text x="{lx + (4 if anch=="start" else -4)}" y="{y+3.5}" class="fc-lb" text-anchor="{anch}">{html.escape(label)}</text>')
-                m += f'<circle cx="{x}" cy="{y}" r="6.5" fill="{CHIP[c]}" class="fc-dot"/>'
-    g0=f'<g transform="translate({dx},0)">' if dx else ''
-    g1='</g>' if dx else ''
-    return (f'<svg class="{cls}" viewBox="0 0 {vw} 380" role="img" aria-label="{aria}" style="width:{width}px">{g0}'
-            f'<path d="{FACE_PATH}" class="fc-line"/>'
-            f'<path d="M100,178 C88,172 80,182 84,196 C87,208 96,214 104,210" class="fc-line fc-thin"/>'
-            f'<path d="M168,132 C176,128 186,128 192,131" class="fc-line fc-thin"/>'
-            f'<path d="M170,152 C176,148 184,148 189,151" class="fc-thin fc-line"/>'
-            f'<path d="M130,340 C136,354 146,362 158,368" class="fc-line fc-thin"/>{g1}{m}</svg>')
+                    lxx = x + (12 if anch == 'start' else -12)
+                    m += (f'<line x1="{x}" y1="{y}" x2="{lxx}" y2="{y}" class="fc-ld"/>'
+                          f'<text x="{lxx + (4 if anch == "start" else -4)}" y="{y + 3.5}" class="fc-lb" '
+                          f'text-anchor="{anch}">{html.escape(label)}</text>')
+            m += (f'<circle cx="{x}" cy="{y}" r="12" fill="{CHIP[c]}" class="fc-halo"/>'
+                  f'<circle cx="{x}" cy="{y}" r="7.5" fill="{CHIP[c]}" class="fc-dot"/>')
+    g0 = f'<g transform="translate({dx},0)">' if dx else ''
+    g1 = '</g>' if dx else ''
+    return (f'<svg class="{cls}" viewBox="0 0 {vw} 400" role="img" aria-label="{aria}" '
+            f'style="max-width:{width}px">{g0}{FACE_ART}{g1}{m}</svg>')
 
 def gel_icons():
     return {
@@ -441,12 +464,19 @@ a9_cards = ''.join(
     + f'</div><span class="a9n">{ASSIN[(b,m)]}</span><span class="a9q">{_a9c.get(ASSIN[(b,m)],0)} produto{"" if _a9c.get(ASSIN[(b,m)],0)==1 else "s"}</span></div>'
     for b,m in A9_ORDEM)
 
-FACE_CAPA = face_svg(200, marks=[(150,74,'a','','start'),(168,163,'s','','start'),
-    (176,224,'m','','start'),(146,208,'v','','end'),(203,298,'r','','start')], cls='facesvg capa-face', aria='perfil facial com pontos das famílias do mapa')
+FACE_CAPA = face_svg(196, marks=[
+    (150,128,'a','','start'), (124,192,'s','','start'), (200,216,'v','','start'),
+    (172,246,'m','','start'), (150,310,'r','','start')],
+    cls='facesvg capa-face', aria='rosto com os pontos das famílias do Mapa')
 
-FACE_GEO = face_svg(300, marks=[(196,268,'a','LINHA · perioral','R'),(178,222,'m','VALE · sulco nasolabial','R'),
-    (144,204,'m','CURVA · malar','L'),(160,242,'r','SUPORTE · profundo','L'),(202,300,'r','VÉRTICE · mento','R')],
-    cls='facesvg', aria='tarefas geométricas na face', vw=390, dx=45, leader=True)
+FACE_GEO = face_svg(620, marks=[
+    (108,207,'m','CURVA · malar','L'),
+    (132,233,'r','SUPORTE · profundo','L'),
+    (134,260,'a','LINHA · perioral','L'),
+    (172,246,'m','VALE · sulco nasolabial','R'),
+    (152,311,'r','VÉRTICE · mento','R')],
+    cls='facesvg facegeo', aria='tarefas geométricas do preenchimento sobre a face',
+    vw=520, dx=110, leader=True, lx_l=150, lx_r=370)
 
 page=f'''<title>eBook Reology Map</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -463,7 +493,7 @@ page=f'''<title>eBook Reology Map</title>
  --chip-rosa:#C4557F; --sf:#0F7480; --sf-soft:rgba(15,116,128,.09);
  --warn:#A8501F; --flag:#B23B3B;
  --za:rgba(46,125,191,.05); --zm:rgba(143,109,18,.06); --zr:rgba(124,58,237,.045);
- --title-ink:#10486F; --gold-ink:#10486F;
+ --title-ink:#10486F; --gold-ink:#10486F; --face-line:#5A6C7A; --face-fill:#FFFCF7;
  --n1bg:#10486F; --n1ink:#FFFFFF; --n2bg:#DCE8F1; --n2ink:#0E4269; --n3bd:#A9BFD1; --n3ink:#31536E; --n4ink:#7A8794;
  --tint:12%;
 }}
@@ -476,7 +506,7 @@ page=f'''<title>eBook Reology Map</title>
  --chip-rosa:#C96B92; --sf:#3DA0AC; --sf-soft:rgba(61,160,172,.15);
  --warn:#D08A5E; --flag:#DC7E7E;
  --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
- --title-ink:#E8EEF4; --gold-ink:#E9B968;
+ --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#8CA3B5; --face-fill:rgba(255,255,255,.04);
  --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
  --tint:22%;
 }} }}
@@ -489,7 +519,7 @@ page=f'''<title>eBook Reology Map</title>
  --chip-rosa:#C96B92; --sf:#3DA0AC; --sf-soft:rgba(61,160,172,.15);
  --warn:#D08A5E; --flag:#DC7E7E;
  --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
- --title-ink:#E8EEF4; --gold-ink:#E9B968;
+ --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#8CA3B5; --face-fill:rgba(255,255,255,.04);
  --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
  --tint:22%;
 }}
@@ -597,11 +627,21 @@ p{{max-width:76ch}} .lead{{color:var(--ink2)}}
 .rdemo{{margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.9rem;text-align:center}}
 .rdemo figcaption{{font-size:.82rem;color:var(--ink2);margin-top:.4rem}} .rdemo b{{color:var(--ink)}}
 /* face / figuras */
-.fc-line{{fill:none;stroke:var(--ink2);stroke-width:2.6;stroke-linecap:round}}
-.fc-thin{{stroke-width:1.8;opacity:.75}}
-.fc-dot{{stroke:var(--card);stroke-width:2}}
+.fc-face{{fill:var(--face-fill);stroke:var(--face-line);stroke-width:2.2;stroke-linejoin:round}}
+.fc-hair path{{fill:none;stroke:var(--face-line);stroke-width:1.4;stroke-linecap:round;opacity:.5}}
+.fc-feat path{{fill:none;stroke:var(--face-line);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}}
+.fc-iris{{fill:var(--face-line);opacity:.62}}
+.fc-dot{{stroke:var(--card);stroke-width:2.2}}
+.fc-halo{{opacity:.17}}
 .fc-ld{{stroke:var(--ink3);stroke-width:1;stroke-dasharray:2 3}}
-.fc-lb{{fill:var(--ink2);font:600 11px 'Source Sans 3',sans-serif}}
+.fc-lb{{fill:var(--ink2);font:700 12px 'Barlow',sans-serif;letter-spacing:.02em}}
+.facesvg{{width:100%;height:auto;display:block;margin:0 auto}}
+.fc-ld{{opacity:.55}}
+.capa-face .fc-face{{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.62)}}
+.capa-face .fc-hair path{{stroke:rgba(255,255,255,.5)}}
+.capa-face .fc-feat path{{stroke:rgba(255,255,255,.58)}}
+.capa-face .fc-iris{{fill:rgba(255,255,255,.6)}}
+.capa-face .fc-dot{{stroke:rgba(10,53,87,.9)}}
 figure.figura{{margin:1.2rem 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem 1.2rem;text-align:center}}
 figure.figura figcaption{{text-align:left;font-size:.85rem;color:var(--ink2);border-top:1px solid var(--linesoft);margin-top:.8rem;padding-top:.6rem}}
 figure.figura figcaption b{{color:var(--ink)}}
@@ -825,7 +865,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 {LEG3}
 <p class="lead" style="font-size:.9rem">Achados: apenas <b>2 dos 76 ensaios</b> são “roxo completo” (grupo 4); os pares sobrepostos (Volift=Voluma, Belotero Volume+=Neauvia Intense, Stimulate=Singderm) estão em re-verificação; famílias comerciais inteiras vivem numa mesma zona — a cor classifica, o número posiciona.</p>
 <figure class="figura">{FACE_GEO}
-<figcaption><b>Figura 1.</b> As cinco tarefas geométricas do preenchimento sobre a face: <b>LINHA</b> (microdepressão superficial — perioral), <b>VALE</b> (depressão — sulco nasolabial, pré-jowl), <b>CURVA</b> (convexidade difusa — malar/bochecha), <b>SUPORTE</b> (sustentação profunda — fossa piriforme, supraperiostal) e <b>VÉRTICE</b> (projeção focal — mento, ângulo, zigoma). A cor de cada ponto indica a família de G′ tipicamente exigida; o gel é escolhido para a tarefa, não para a região inteira.</figcaption></figure>
+<figcaption><b>Figura 2.</b> As cinco tarefas geométricas do preenchimento sobre a face: <b>LINHA</b> (microdepressão superficial — perioral), <b>VALE</b> (depressão — sulco nasolabial, pré-jowl), <b>CURVA</b> (convexidade difusa — malar/bochecha), <b>SUPORTE</b> (sustentação profunda — fossa piriforme, supraperiostal) e <b>VÉRTICE</b> (projeção focal — mento, ângulo, zigoma). A cor de cada ponto indica a família de G′ tipicamente exigida: <span style="color:var(--fam-a)"><b>azul</b></span> baixo, <span style="color:var(--fam-m)"><b>amarelo</b></span> intermediário, <span style="color:var(--fam-r)"><b>roxo</b></span> alto. O gel é escolhido para a tarefa, não para a região inteira.</figcaption></figure>
 </section>
 
 <section id="forma">
