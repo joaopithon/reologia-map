@@ -9,9 +9,11 @@ ed = importlib.util.module_from_spec(spec); spec.loader.exec_module(ed)
 DATA = {r['produto']: r for r in json.load(open(f'{BASE}/produtos_full.json'))}
 QR = json.load(open(f'{BASE}/qrs.json'))
 ILU = json.load(open(f'{BASE}/ilustracoes.json'))
+ILU2 = json.load(open(f'{BASE}/ilustracoes2.json'))
 assert len(ed.PRODUTOS) == 76
 
-def td_of(k): return 0.15 if k == 'Perfectha Subskin' else DATA[k]['tand_0.7Hz']
+ERR_TD = {'Perfectha Subskin': 0.15}   # errata: G″/G′ = 52,00/343,00 = 0,1516
+def td_of(k): return ERR_TD.get(k, DATA[k]['tand_0.7Hz'])
 def br(v, nd=2): return f'{v:,.{nd}f}'.replace(',', 'X').replace('.', ',').replace('X', '.')
 def br0(v): return f'{v:,.0f}'.replace(',', '.')
 def slug(t):
@@ -133,6 +135,77 @@ def logo(size=104):
     e=''.join(f'<line x1="{nodes[a][0]}" y1="{nodes[a][1]}" x2="{nodes[b][0]}" y2="{nodes[b][1]}" class="lg-e"/>' for a,b in edges)
     n=''.join(f'<circle cx="{x}" cy="{y}" r="{5.2 if i in (0,4) else 3.9}" class="lg-n"/>' for i,(x,y) in enumerate(nodes))
     return f'<svg class="logo" viewBox="0 0 104 100" role="img" aria-label="Reology Map" style="width:{size}px">{e}{n}</svg>'
+
+
+# ---------------- ornamentos da identidade: cadeia e rede de AH ----------------
+def _ha_pts(w, h, amp, period, n, x0=3):
+    return [(round(x0 + i*(w-2*x0)/n, 2),
+             round(h/2 - amp*math.sin(2*math.pi*(x0 + i*(w-2*x0)/n - x0)/period), 2))
+            for i in range(n+1)]
+
+def orn(kind='cadeia', width=150, cls='orn'):
+    """Ornamento inspirado no desenho oficial de formação do hidrogel:
+    cadeias de ácido hialurônico em contas, pontos de reticulação e água."""
+    if kind == 'cadeia':
+        w, h = 150, 20
+        pts = _ha_pts(w, h, 5.4, 38, 30)
+        d = 'M' + ' L'.join(f'{x},{y}' for x, y in pts)
+        beads = ''
+        for i, (x, y) in enumerate(pts):
+            if i % 2: continue
+            t = i/(len(pts)-1)
+            op = round(.28 + .72*math.sin(math.pi*t)**.6, 2)
+            r  = round(1.6 + 1.5*math.sin(math.pi*t)**.7, 2)
+            beads += f'<circle cx="{x}" cy="{y}" r="{r}" class="orn-b" opacity="{op}"/>'
+        body = f'<path d="{d}" class="orn-l"/>{beads}'
+    elif kind == 'rede':
+        # duas cadeias unidas por um ponto de reticulação + moléculas de água
+        w, h = 132, 54
+        a = _ha_pts(w, 30, 5.0, 40, 26); b = _ha_pts(w, 30, 5.0, 40, 26)
+        da = 'M' + ' L'.join(f'{x},{y+3}' for x, y in a)
+        db = 'M' + ' L'.join(f'{x},{y+27}' for x, y in b)
+        beads = ''
+        for pts, dy in ((a, 3), (b, 27)):
+            for i, (x, y) in enumerate(pts):
+                if i % 2: continue
+                t = i/(len(pts)-1)
+                beads += (f'<circle cx="{x}" cy="{y+dy}" r="{round(1.5+1.3*math.sin(math.pi*t)**.7,2)}" '
+                          f'class="orn-b" opacity="{round(.3+.7*math.sin(math.pi*t)**.6,2)}"/>')
+        xs = [40, 92]
+        links = ''.join(f'<line x1="{x}" y1="{a[0][1]+9}" x2="{x}" y2="{b[0][1]+21}" class="orn-x"/>'
+                        f'<circle cx="{x}" cy="{h/2}" r="2.6" class="orn-n"/>' for x in xs)
+        agua = ''.join(f'<circle cx="{x}" cy="{y}" r="1.5" class="orn-w"/>'
+                       for x, y in ((20,27),(66,22),(66,33),(114,27)))
+        body = f'<path d="{da}" class="orn-l"/><path d="{db}" class="orn-l"/>{links}{agua}{beads}'
+    else:  # 'gota' — gel: gota com rede interna
+        w, h = 62, 74
+        body = ('<path d="M31,4 C31,4 54,32 54,46 A23,23 0 0,1 8,46 C8,32 31,4 31,4 Z" class="orn-g"/>'
+                '<path d="M17,44 C24,38 38,38 45,44" class="orn-l"/>'
+                '<path d="M15,54 C23,48 39,48 47,54" class="orn-l"/>'
+                '<circle cx="22" cy="42" r="2.2" class="orn-b"/><circle cx="31" cy="40" r="2.6" class="orn-b"/>'
+                '<circle cx="40" cy="42" r="2.2" class="orn-b"/><circle cx="20" cy="52" r="2.2" class="orn-b"/>'
+                '<circle cx="31" cy="50" r="2.6" class="orn-b"/><circle cx="42" cy="52" r="2.2" class="orn-b"/>'
+                '<line x1="31" y1="40" x2="31" y2="50" class="orn-x"/>'
+                '<circle cx="26" cy="61" r="1.5" class="orn-w"/><circle cx="37" cy="62" r="1.5" class="orn-w"/>')
+    return (f'<svg class="{cls}" viewBox="0 0 {w} {h}" role="presentation" aria-hidden="true" '
+            f'style="width:{width}px">{body}</svg>')
+
+def filete(kind='cadeia', width=150):
+    """Filete ornamental centrado: régua — ornamento — régua."""
+    return f'<div class="filete"><span></span>{orn(kind, width)}<span></span></div>'
+
+
+def cap_head(eyebrow, titulo, sub=''):
+    """Abertura de capítulo em formato de livro: numeral, ornamento e regra."""
+    m = re.match(r'Cap[ií]tulo\s+([0-9]+)', eyebrow)
+    num = m.group(1) if m else ''
+    resto = eyebrow if not m else eyebrow[m.end():].strip(' ·')
+    marca = f'<span class="cap-n">{num}</span>' if num else ''
+    extra = f'<span class="cap-extra">{resto}</span>' if resto else ''
+    subp = f'<p class="cap-sub">{sub}</p>' if sub else ''
+    return (f'<div class="cap-abre">{marca}<div class="cap-tx">'
+            f'<p class="cap-eyebrow">{"Capítulo" if num else eyebrow}{extra}</p>'
+            f'<h2>{titulo}</h2>{subp}</div>{orn("rede", 108)}</div>')
 
 # ---------------- radar ----------------
 def radar(k, fam, size=96, cls='radar'):
@@ -401,8 +474,56 @@ def emblema(size=200):
          f'<text x="{c}" y="{size-3}" class="rd-lb" text-anchor="middle">tan δ</text><text x="3" y="{c+3.5}" class="rd-lb">η*</text>')
     return f'<svg class="capa-emb" viewBox="0 0 {size} {size}" role="img" aria-label="assinaturas reológicas">{grid}{axes}{"".join(polys)}{lbl}</svg>'
 
+
+# ---------------- rankings temáticos (recalculados do banco, 76 ensaios) --------
+def top(metric, n=10, maior=True, filtro=None, cor='g1'):
+    """Ranking temático direto do banco canônico — nunca de tabela transcrita."""
+    def v(r):
+        return {'g1': r['G1_0.7Hz'], 'g2': r['G2_0.7Hz'],
+                'td': ERR_TD.get(r['produto'], r['tand_0.7Hz']),
+                'eta': r['eta_0.7Hz']}[metric]
+    rs = [r for r in DATA.values() if v(r) is not None and (filtro(r) if filtro else True)]
+    rs.sort(key=v, reverse=maior)
+    return rs[:n]
+
+def podio(rows, metric, titulo, nota='', fmt=None):
+    fmt = fmt or (lambda x: br(x, 2) if metric == 'td' else br(x, 2))
+    def v(r):
+        return {'g1': r['G1_0.7Hz'], 'g2': r['G2_0.7Hz'],
+                'td': ERR_TD.get(r['produto'], r['tand_0.7Hz']),
+                'eta': r['eta_0.7Hz']}[metric]
+    tr = ''
+    for i, r in enumerate(rows, 1):
+        k = r['produto']
+        g1 = r['G1_0.7Hz']; td = ERR_TD.get(k, r['tand_0.7Hz'])
+        fam = c_g1(g1)
+        comp = (f'tan δ {br(td,2)}' if metric == 'g1'
+                else (f'G′ {br(g1,2)} Pa' if metric == 'td'
+                      else f'G′ {br(g1,2)} · tan δ {br(td,2)}'))
+        tr += (f'<tr><td class="pd-n">{i}</td>'
+               f'<td class="pd-p">{dotchip(fam,10)} {html.escape(short(k))}'
+               f'<span class="pd-as">{assinatura(k)[0]}</span></td>'
+               f'<td class="pd-v">{fmt(v(r))}</td>'
+               f'<td class="pd-x">{comp}</td></tr>')
+    un = {'g1': 'G′ (Pa)', 'g2': 'G″ (Pa)', 'td': 'tan δ', 'eta': 'η* (Pa·s)'}[metric]
+    n = f'<p class="pd-nota">{nota}</p>' if nota else ''
+    hx = {'g1': 'tan δ', 'td': 'G′'}.get(metric, 'Perfil')
+    return (f'<div class="podio"><h4>{titulo}</h4><table><thead><tr><th></th><th>Produto</th>'
+            f'<th>{un}</th><th>{hx}</th></tr></thead><tbody>{tr}</tbody></table>{n}</div>')
+
+OUTRAS_FONTES = [('Belotero Balance Lido', '128', '0,64', 'lit', 'Literatura publicada'), ('Belotero Intense Lido', '255', '0,43', 'lit', 'Literatura publicada'), ('Belotero Volume + Lido', '438', '0,23', 'lit', 'Literatura publicada'), ('e.p.t.q S 100 Lido', '36', '0,46', 'fab', 'Fabricante (Anton Paar MCR302 · 0,1 Hz)'), ('e.p.t.q S 300 Lido', '144', '0,19', 'fab', 'Fabricante (Anton Paar MCR302 · 0,1 Hz)'), ('e.p.t.q S 500 Lido', '232', '0,14', 'fab', 'Fabricante (Anton Paar MCR302 · 0,1 Hz)'), ('Yvoire Classic+ Lido', '286', '0,36', 'lit', 'Estudo comparativo de linha'), ('Yvoire Volume+ Lido', '253', '0,29', 'lit', 'Estudo comparativo de linha'), ('Yvoire Contour+ Lido', '484', '0,32', 'lit', 'Estudo comparativo de linha')]
+
+_ROWS_FONTES = ''
+for _p, _g, _t, _kind, _fonte in OUTRAS_FONTES:
+    _r = DATA[_p]; _td = ERR_TD.get(_p, _r['tand_0.7Hz'])
+    _ddir = '↑' if float(_g.replace(',', '.')) > _r['G1_0.7Hz'] else '↓'
+    _ROWS_FONTES += (f'<tr><td><b>{html.escape(short(_p))}</b></td>'
+        f'<td class="med">G′ {br(_r["G1_0.7Hz"],2)}<br>tan δ {br(_td,2)}</td>'
+        f'<td class="out">G′ {_g} {_ddir}<br>tan δ {_t}</td>'
+        f'<td>{_fonte}</td></tr>')
+
 # ---------------- seções de grupos ----------------
-fam_secs=[]; CH0=6
+fam_secs=[]; CH0=9
 for gi,g in enumerate(['G1','G2','G3','G4','G5']):
     G=GRUPOS[g]; prods=[p for p in ed.PRODUTOS if grp(p)==g]
     prods.sort(key=lambda p:DATA[p['k']]['G1_0.7Hz'])
@@ -415,7 +536,7 @@ for gi,g in enumerate(['G1','G2','G3','G4','G5']):
 {figura(f'{G["num"]}.1', ILU[f'g{G["num"]}a'], f'<b>{G["nome"]}</b> — leitura conceitual do grupo: características, leitura clínica, comportamento e mensagem-chave. Ilustração oficial do Mapa da Reologia.')}
 {figura(f'{G["num"]}.2', ILU[f'g{G["num"]}b'], 'Exemplos do grupo com os valores medidos a 0,7 Hz, na linguagem de cores do Mapa. As fichas a seguir detalham cada produto.')}
 </div>'''
-    fam_secs.append(f'''<section class="famsec" id="grupo-{G['num']}">
+    fam_secs.append(f'''<section class="famsec folha" id="grupo-{G['num']}">
 <div class="fambanner bn-{G['fam']}"><div><p class="fam-eyebrow">CAPÍTULO {CH0+gi} · GRUPO {G['num']} · {html.escape(G['tec'])}</p><h2>{G['nome']}</h2>
 <p class="famchave">“{html.escape(G['chave'])}”</p></div>
 <div><p class="famdesc"><b>Faixas do grupo:</b> {G['bandas']}<br><b>Melhores contextos:</b> {html.escape(G['ctx'])} · <b>Produto-exemplo:</b> {html.escape(G['ex'])}</p>{extra}
@@ -431,8 +552,8 @@ SF=[('Yvoire Contour+ Lido','1ª escolha do autor para olheiras: G′ alto (580 
 sf_cards=''.join(f'''<article class="sfcard"><header>{dotchip('s',12)}<h4>{html.escape(k)}</h4><span class="marca">{html.escape(next(q for q in ed.PRODUTOS if q['k']==k)['m'])}</span></header>
 <div class="sfnum"><span>G′ <b>{br(DATA[k]['G1_0.7Hz'])}</b> Pa</span><span>tan δ <b>{br(td_of(k))}</b></span>{radar(k, GRUPOS[grp(next(q for q in ed.PRODUTOS if q['k']==k))]['fam'],72,'radar radar-sm')}</div>
 <p>{html.escape(why)}</p><a class="sflink" href="#{slug(k)}">ver ficha completa ↓</a></article>''' for k,why in SF)
-sf_sec=f'''<section class="famsec" id="grupo-6">
-<div class="fambanner bn-s"><div><p class="fam-eyebrow">CAPÍTULO 11 · GRUPO 6 · critério funcional transversal · 💧</p><h2>PRECISOS — BAIXO SWELLING FACTOR</h2>
+sf_sec=f'''<section class="famsec folha" id="grupo-6">
+<div class="fambanner bn-s"><div><p class="fam-eyebrow">CAPÍTULO 14 · GRUPO 6 · critério funcional transversal · 💧</p><h2>PRECISOS — BAIXO SWELLING FACTOR</h2>
 <p class="famchave">“Alta projeção + baixa expansão + mais precisão + melhor controle de edema.”</p></div>
 <div><p class="famdesc"><b>Padrão funcional:</b> alto G′ + AH em baixa concentração (20–22 mg/mL) + partículas grandes + maior estabilidade química. <b>Melhores contextos:</b> olheiras e áreas em que o controle de expansão é determinante. Regra do autor: <i>nunca escolher olheira pelo G′</i> — “o tamanho da partícula ajuda a explicar; o SF medido é o que confirma”.</p>
 <p class="famdesc" style="margin-top:.3rem"><b>⚠ SF ainda não foi medido em nenhum produto</b> — prioridade da 2ª rodada laboratorial. Até lá, grupo clínico-declarativo (💧); sem SF confiável, não existe “ranking definitivo” para olheiras.</p></div></div>
@@ -495,7 +616,7 @@ page=f'''<title>eBook Reology Map</title>
  --za:rgba(46,125,191,.05); --zm:rgba(143,109,18,.06); --zr:rgba(124,58,237,.045);
  --title-ink:#10486F; --gold-ink:#10486F; --face-line:#5A6C7A; --face-fill:#FFFCF7;
  --n1bg:#10486F; --n1ink:#FFFFFF; --n2bg:#DCE8F1; --n2ink:#0E4269; --n3bd:#A9BFD1; --n3ink:#31536E; --n4ink:#7A8794;
- --tint:12%;
+ --tint:12%; --book-bg:#EDE7DD;
 }}
 @media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{
  --navy:#071F33; --navy-2:#0C2A42; --navy-3:#2A6C9C; --navy-ink:#DCE8F1;
@@ -508,7 +629,7 @@ page=f'''<title>eBook Reology Map</title>
  --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
  --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#8CA3B5; --face-fill:rgba(255,255,255,.04);
  --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
- --tint:22%;
+ --tint:22%; --book-bg:#04141F;
 }} }}
 :root[data-theme="dark"] {{
  --navy:#071F33; --navy-2:#0C2A42; --navy-3:#2A6C9C; --navy-ink:#DCE8F1;
@@ -521,7 +642,7 @@ page=f'''<title>eBook Reology Map</title>
  --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
  --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#8CA3B5; --face-fill:rgba(255,255,255,.04);
  --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
- --tint:22%;
+ --tint:22%; --book-bg:#04141F;
 }}
 *{{box-sizing:border-box}} html{{scroll-behavior:smooth}}
 @media (prefers-reduced-motion:reduce){{html{{scroll-behavior:auto}}}}
@@ -552,6 +673,114 @@ h1,h2,h3,h4{{font-family:'Barlow Condensed','Barlow',sans-serif;text-wrap:balanc
 .capa-autor{{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.15rem,3vw,1.6rem);font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);margin:0}}
 .capa-ed{{font-family:'Barlow',sans-serif;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);margin:.7rem 0 0}}
 .capa-band{{height:7px;background:linear-gradient(90deg,var(--fam-a) 0 25%,var(--fam-m) 25% 50%,var(--fam-r) 50% 75%,var(--fam-v) 75% 100%)}}
+
+/* ================= FORMATO DE LIVRO: folhas, rodapés e ornamentos ================= */
+main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg);counter-reset:folha}}
+.folha{{max-width:74rem;margin:0 auto 2rem;background:var(--card);border:1px solid var(--line);
+ border-radius:2px;padding:clamp(1.5rem,3.2vw,3rem) clamp(1.1rem,3vw,3.2rem) 0;position:relative;
+ box-shadow:0 1px 2px rgba(10,53,87,.06),0 14px 30px -20px rgba(10,53,87,.30);counter-increment:folha}}
+.folha::before{{content:"";position:absolute;left:0;right:0;top:0;height:3px;
+ background:linear-gradient(90deg,var(--gold-3),var(--gold-2) 32%,var(--gold) 68%,var(--gold-3))}}
+.folha::after{{content:"Reologia do Ácido Hialurônico · Reology Map · " counter(folha);
+ display:block;margin:2.6rem calc(-1*clamp(1.1rem,3vw,3.2rem)) 0;
+ padding:2.9rem 1rem 1.15rem;border-top:1px solid var(--line);
+ background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20152%2020%27%20width%3D%27152%27%20height%3D%2720%27%3E%3Cpath%20d%3D%27M3.0%2C10.0%20L7.87%2C6.11%20L12.73%2C4.6%20L17.6%2C6.41%20L22.47%2C10.42%20L27.33%2C14.17%20L32.2%2C15.36%20L37.07%2C13.27%20L41.93%2C9.17%20L46.8%2C5.58%20L51.67%2C4.7%20L56.53%2C7.07%20L61.4%2C11.24%20L66.27%2C14.65%20L71.13%2C15.2%20L76.0%2C12.57%20L80.87%2C8.36%20L85.73%2C5.16%20L90.6%2C4.92%20L95.47%2C7.8%20L100.33%2C12.03%20L105.2%2C15.01%20L110.07%2C14.92%20L114.93%2C11.81%20L119.8%2C7.59%20L124.67%2C4.85%20L129.53%2C5.27%20L134.4%2C8.59%20L139.27%2C12.78%20L144.13%2C15.26%20L149.0%2C14.52%27%20fill%3D%27none%27%20stroke%3D%27%23C08A2E%27%20stroke-width%3D%271%27%20opacity%3D%27.42%27%2F%3E%3Ccircle%20cx%3D%223.0%22%20cy%3D%2210.0%22%20r%3D%221.7%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.3%22%2F%3E%3Ccircle%20cx%3D%2212.73%22%20cy%3D%224.6%22%20r%3D%222.2%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%2222.47%22%20cy%3D%2210.42%22%20r%3D%222.5%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%2232.2%22%20cy%3D%2215.36%22%20r%3D%222.73%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%2241.93%22%20cy%3D%229.17%22%20r%3D%222.92%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.89%22%2F%3E%3Ccircle%20cx%3D%2251.67%22%20cy%3D%224.7%22%20r%3D%223.06%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%2261.4%22%20cy%3D%2211.24%22%20r%3D%223.15%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.98%22%2F%3E%3Ccircle%20cx%3D%2271.13%22%20cy%3D%2215.2%22%20r%3D%223.19%22%20fill%3D%22%23C08A2E%22%20opacity%3D%221.0%22%2F%3E%3Ccircle%20cx%3D%2280.87%22%20cy%3D%228.36%22%20r%3D%223.19%22%20fill%3D%22%23C08A2E%22%20opacity%3D%221.0%22%2F%3E%3Ccircle%20cx%3D%2290.6%22%20cy%3D%224.92%22%20r%3D%223.15%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.98%22%2F%3E%3Ccircle%20cx%3D%22100.33%22%20cy%3D%2212.03%22%20r%3D%223.06%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%22110.07%22%20cy%3D%2214.92%22%20r%3D%222.92%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.89%22%2F%3E%3Ccircle%20cx%3D%22119.8%22%20cy%3D%227.59%22%20r%3D%222.73%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%22129.53%22%20cy%3D%225.27%22%20r%3D%222.5%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%22139.27%22%20cy%3D%2212.78%22%20r%3D%222.2%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%22149.0%22%20cy%3D%2214.52%22%20r%3D%221.7%22%20fill%3D%22%23C08A2E%22%20opacity%3D%220.3%22%2F%3E%3C%2Fsvg%3E") no-repeat center .95rem;background-size:132px 18px;
+ font-family:'Barlow',system-ui,sans-serif;font-size:.66rem;font-weight:600;letter-spacing:.2em;
+ text-transform:uppercase;color:var(--ink3);text-align:center}}
+/* ornamentos inline */
+.orn{{display:block;height:auto;overflow:visible}}
+.orn-l{{fill:none;stroke:var(--gold);stroke-width:1;opacity:.45}}
+.orn-b{{fill:var(--gold)}}
+.orn-x{{stroke:var(--gold-2);stroke-width:1.3;opacity:.75}}
+.orn-n{{fill:var(--gold-2)}}
+.orn-w{{fill:var(--accent);opacity:.45}}
+.orn-g{{fill:var(--gold-soft);stroke:var(--gold-2);stroke-width:1.3}}
+.filete{{display:flex;align-items:center;gap:.9rem;margin:1.8rem 0 1.2rem}}
+.filete>span{{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line) 22%,var(--line) 78%,transparent)}}
+/* abertura de capítulo */
+.cap-abre{{display:flex;align-items:center;gap:clamp(.8rem,2vw,1.5rem);
+ border-bottom:2px solid var(--gold-2);padding-bottom:.75rem;margin:0 0 1.4rem}}
+.cap-abre .cap-tx{{flex:1;min-width:0}}
+.cap-abre h2{{margin:.1rem 0 0;font-size:clamp(1.5rem,3.4vw,2.15rem);color:var(--title-ink)}}
+.cap-abre .cap-eyebrow{{margin:0}}
+.cap-n{{font-family:'Barlow Condensed','Barlow',sans-serif;font-size:clamp(2.6rem,7vw,4rem);
+ font-weight:700;line-height:.78;color:var(--gold-2);letter-spacing:-.02em;
+ border-right:1px solid var(--line);padding-right:clamp(.7rem,2vw,1.3rem);align-self:stretch;
+ display:flex;align-items:center}}
+.cap-extra{{color:var(--ink3);font-weight:600}}
+.cap-extra::before{{content:" · "}}
+.cap-abre .orn{{flex:0 0 auto;opacity:.85}}
+@media (max-width:620px){{.cap-abre .orn{{display:none}}}}
+.cap-sub{{font-family:'Barlow',sans-serif;font-size:.9rem;color:var(--ink2);margin:.35rem 0 0;max-width:60ch}}
+@media (prefers-color-scheme:dark){{:root:not([data-theme="light"]) .folha::after{{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20152%2020%27%20width%3D%27152%27%20height%3D%2720%27%3E%3Cpath%20d%3D%27M3.0%2C10.0%20L7.87%2C6.11%20L12.73%2C4.6%20L17.6%2C6.41%20L22.47%2C10.42%20L27.33%2C14.17%20L32.2%2C15.36%20L37.07%2C13.27%20L41.93%2C9.17%20L46.8%2C5.58%20L51.67%2C4.7%20L56.53%2C7.07%20L61.4%2C11.24%20L66.27%2C14.65%20L71.13%2C15.2%20L76.0%2C12.57%20L80.87%2C8.36%20L85.73%2C5.16%20L90.6%2C4.92%20L95.47%2C7.8%20L100.33%2C12.03%20L105.2%2C15.01%20L110.07%2C14.92%20L114.93%2C11.81%20L119.8%2C7.59%20L124.67%2C4.85%20L129.53%2C5.27%20L134.4%2C8.59%20L139.27%2C12.78%20L144.13%2C15.26%20L149.0%2C14.52%27%20fill%3D%27none%27%20stroke%3D%27%23D6A048%27%20stroke-width%3D%271%27%20opacity%3D%27.42%27%2F%3E%3Ccircle%20cx%3D%223.0%22%20cy%3D%2210.0%22%20r%3D%221.7%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.3%22%2F%3E%3Ccircle%20cx%3D%2212.73%22%20cy%3D%224.6%22%20r%3D%222.2%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%2222.47%22%20cy%3D%2210.42%22%20r%3D%222.5%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%2232.2%22%20cy%3D%2215.36%22%20r%3D%222.73%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%2241.93%22%20cy%3D%229.17%22%20r%3D%222.92%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.89%22%2F%3E%3Ccircle%20cx%3D%2251.67%22%20cy%3D%224.7%22%20r%3D%223.06%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%2261.4%22%20cy%3D%2211.24%22%20r%3D%223.15%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.98%22%2F%3E%3Ccircle%20cx%3D%2271.13%22%20cy%3D%2215.2%22%20r%3D%223.19%22%20fill%3D%22%23D6A048%22%20opacity%3D%221.0%22%2F%3E%3Ccircle%20cx%3D%2280.87%22%20cy%3D%228.36%22%20r%3D%223.19%22%20fill%3D%22%23D6A048%22%20opacity%3D%221.0%22%2F%3E%3Ccircle%20cx%3D%2290.6%22%20cy%3D%224.92%22%20r%3D%223.15%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.98%22%2F%3E%3Ccircle%20cx%3D%22100.33%22%20cy%3D%2212.03%22%20r%3D%223.06%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%22110.07%22%20cy%3D%2214.92%22%20r%3D%222.92%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.89%22%2F%3E%3Ccircle%20cx%3D%22119.8%22%20cy%3D%227.59%22%20r%3D%222.73%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%22129.53%22%20cy%3D%225.27%22%20r%3D%222.5%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%22139.27%22%20cy%3D%2212.78%22%20r%3D%222.2%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%22149.0%22%20cy%3D%2214.52%22%20r%3D%221.7%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.3%22%2F%3E%3C%2Fsvg%3E")}}}}
+:root[data-theme="dark"] .folha::after{{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20152%2020%27%20width%3D%27152%27%20height%3D%2720%27%3E%3Cpath%20d%3D%27M3.0%2C10.0%20L7.87%2C6.11%20L12.73%2C4.6%20L17.6%2C6.41%20L22.47%2C10.42%20L27.33%2C14.17%20L32.2%2C15.36%20L37.07%2C13.27%20L41.93%2C9.17%20L46.8%2C5.58%20L51.67%2C4.7%20L56.53%2C7.07%20L61.4%2C11.24%20L66.27%2C14.65%20L71.13%2C15.2%20L76.0%2C12.57%20L80.87%2C8.36%20L85.73%2C5.16%20L90.6%2C4.92%20L95.47%2C7.8%20L100.33%2C12.03%20L105.2%2C15.01%20L110.07%2C14.92%20L114.93%2C11.81%20L119.8%2C7.59%20L124.67%2C4.85%20L129.53%2C5.27%20L134.4%2C8.59%20L139.27%2C12.78%20L144.13%2C15.26%20L149.0%2C14.52%27%20fill%3D%27none%27%20stroke%3D%27%23D6A048%27%20stroke-width%3D%271%27%20opacity%3D%27.42%27%2F%3E%3Ccircle%20cx%3D%223.0%22%20cy%3D%2210.0%22%20r%3D%221.7%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.3%22%2F%3E%3Ccircle%20cx%3D%2212.73%22%20cy%3D%224.6%22%20r%3D%222.2%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%2222.47%22%20cy%3D%2210.42%22%20r%3D%222.5%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%2232.2%22%20cy%3D%2215.36%22%20r%3D%222.73%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%2241.93%22%20cy%3D%229.17%22%20r%3D%222.92%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.89%22%2F%3E%3Ccircle%20cx%3D%2251.67%22%20cy%3D%224.7%22%20r%3D%223.06%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%2261.4%22%20cy%3D%2211.24%22%20r%3D%223.15%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.98%22%2F%3E%3Ccircle%20cx%3D%2271.13%22%20cy%3D%2215.2%22%20r%3D%223.19%22%20fill%3D%22%23D6A048%22%20opacity%3D%221.0%22%2F%3E%3Ccircle%20cx%3D%2280.87%22%20cy%3D%228.36%22%20r%3D%223.19%22%20fill%3D%22%23D6A048%22%20opacity%3D%221.0%22%2F%3E%3Ccircle%20cx%3D%2290.6%22%20cy%3D%224.92%22%20r%3D%223.15%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.98%22%2F%3E%3Ccircle%20cx%3D%22100.33%22%20cy%3D%2212.03%22%20r%3D%223.06%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.94%22%2F%3E%3Ccircle%20cx%3D%22110.07%22%20cy%3D%2214.92%22%20r%3D%222.92%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.89%22%2F%3E%3Ccircle%20cx%3D%22119.8%22%20cy%3D%227.59%22%20r%3D%222.73%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.81%22%2F%3E%3Ccircle%20cx%3D%22129.53%22%20cy%3D%225.27%22%20r%3D%222.5%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.71%22%2F%3E%3Ccircle%20cx%3D%22139.27%22%20cy%3D%2212.78%22%20r%3D%222.2%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.57%22%2F%3E%3Ccircle%20cx%3D%22149.0%22%20cy%3D%2214.52%22%20r%3D%221.7%22%20fill%3D%22%23D6A048%22%20opacity%3D%220.3%22%2F%3E%3C%2Fsvg%3E")}}
+
+/* pódios (rankings temáticos) */
+.podios{{display:grid;grid-template-columns:repeat(auto-fit,minmax(390px,1fr));gap:1.1rem;margin:1.1rem 0}}
+.podio{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.9rem 1rem 1rem}}
+.podio h4{{margin:0 0 .55rem;font-size:1.06rem;color:var(--title-ink);letter-spacing:.02em}}
+.podio table{{width:100%;border-collapse:collapse;font-family:'Barlow',sans-serif;font-size:.86rem}}
+.podio th{{text-align:left;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--ink3);font-weight:700;border-bottom:1px solid var(--line);padding:0 .3rem .3rem}}
+.podio td{{padding:.3rem .3rem;border-bottom:1px solid var(--linesoft);vertical-align:baseline}}
+.podio tr:last-child td{{border-bottom:none}}
+.pd-n{{font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--gold);width:1.7rem;font-size:1rem}}
+.pd-p{{font-weight:600;color:var(--ink)}}
+.pd-as{{display:block;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:600}}
+.pd-v{{font-family:'JetBrains Mono',monospace;font-weight:700;text-align:right;white-space:nowrap;color:var(--accent-ink)}}
+.pd-x{{font-size:.74rem;color:var(--ink2);white-space:nowrap;text-align:right}}
+.pd-nota{{font-family:'Barlow',sans-serif;font-size:.76rem;color:var(--ink2);margin:.6rem 0 0;line-height:1.45}}
+@media (max-width:560px){{.pd-x{{display:none}}}}
+/* tabela de camadas de evidência */
+.fontes{{overflow-x:auto;margin:1rem 0}}
+.fontes table{{width:100%;min-width:640px;border-collapse:collapse;font-family:'Barlow',sans-serif;font-size:.85rem}}
+.fontes th{{background:var(--accent-soft);color:var(--accent-ink);text-align:left;padding:.5rem .6rem;
+ font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;border-bottom:1px solid var(--line)}}
+.fontes td{{padding:.45rem .6rem;border-bottom:1px solid var(--linesoft);vertical-align:top}}
+.fontes .med{{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent-ink);white-space:nowrap}}
+.fontes .out{{font-family:'JetBrains Mono',monospace;color:var(--warn);white-space:nowrap}}
+.fontes tr:nth-child(even) td{{background:color-mix(in srgb,var(--linesoft) 42%,transparent)}}
+.camadas{{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem;margin:1rem 0}}
+.camada{{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:3px;
+ background:var(--card);padding:.7rem .85rem}}
+.camada>b{{font-family:'Barlow Condensed',sans-serif;font-size:1.02rem;letter-spacing:.05em;
+ text-transform:uppercase;color:var(--title-ink);display:block}}
+.camada p{{margin:.25rem 0 0;font-family:'Barlow',sans-serif;font-size:.8rem;color:var(--ink2);line-height:1.45}}
+.camada.c2{{border-left-color:var(--gold)}} .camada.c3{{border-left-color:var(--fam-v)}}
+.camada.c4{{border-left-color:var(--fam-r)}}
+/* errata */
+.errata{{background:var(--gold-soft);border:1px solid var(--gold-2);border-radius:4px;padding:1rem 1.2rem;margin:1.2rem 0}}
+.errata h4{{margin:0 0 .5rem;color:var(--gold-ink);font-size:1.1rem;letter-spacing:.04em}}
+.errata ul{{margin:.3rem 0 0;padding-left:1.1rem;font-family:'Barlow',sans-serif;font-size:.87rem;line-height:1.6}}
+.errata li{{margin-bottom:.4rem}}
+.errata code{{font-family:'JetBrains Mono',monospace;font-size:.82em;background:var(--card);
+ padding:.05rem .3rem;border-radius:2px;border:1px solid var(--line)}}
+.de{{color:var(--flag);text-decoration:line-through}} .para{{color:var(--fam-v);font-weight:700}}
+/* equações */
+.eqs{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.85rem;margin:1rem 0}}
+.eq{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.85rem 1rem;text-align:center}}
+.eq .f{{font-family:'JetBrains Mono',monospace;font-size:1.16rem;font-weight:700;color:var(--accent-ink);display:block}}
+.eq .t{{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--gold-ink);display:block;margin-bottom:.3rem}}
+.eq p{{margin:.35rem 0 0;font-family:'Barlow',sans-serif;font-size:.79rem;color:var(--ink2);line-height:1.4}}
+/* modelos reológicos */
+.mods{{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.85rem;margin:1rem 0}}
+.mod{{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gold-2);
+ border-radius:3px;padding:.8rem .95rem}}
+.mod>b{{font-family:'Barlow Condensed',sans-serif;font-size:1.05rem;letter-spacing:.04em;
+ text-transform:uppercase;color:var(--title-ink);display:block;margin-bottom:.25rem}}
+.mod p{{margin:0;font-family:'Barlow',sans-serif;font-size:.82rem;color:var(--ink2);line-height:1.5}}
+/* etapas numeradas (química) */
+.etapas{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.85rem;margin:1rem 0}}
+.etapa{{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.85rem 1rem;position:relative}}
+.etapa .n{{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.9rem;color:#fff;
+ background:var(--accent);width:1.55rem;height:1.55rem;border-radius:50%;display:flex;
+ align-items:center;justify-content:center;margin-bottom:.45rem}}
+.etapa>b{{font-family:'Barlow Condensed',sans-serif;font-size:1.02rem;letter-spacing:.04em;
+ text-transform:uppercase;color:var(--title-ink);display:block;margin-bottom:.2rem}}
+.etapa p{{margin:0;font-family:'Barlow',sans-serif;font-size:.82rem;color:var(--ink2);line-height:1.5}}
+.etapa p b,.mod p b,.camada p b,.podio p b,.pd-nota b{{display:inline;font-family:inherit;font-size:inherit;letter-spacing:normal;text-transform:none;color:var(--ink);font-weight:700}}
+.etapa code{{font-family:'JetBrains Mono',monospace;font-size:.78em;color:var(--accent-ink)}}
 /* figuras e ilustrações com moldura dourada */
 .figura-img{{margin:1.4rem 0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.7rem}}
 .figura-img>img{{display:block;width:100%;height:auto;border:2px solid var(--gold-2)}}
@@ -765,6 +994,23 @@ figure.figura figcaption b{{color:var(--ink)}}
  .card,.sfcard,.rdemo,.qrbox,.figura-img,.gelcard,.gramc{{break-inside:avoid}} #tip{{display:none}}
  .capa-in{{-webkit-print-color-adjust:exact;print-color-adjust:exact}} .fambanner,.bx-head,.regtab th{{-webkit-print-color-adjust:exact;print-color-adjust:exact}} }}
 @media(max-width:30rem){{.vis{{flex-direction:column;align-items:flex-start}}}}
+
+/* ================= impressão: livro em página real ================= */
+@media print{{
+ @page{{size:210mm 280mm;margin:15mm 14mm 16mm}}
+ html,body{{background:#fff}}
+ main{{padding:0;background:#fff}}
+ .folha{{max-width:none;margin:0;border:none;box-shadow:none;padding:0 0 6mm;
+  break-after:page;page-break-after:always}}
+ .folha:last-child{{break-after:auto;page-break-after:auto}}
+ .folha::before{{display:none}}
+ .folha::after{{margin:8mm 0 0;padding-top:9mm;background-size:110px 15px}}
+ .cap-abre{{break-after:avoid;page-break-after:avoid}}
+ h2,h3,h4{{break-after:avoid;page-break-after:avoid}}
+ .box,.gelcard,.card,figure,table{{break-inside:avoid;page-break-inside:avoid}}
+ .capa{{break-after:page;page-break-after:always}}
+ a[href^="http"]::after{{content:""}}
+}}
 </style>
 <main>
 <header class="capa">
@@ -792,11 +1038,12 @@ figure.figura figcaption b{{color:var(--ink)}}
 <p class="qt" style="margin:1rem 0 .2rem">“Não existe o melhor preenchedor. Existe a propriedade reológica mais adequada para o comportamento que queremos produzir em cada região.”</p>
 </div>
 
-<section id="comoler">
-<p class="cap-eyebrow">Capítulo 1</p><h2>Como ler este guia</h2>
+<section class="folha" id="comoler">
+{cap_head('Capítulo 1','Como ler este guia')}
+{figura('1', ILU2['conc_mapa'], 'O <b>mapa geral da reologia do ácido hialurônico</b>: os cinco parâmetros que descrevem um gel injetado na face e o que cada extremo significa na clínica — <b>baixo G′</b> (flexibilidade e naturalidade), <b>alto G′</b> (suporte e projeção), <b>baixo swelling factor</b> (menor edema e maior previsibilidade), <b>alto tan δ</b> (maleabilidade e integração dinâmica) e <b>coesividade</b> (capacidade de se manter unido no tecido). Deste conjunto, este livro mede quatro; swelling factor e coesividade não foram medidos nesta rodada e aparecem sempre marcados com 💧.', 'mapa geral dos parâmetros reológicos do ácido hialurônico')}
 <div class="box">
 <p style="margin-top:0">Os preenchedores estão organizados nos <b>seis grupos oficiais do Mapa da Reologia</b>: <b style="color:var(--fam-a)">G1 Fluidos Dinâmicos</b> · <b style="color:var(--fam-a)">G2 Fluidos com Corpo</b> · <b style="color:var(--fam-m)">G3 Equilibrados</b> · <b style="color:var(--fam-r)">G4 Projetores Puros</b> · <b style="color:var(--fam-r)">G5 Estruturais Moldáveis</b> · <b style="color:var(--sf)">G6 Precisos (Baixo SF)</b>, o grupo funcional transversal. <i>“A primeira cor mostra quanto o gel estrutura. As demais cores mostram como essa estrutura se comporta.”</i></p>
-{figura('1', ILU['esquema'], 'O <b>Esquema de Descrição dos Ácidos Hialurônicos</b> — a leitura completa do perfil reológico em quatro passos: a 1ª cor (G′), a 2ª cor (comportamento), a assinatura resultante e a leitura clínica em três perguntas. Identidade oficial do Reology Map.')}
+{figura('2', ILU['esquema'], 'O <b>Esquema de Descrição dos Ácidos Hialurônicos</b> — a leitura completa do perfil reológico em quatro passos: a 1ª cor (G′), a 2ª cor (comportamento), a assinatura resultante e a leitura clínica em três perguntas. Identidade oficial do Reology Map.')}
 <h3 style="margin-top:1.2rem">A gramática das cores — 1ª cor, 2ª cor, assinatura</h3>
 <p style="margin-top:.2rem"><b>A 1ª cor mostra quanto o gel estrutura</b> (o G′):</p>
 <div class="gram">
@@ -823,8 +1070,66 @@ figure.figura figcaption b{{color:var(--ink)}}
 </div>
 </section>
 
-<section id="fundamentos">
-<p class="cap-eyebrow">Capítulo 2</p><h2>Os quatro números em 60 segundos</h2>
+<section class="folha" id="molecula">
+{cap_head('Capítulo 2','A molécula e a rede — de onde vem o G′',
+ 'Antes de qualquer número existe química. Três desenhos explicam por que um gel de ácido hialurônico resiste, escoa e um dia desaparece.')}
+<h3>2.1 &nbsp;A molécula: um dissacarídeo repetido milhares de vezes</h3>
+<p class="lead">O ácido hialurônico é um <b>glicosaminoglicano linear</b> formado pela repetição de uma única unidade dissacarídica: <b>ácido D-glicurônico</b> (GlcA, C<sub>6</sub>H<sub>10</sub>O<sub>7</sub>) e <b>N-acetil-D-glicosamina</b> (GlcNAc, C<sub>8</sub>H<sub>15</sub>NO<sub>6</sub>). As duas unidades se unem alternadamente por ligações <b>β(1→3)</b> e <b>β(1→4)</b>, e uma única cadeia pode conter de <b>2.000 a mais de 25.000</b> dessas unidades.</p>
+{figura('3', ILU2['conc_molecula'], 'Arquitetura molecular do ácido hialurônico: as duas unidades monossacarídicas em projeção de Haworth e modelo tridimensional, com as ligações glicosídicas alternadas β(1→3) e β(1→4). Os grupos que aparecem na cadeia — carboxila (COO<sup>−</sup>), hidroxila (OH) e acetamido (NH-COCH<sub>3</sub>) — são os que dão ao HA sua avidez por água e, no passo seguinte, os pontos onde a reticulação acontece.', 'estrutura molecular do ácido hialurônico')}
+<div class="box"><p style="margin:0"><b>O que distingue o HA dos outros glicosaminoglicanos:</b> ele <b>não possui grupamentos sulfatados</b> e <b>não está ligado covalentemente a proteínas</b>. É por isso que o HA nativo é solúvel, altamente hidratado e rapidamente degradado — e é justamente por isso que, para virar preenchedor, ele precisa ser <b>reticulado</b>.</p></div>
+
+{filete('cadeia', 160)}
+<h3>2.2 &nbsp;Da solução ao hidrogel: a reticulação</h3>
+<p class="lead">Uma solução de HA não sustenta nada: as cadeias deslizam livremente umas sobre as outras. O que transforma solução em <b>gel</b> é a criação de pontes covalentes entre cadeias — a reticulação. Este é o passo que faz nascer o G′.</p>
+<div class="etapas">
+<div class="etapa"><div class="n">1</div><b>Solução de HA</b><p>Cadeias lineares de ácido hialurônico dispersas em solução aquosa, sem ligação entre si.</p></div>
+<div class="etapa"><div class="n">2</div><b>Agente reticulante</b><p>Molécula com grupos reativos nas duas pontas. O mais usado é o <b>BDDE</b> — <code>1,4-butanodiol diglicidil éter</code> —, cujos grupos epóxi são os sítios reativos.</p></div>
+<div class="etapa"><div class="n">3</div><b>Reação de reticulação</b><p>Os grupos epóxi reagem com as <b>hidroxilas (−OH)</b> das cadeias de HA formando <b>ligações éter covalentes</b>, estáveis.</p></div>
+<div class="etapa"><div class="n">4</div><b>Rede tridimensional</b><p>Múltiplas ligações cruzadas formam uma rede 3D que <b>aprisiona grande quantidade de água</b>. É esse conjunto — rede + água — que chamamos de hidrogel.</p></div>
+</div>
+{figura('4', ILU2['conc_hidrogel'], 'Formação do hidrogel de ácido hialurônico em quatro etapas: solução, agente reticulante (BDDE), reação com as hidroxilas formando ligações éter e a rede tridimensional que retém água. O detalhe mostra a ligação éter no ponto de reticulação. <b>É deste desenho que vem o ornamento das cadeias em contas usado nos rodapés deste livro</b> — a identidade visual do Reology Map nasce da própria molécula.', 'formação do hidrogel de ácido hialurônico por reticulação')}
+<p><b>Reticulantes descritos na literatura:</b> BDDE (1,4-butanodiol diglicidil éter) · DVS (divinil sulfona) · EGDE (etilenoglicol diglicidil éter) · PEGDGE (polietilenoglicol diglicidil éter).</p>
+<div class="box"><p style="margin-top:0"><b>O grau de reticulação governa três propriedades ao mesmo tempo</b> — e é aqui que a química encontra a reologia:</p>
+<div class="g33 passos" style="margin-top:.6rem">
+<div class="box passo"><b style="color:var(--fam-a)">Baixo grau de reticulação</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Gel mais macio · maior inchamento · degradação mais rápida.</p></div>
+<div class="box passo"><b style="color:var(--fam-r)">Alto grau de reticulação</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Gel mais firme · menor inchamento · degradação mais lenta.</p></div>
+<div class="box passo"><b style="color:var(--gold-ink)">O que isso mede</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Firmeza é <b>G′</b>. Inchamento é <b>swelling factor</b> — que este estudo <b>não mediu</b> (💧).</p></div>
+</div></div>
+<p class="qt">Cuidado com o atalho: a reticulação <i>explica</i> o G′, mas a <b>tecnologia declarada não prevê a faixa de G′</b>. No banco deste livro, DVS não significa alto G′ e NASHA não significa alto G′. A química é a causa; o reômetro é a medida.</p>
+
+{filete('cadeia', 160)}
+<h3>2.3 &nbsp;A rede desfeita: hialuronidase</h3>
+<p class="lead">A mesma ligação que constrói a cadeia é a que permite desfazê-la. A <b>hialuronidase</b> cliva especificamente a ligação <b>β(1→4)</b> entre o GlcA e a GlcNAc — e só essa. É a base bioquímica da reversão de um preenchimento.</p>
+{figura('5', ILU2['conc_hialuron'], 'Degradação do gel de ácido hialurônico pela hialuronidase: o sítio de clivagem na ligação β(1→4), o mecanismo catalítico em quatro passos (reconhecimento, posicionamento da água no sítio ativo, clivagem hidrolítica e liberação dos oligossacarídeos) e o efeito progressivo sobre o gel.', 'ação da hialuronidase sobre o gel de ácido hialurônico')}
+<div class="etapas">
+<div class="etapa"><div class="n">1</div><b>Gel íntegro</b><p>Alta viscosidade · rede tridimensional estável · capacidade plena de sustentação.</p></div>
+<div class="etapa"><div class="n">2</div><b>Degradação parcial</b><p>Viscosidade reduzida · perda parcial da sustentação · formação de cadeias menores.</p></div>
+<div class="etapa"><div class="n">3</div><b>Degradação completa</b><p>Solução fluida · perda total da estrutura de gel · eliminação natural dos fragmentos.</p></div>
+</div>
+<div class="box"><p style="margin:0"><b>Condições de atividade:</b> a enzima tem atividade ótima em <b>pH 5,0–7,0</b> e à <b>temperatura corporal (37&nbsp;°C)</b>, e é <b>específica</b> para a ligação β(1→4) entre GlcA e GlcNAc. <b>Honestidade de fonte:</b> este capítulo é química de literatura — o estudo reológico deste livro <b>não mediu degradação enzimática</b> de nenhum produto. Nenhum número de resistência à hialuronidase é atribuído aqui a nenhum gel.</p></div>
+</section>
+
+<section class="folha" id="viscoelast">
+{cap_head('Capítulo 3','Por que o gel é viscoelástico',
+ 'Um preenchedor não é sólido nem líquido: é os dois ao mesmo tempo. Entender isso é entender por que existem G′, G″ e tan δ — e por que a frequência muda o resultado.')}
+<div class="eqs">
+<div class="eq"><span class="t">Material elástico</span><span class="f">F = k · x</span><p>A <b>mola</b>. Deforma sob força e <b>retorna inteiramente</b> à forma original quando a força cessa. A deformação é proporcional à força (Lei de Hooke).</p></div>
+<div class="eq"><span class="t">Material viscoso</span><span class="f">τ = η · γ̇</span><p>O <b>mel</b>. <b>Escoa</b> sob tensão e não retorna. A tensão de cisalhamento é proporcional à taxa de deformação; η é a viscosidade.</p></div>
+<div class="eq"><span class="t">Hidrogel</span><span class="f">G* = G′ + iG″</span><p>O <b>gel de ácido hialurônico</b>. Deforma, escoa lentamente até um platô e <b>recupera parte</b> da deformação — nunca toda.</p></div>
+</div>
+{figura('6', ILU2['conc_viscoel'], 'Viscoelasticidade da base ao gel: elasticidade (mola, Lei de Hooke), viscosidade (mel, τ = η·γ̇), a distinção entre fluido e sólido elástico sob tensão constante, o hidrogel como caso intermediário e os três modelos reológicos clássicos — Maxwell, Kelvin-Voigt e Burgers — aplicados aos preenchedores.', 'capítulo de viscoelasticidade: elasticidade, viscosidade e modelos reológicos')}
+<h3>Os três modelos clássicos</h3>
+<div class="mods">
+<div class="mod"><b>Maxwell</b><p>Mola e amortecedor <b>em série</b>. Responde instantaneamente e depois escoa sem limite. Descreve bem a <b>relaxação</b> de tensão.</p></div>
+<div class="mod"><b>Kelvin-Voigt</b><p>Mola e amortecedor <b>em paralelo</b>. Deforma progressivamente até um platô e recupera. Descreve bem a <b>fluência</b> (creep).</p></div>
+<div class="mod"><b>Burgers</b><p>Combinação dos dois. É o que mais se aproxima do comportamento real de um hidrogel de HA: deformação instantânea, fluência e recuperação parcial.</p></div>
+</div>
+<div class="box"><p style="margin-top:0"><b>É daqui que saem os quatro números do capítulo seguinte.</b> Num ensaio oscilatório, a resposta do gel se decompõe em duas partes: a que está <b>em fase</b> com a deformação — a energia armazenada e devolvida, <b>G′</b> — e a que está <b>defasada em 90°</b> — a energia dissipada como escoamento, <b>G″</b>. A razão entre elas, <b>tan δ = G″/G′</b>, diz qual dos dois comportamentos domina.</p>
+<p style="margin-bottom:0">E como o gel é viscoelástico, <b>a resposta depende da velocidade da solicitação</b>. Não existe “o G′ do produto”: existe o G′ àquela frequência. Por isso todo este livro é lido a <b>0,7 Hz</b> — a frequência da mímica habitual — e por isso o mesmo Belotero Balance aparece com G′ 78 Pa e tan δ 0,90 a 10 Hz, 34 Pa e 0,69 a 0,7 Hz, e vira praticamente líquido a 0,01 Hz.</p></div>
+</section>
+
+<section class="folha" id="fundamentos">
+{cap_head('Capítulo 4','Os quatro números em 60 segundos')}
 <div class="fund">
 <div class="box"><b class="t">G′ — módulo elástico</b><p>A “mola”: energia devolvida. Sustentação, projeção, manutenção de forma. No banco: 33,6 a 935,9 Pa.</p></div>
 <div class="box"><b class="t">G″ — módulo viscoso</b><p>O “amortecedor”: energia dissipada. Acomodação ao movimento. Ler sempre em relação ao G′.</p></div>
@@ -858,18 +1163,18 @@ figure.figura figcaption b{{color:var(--ink)}}
 <p class="qt">Sequência decisória: <b>ANATOMIA → DEFEITO → OBJETIVO → PLANO → PRODUTO → VOLUME → TÉCNICA</b>. O produto é a 5ª decisão — e “RESULTADO = PRODUTO × VOLUME × PLANO × TÉCNICA × TECIDO”.</p>
 </section>
 
-<section id="mapasec">
-<p class="cap-eyebrow">Capítulo 3</p><h2>O Mapa da Reologia — todos os géis em um plano</h2>
+<section class="folha" id="mapasec">
+{cap_head('Capítulo 5','O Mapa da Reologia — todos os géis em um plano')}
 <p class="lead">Cada ponto é um ensaio (0,7&nbsp;Hz). As faixas coloridas são as três famílias da 1ª cor (cortes 200 e 300&nbsp;Pa); a altura é o caráter dinâmico (tan δ). Passe o mouse/toque para identificar.</p>
 {scatter_main()}
 {LEG3}
 <p class="lead" style="font-size:.9rem">Achados: apenas <b>2 dos 76 ensaios</b> são “roxo completo” (grupo 4); os pares sobrepostos (Volift=Voluma, Belotero Volume+=Neauvia Intense, Stimulate=Singderm) estão em re-verificação; famílias comerciais inteiras vivem numa mesma zona — a cor classifica, o número posiciona.</p>
 <figure class="figura">{FACE_GEO}
-<figcaption><b>Figura 2.</b> As cinco tarefas geométricas do preenchimento sobre a face: <b>LINHA</b> (microdepressão superficial — perioral), <b>VALE</b> (depressão — sulco nasolabial, pré-jowl), <b>CURVA</b> (convexidade difusa — malar/bochecha), <b>SUPORTE</b> (sustentação profunda — fossa piriforme, supraperiostal) e <b>VÉRTICE</b> (projeção focal — mento, ângulo, zigoma). A cor de cada ponto indica a família de G′ tipicamente exigida: <span style="color:var(--fam-a)"><b>azul</b></span> baixo, <span style="color:var(--fam-m)"><b>amarelo</b></span> intermediário, <span style="color:var(--fam-r)"><b>roxo</b></span> alto. O gel é escolhido para a tarefa, não para a região inteira.</figcaption></figure>
+<figcaption><b>Figura 7.</b> As cinco tarefas geométricas do preenchimento sobre a face: <b>LINHA</b> (microdepressão superficial — perioral), <b>VALE</b> (depressão — sulco nasolabial, pré-jowl), <b>CURVA</b> (convexidade difusa — malar/bochecha), <b>SUPORTE</b> (sustentação profunda — fossa piriforme, supraperiostal) e <b>VÉRTICE</b> (projeção focal — mento, ângulo, zigoma). A cor de cada ponto indica a família de G′ tipicamente exigida: <span style="color:var(--fam-a)"><b>azul</b></span> baixo, <span style="color:var(--fam-m)"><b>amarelo</b></span> intermediário, <span style="color:var(--fam-r)"><b>roxo</b></span> alto. O gel é escolhido para a tarefa, não para a região inteira.</figcaption></figure>
 </section>
 
-<section id="forma">
-<p class="cap-eyebrow">Capítulo 4</p><h2>A forma do gel — o radar de 4 eixos</h2>
+<section class="folha" id="forma">
+{cap_head('Capítulo 6','A forma do gel — o radar de 4 eixos')}
 <p class="lead">Cada produto tem uma <b>forma geométrica</b> construída com as 4 características medidas: <b>G′</b> (cima), <b>G″</b> (direita), <b>tan δ</b> (baixo) e <b>η*</b> (esquerda), em percentil do banco a 0,7 Hz. A forma é a impressão digital reológica do gel.</p>
 <div class="rdemos">
 {radar_demo('Belotero Balance Lido','Pipa para BAIXO: tan δ domina — gel dissipativo, espalha e acompanha.')}
@@ -880,8 +1185,8 @@ figure.figura figcaption b{{color:var(--ink)}}
 <p class="lead" style="font-size:.92rem">Como ler: <b>seta para cima-esquerda</b> = estrutura e permanência · <b>pipa para baixo</b> = integração e movimento · <b>losango largo</b> = magnitude com equilíbrio viscoelástico · <b>forma pequena</b> = gel leve em todas as dimensões.</p>
 </section>
 
-<section id="textura">
-<p class="cap-eyebrow">Capítulo 5</p><h2>Textura visual do gel — o que os olhos antecipam</h2>
+<section class="folha" id="textura">
+{cap_head('Capítulo 7','Textura visual do gel — o que os olhos antecipam')}
 <p class="lead">Antes do reômetro, o gel já conta parte da história ao ser extrudado: existe um padrão visual nos tipos de géis. Uns escorrem <b>em gota</b>; outros vertem densos, <b>como mel</b>; outros saem <b>rígidos</b>, em cordão que se quebra — o aspecto <b>fraturado</b>. Além do escoamento, observa-se a aparência: gel <b>translúcido</b> e contínuo ou opalescente e particulado.</p>
 <div class="gelrow">
 <div class="gelcard">{GEL['gota']}<h4>Em gota — fluido</h4><p class="gelsub">TÍPICO DOS GRUPOS 1–2</p><p>Escorre e se espalha; vence a própria forma. Antecipa integração alta e baixo relevo.</p></div>
@@ -895,8 +1200,8 @@ figure.figura figcaption b{{color:var(--ink)}}
  ilus=ILU['g1b'], ilus_cap='Da textura ao número: o grupo mais fluido do banco e seus valores medidos.')}
 </section>
 
-<section id="atlas">
-<p class="cap-eyebrow">Capítulo 6 (gráficos) · Capítulos 7–11 (grupos)</p><h2>Atlas de gráficos — todas as variáveis</h2>
+<section class="folha" id="atlas">
+{cap_head('Capítulo 8 (gráficos) · Capítulos 9–14 (grupos)','Atlas de gráficos — todas as variáveis')}
 <h3>G″ × G′ — a dissipação em magnitude (tan δ vira inclinação)</h3>
 <p class="lead">Nas escalas log, as retas tracejadas são valores constantes de tan δ: produtos sobre a mesma reta têm a mesma <i>proporção</i> dissipativa, ainda que magnitudes muito diferentes.</p>
 {scatter_gg()}
@@ -910,31 +1215,114 @@ figure.figura figcaption b{{color:var(--ink)}}
 {''.join(fam_secs)}
 {sf_sec}
 
-<section id="rankings">
-<p class="cap-eyebrow">Capítulo 12</p><h2>Rankings completos — os 76 ensaios lado a lado</h2>
+<section class="folha" id="rankings">
+{cap_head('Capítulo 15','Rankings completos — os 76 ensaios lado a lado')}
 <h3>G′ a 0,7 Hz (Pa) — a espinha estrutural do banco</h3>
 {ranking('g1','G′ a 0,7 Hz (Pa)',960,br0,(0,200,300,500,750))}
 <h3>tan δ a 0,7 Hz — o eixo do movimento</h3>
 {ranking('td','tan δ a 0,7 Hz',0.72,lambda v: br(v,2),(0,0.15,0.30,0.50,0.70))}
+
+{filete('cadeia', 160)}
+<h3>Rankings temáticos — recalculados sobre os 76 ensaios</h3>
+<p class="lead">Os quatro recortes que mais se pedem na prática, gerados <b>direto do banco canônico</b> e não de tabelas transcritas. Vale registrar o motivo: versões anteriores destes rankings circularam construídas sobre um subconjunto de 42 produtos, e a composição muda quando se olha o banco inteiro — o menor G′ do estudo não é o Up Fine e sim o <b>Belotero Balance</b>, e o segundo maior não é o Lyft e sim o <b>Hyafilia V Plus</b>. Os números eram certos; a lista estava incompleta.</p>
+<div class="podios">
+{podio(top('g1', 10, True), 'g1', 'Os 10 maiores G′', 'Maior capacidade de manter forma sob carga. Não confundir com volumização, lifting ou segurança vascular.')}
+{podio(top('g1', 10, False), 'g1', 'Os 10 menores G′', 'Maior integração e menor relevo próprio. Baixo G′ <b>não</b> implica baixo swelling factor — são propriedades independentes, e o SF não foi medido (💧).')}
+{podio(top('td', 10, True), 'td', 'Os 10 maiores tan δ', 'Componente viscosa relativa dominante: o gel acompanha o movimento e se distribui. tan δ é uma <b>razão</b>, não uma força — um tan δ alto num gel de G′ baixo não é o mesmo gel de um tan δ alto num G′ alto.')}
+{podio(top('td', 10, True, filtro=lambda r: r['G1_0.7Hz'] and r['G1_0.7Hz'] >= 300), 'td', 'Alto G′ (≥ 300 Pa) com maior tan δ', 'O recorte mais útil e o mais mal transcrito: estrutura <b>com</b> componente dinâmica preservada — sustenta sem endurecer o movimento.')}
+</div>
+<div class="box"><p style="margin:0"><b>Filtro clássico, refeito:</b> o critério “G′ ≥ 200 Pa <b>e</b> tan δ ≥ 0,21” devolve <b>10 ensaios</b> no banco completo, não 7: além de Neauvia Stimulate, Singderm, Restylane Lido, Belotero Volume +, Neauvia Intense, e.p.t.q S 300 e Up Max, entram <b>Restylane Lido (lote 27003)</b>, <b>Restylane Skinbooster</b> e <b>Hyafilia S Plus</b>.</p></div>
 </section>
 
-<section id="regioes">
-<p class="cap-eyebrow">Capítulo 13</p><h2>Guia rápido por região</h2>
+<section class="folha" id="fontes">
+{cap_head('Capítulo 16','Quando as fontes discordam',
+ 'O mesmo produto, medido por dois laboratórios, devolve dois números — e os dois podem estar certos. Este capítulo mostra o tamanho real dessa diferença e a regra que impede que ela contamine o livro.')}
+<h3>15.1 &nbsp;As quatro camadas de evidência</h3>
+<p class="lead">Todo dado deste guia carrega, explicitamente, de onde veio. Não é formalidade: é o que separa uma medida de uma impressão.</p>
+<div class="camadas">
+<div class="camada"><b>1 · Medido</b><p>Laudo do estudo, com lote identificado, a 0,7 Hz. É a única camada que gera cor, grupo, assinatura e ranking neste livro.</p></div>
+<div class="camada c2"><b>2 · Fabricante *</b><p>Valor declarado em monografia, bula ou material técnico. Sempre marcado com asterisco e nunca comparado lado a lado com a camada 1.</p></div>
+<div class="camada c3"><b>3 · Literatura</b><p>Dado publicado por terceiros, citado como tal. Útil para contexto histórico e para entender divergências — não para classificar.</p></div>
+<div class="camada c4"><b>4 · Interpretação</b><p>A leitura clínica do autor sobre o número medido. É opinião fundamentada, declarada como opinião.</p></div>
+</div>
+<p><b>E a quinta possibilidade, que não é camada nenhuma:</b> o dado ausente. Swelling factor, coesividade quantitativa, força de extrusão e Strain X <b>não foram medidos</b> nesta rodada e aparecem marcados com 💧. Dado ausente é informação — nunca se deduz um deles a partir de outro.</p>
+
+{filete('cadeia', 160)}
+<h3>15.2 &nbsp;O tamanho real da divergência</h3>
+<p class="lead">Nove produtos deste banco também têm valores publicados por outras fontes. Abaixo, os dois números lado a lado. A coluna da esquerda é o que este estudo mediu; a da direita, o que a outra fonte relata.</p>
+<div class="fontes"><table>
+<thead><tr><th>Produto</th><th>Este estudo · 0,7 Hz</th><th>Outra fonte</th><th>Camada e origem</th></tr></thead>
+<tbody>{_ROWS_FONTES}</tbody></table></div>
+<div class="box"><p style="margin-top:0"><b>Por que os números diferem — e por que isso não é erro de ninguém:</b></p>
+<ul class="anti" style="margin-bottom:.4rem">
+<li><b>Reômetro e geometria diferentes.</b> Este estudo: TA Instruments AR-1500ex, placas Ø 20 mm, gap 500 µm. A fonte do fabricante da linha e.p.t.q: Anton Paar MCR302, placa-placa 25 mm, gap 1.000 µm.</li>
+<li><b>Frequência diferente.</b> O dado do fabricante é reportado a 0,1 Hz; este livro lê a 0,7 Hz. Num material viscoelástico, mudar a frequência muda o número por definição — não por imprecisão.</li>
+<li><b>Desenho de estudo diferente.</b> O comparativo da linha Yvoire mede também tamanho de partícula (693 ± 344 a 1.258 ± 742) e força de injeção (9,8 a 19 N): é outro experimento, com outro objetivo.</li>
+<li><b>Lote e geração de produto diferentes.</b> Comparar um lote de hoje com um dado de anos atrás compara também duas formulações.</li>
+</ul>
+<p style="margin-bottom:0"><b>A prova de que é protocolo e não desvio sistemático:</b> a divergência não tem direção única. Para a linha e.p.t.q, a outra fonte é <b>menor</b> em G′. Para a linha Belotero, é <b>maior</b>. Para a linha Yvoire, é menor em G′ e <b>muito maior</b> em tan δ. Se houvesse um erro de calibração de um lado, o desvio andaria sempre para o mesmo lado.</p></div>
+<p class="qt">A regra operacional deste livro: <b>comparabilidade é interna ao protocolo</b>. Números de fontes diferentes nunca entram na mesma tabela, no mesmo gráfico ou no mesmo ranking — nem quando isso deixaria a lista mais completa.</p>
+
+{filete('cadeia', 160)}
+<h3>15.3 &nbsp;Nome comercial não é reologia: o caso Perfectha</h3>
+<p class="lead">A linha Perfectha é apresentada como uma escada crescente de suporte: <b>Finelines → Derm → Deep → Subskin</b>, do refinamento superficial à sustentação estrutural. É uma narrativa clara, coerente e — na medida de G′ — invertida.</p>
+<div class="podios"><div class="podio"><h4>O que a escada comercial promete × o que o reômetro mediu</h4>
+<table><thead><tr><th></th><th>Produto</th><th>G′ medido (Pa)</th><th>Posição na escada</th></tr></thead><tbody>
+<tr><td class="pd-n">1</td><td class="pd-p">Perfectha Derm</td><td class="pd-v">440,68</td><td class="pd-x">2º de 4 · <b>maior G′</b></td></tr>
+<tr><td class="pd-n">2</td><td class="pd-p">Perfectha Deep</td><td class="pd-v">386,46</td><td class="pd-x">3º de 4</td></tr>
+<tr><td class="pd-n">3</td><td class="pd-p">Perfectha Subskin</td><td class="pd-v">343,00</td><td class="pd-x">4º de 4 · <b>menor G′</b></td></tr>
+</tbody></table>
+<p class="pd-nota">O produto vendido como o mais estrutural da linha é o que tem <b>menor</b> módulo elástico dos três medidos. Isso não desqualifica o Subskin: ele pode ser o mais indicado para volumização profunda por coesividade, comportamento de bolus ou tolerância a grandes volumes — propriedades que este estudo <b>não mediu</b>. O que a medida desautoriza é a inferência de que “mais profundo no nome” significa “maior G′”.</p></div></div>
+<p>É o mesmo fenômeno já registrado no capítulo 4 com o Hyafilia Soft (284 Pa — “soft não é azul”) e com a linha Hyafilia inteira a 20 mg/mL variando de 284 a 841 Pa. <b>O nome descreve a intenção comercial; o número descreve o gel.</b></p>
+
+{filete('cadeia', 160)}
+<h3>15.4 &nbsp;Reconciliação de nomes</h3>
+<p class="lead">Materiais anteriores usam denominações que não batem com as do banco. Nenhuma delas é erro — são gerações, mercados e traduções diferentes. Registrar a correspondência evita que o mesmo gel seja contado duas vezes.</p>
+<div class="fontes"><table>
+<thead><tr><th>Nome em outros materiais</th><th>Nome canônico neste livro</th><th>Observação</th></tr></thead><tbody>
+<tr><td>Yvoire Classic / Volume / Contour</td><td><b>Yvoire Classic+ · Volume+ · Contour+</b></td><td>A geração “+” é a medida neste estudo; os valores da geração anterior circulam na literatura.</td></tr>
+<tr><td>Juvéderm Volite</td><td><b>Juvéderm Skinvive</b></td><td>Mesma proposta de skin quality, denominação distinta por mercado.</td></tr>
+<tr><td>Milimetric Fino / Moderado / Profundo</td><td><b>Milimetric PRO Leve · Moderado · Intenso</b></td><td>Correspondência por posição na linha.</td></tr>
+<tr><td>EVO Fine / Deep / Contour</td><td><b>Evofill Derm · Evofill Ultra Deep</b></td><td>Apenas dois ensaios desta marca entraram no banco; a linha comercial é maior.</td></tr>
+<tr><td>Finafill</td><td><b>Finahfil Intense</b></td><td>Grafia divergente do mesmo produto.</td></tr>
+<tr><td>Belotero Soft · Perlane · Rennova Ultradeep</td><td><b>—</b></td><td>Citados em materiais anteriores, <b>não presentes</b> neste banco: nenhum valor lhes é atribuído aqui.</td></tr>
+</tbody></table></div>
+
+{filete('cadeia', 160)}
+<h3>15.5 &nbsp;Errata desta edição</h3>
+<p class="lead">Esta edição corrige três valores que circularam em materiais anteriores do próprio autor. Em todos os casos o banco de laudo está certo e a transcrição estava errada — e em todos os três a própria tabela de origem contém a prova da correção.</p>
+<div class="errata">
+<h4>Três correções, com a demonstração de cada uma</h4>
+<ul>
+<li><b>e.p.t.q S 500 — tan δ:</b> <span class="de">0,23</span> → <span class="para">0,19</span>.<br>
+Recálculo direto: <code>G″/G′ = 67,30 / 355,13 = 0,1895</code>. O valor 0,23 é o tan δ do <b>S 300</b>, repetido uma linha abaixo.</li>
+<li><b>Perfectha Subskin — tan δ:</b> <span class="de">0,20</span> → <span class="para">0,15</span>.<br>
+Recálculo direto: <code>52,00 / 343,00 = 0,1516</code>. Esta correção já vinha sinalizada com ⚑ nas fichas e agora está consolidada.</li>
+<li><b>Saypha Filler — G″:</b> <span class="de">39,36 Pa</span> → <span class="para">33,52 Pa</span>.<br>
+O valor 39,36 é o G″ do <b>Revanesse Ultra +</b>, linha vizinha na tabela de origem. A prova está na própria tabela: ela imprime tan δ 0,24 para o Saypha Filler, e <code>33,52 / 142,61 = 0,235</code> fecha em 0,24 — <code>39,36 / 142,61 = 0,276</code> não fecha.</li>
+</ul>
+</div>
+<div class="box"><p style="margin-top:0"><b>Correção de escopo, não de valor — os rankings.</b> As listas de maiores e menores G′ publicadas anteriormente traziam <b>valores corretos sobre um universo incompleto</b>: foram construídas quando o banco tinha 42 produtos. Sobre os 76 ensaios atuais, a composição muda — entram Belotero Balance (o menor G′ do estudo), Milimetric PRO Leve, Rennova Fill Fine Lines, Restylane Refyne e Juvéderm Skinvive entre os menores; e Hyafilia V Plus, Restylane Lido lote 27003, Juvéderm Volux, Restylane Skinbooster e Hyafilia M Plus entre os maiores. O mesmo vale para o filtro “G′ ≥ 200 e tan δ ≥ 0,21”, que passa de 7 para 10 ensaios.</p>
+<p style="margin-bottom:0"><b>Como conferir qualquer número deste livro:</b> todos os valores são gerados diretamente de <code>data/reologia_produtos_full.json</code> — o banco canônico versionado — e não de tabelas redigitadas. Nenhum número deste guia foi transcrito à mão de uma imagem.</p></div>
+</section>
+
+<section class="folha" id="regioes">
+{cap_head('Capítulo 17','Guia rápido por região')}
 <p class="lead">Síntese do mapeamento região → necessidade reológica → produtos citados nas monografias. Uma região pode pertencer a mais de um grupo conforme o objetivo (corpo do mento ≠ vértice do mento).</p>
 <div class="regtab"><table><thead><tr><th>Região</th><th>Necessidade</th><th>Produtos (1ª escolha / fortes)</th><th>Observação</th></tr></thead><tbody>{reg_rows}</tbody></table></div>
 </section>
 
-<section id="indice">
-<p class="cap-eyebrow">Apêndice A</p><h2>Índice por marca</h2>
+<section class="folha" id="indice">
+{cap_head('Apêndice A','Índice por marca')}
 <div class="ix">{idx}</div>
 </section>
 
-<section id="notas">
-<p class="cap-eyebrow">Apêndice B</p><h2>Fontes, limitações e aviso</h2>
+<section class="folha" id="notas">
+{cap_head('Apêndice B','Fontes, limitações e aviso')}
 <div class="box">
 <p style="margin-top:0"><b>Fonte dos números:</b> Estudo Reológico Pithon Napoli — laudo laboratorial independente, assinado, de 04/08/2026 (Anexo 2, 0,7 Hz), com lote identificado em cada ficha; 76 ensaios e 75 produtos canônicos (Restylane Lido em dois lotes, modelado como um produto com dois ensaios). Reômetro rotacional TA Instruments AR-1500ex, 25 °C, placas paralelas Ø 20 mm, gap 500 µm, varredura 10 → 0,01 Hz. Comparabilidade é <b>interna ao protocolo</b>; 25 °C in vitro ≠ comportamento in vivo. O radar usa <b>percentil do banco</b>, não valor absoluto. As cores seguem a gramática oficial do Mapa, com zonas de transição e curadoria versionada.</p>
 <p><b>Não medidos nesta rodada</b> (prioridade da 2ª rodada): coesividade quantitativa, Swelling Factor, força de extrusão, Strain X/amplitude, compressão. Onde citados, são dados declarados pelo fabricante (*) ou impressão clínica do autor — dado ausente é informação, nunca inferência.</p>
-<p><b>Fichas com ⚑</b> aguardam errata/re-verificação laboratorial (pares idênticos, η* divergentes, tan δ do Perfectha Subskin corrigido por recálculo). <b>Fichas com ◌</b> aguardam a monografia do autor.</p>
+<p><b>Auditoria desta edição:</b> os infográficos e tabelas anteriores do autor foram conferidos valor por valor contra o banco canônico antes de qualquer conteúdo novo entrar no livro. A tabela-mestra a 0,7 Hz conferiu em 39 dos 42 produtos; as três divergências, sua demonstração e a correção de escopo dos rankings estão no <b>capítulo 16</b>. Rankings construídos sobre universo incompleto foram refeitos a partir dos 76 ensaios. <b>Fichas com ⚑</b> aguardam errata/re-verificação laboratorial (pares idênticos, η* divergentes, tan δ do Perfectha Subskin corrigido por recálculo). <b>Fichas com ◌</b> aguardam a monografia do autor.</p>
 <p style="margin-bottom:0"><b>Aviso:</b> material educacional para profissionais habilitados; não substitui julgamento clínico, bula/IFU nem treinamento anatômico. Indicações refletem a experiência e a leitura reológica do autor sobre lotes específicos; os fabricantes não participaram nem endossam o estudo. Marcas citadas pertencem aos respectivos titulares.</p>
 </div>
 {box_qr('Continue com o autor — aulas e atualizações',
