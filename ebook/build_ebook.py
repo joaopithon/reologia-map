@@ -312,8 +312,8 @@ def box_qr(titulo, texto, qr, url, kind='pratica', ilus=None, ilus_cap=''):
 def box_pratica(titulo, texto, qr, url, ilus=None, ilus_cap=''):
     return box_qr(titulo, texto, qr, url, 'pratica', ilus, ilus_cap)
 
-def figura(num, ilus, legenda, alt=''):
-    return (f'<figure class="figura-img"><img src="{ilus}" alt="{html.escape(alt or legenda[:80])}" loading="lazy">'
+def figura(num, ilus, legenda, alt='', cls=''):
+    return (f'<figure class="figura-img {cls}"><img src="{ilus}" alt="{html.escape(alt or legenda[:80])}" loading="lazy">'
             f'<figcaption><b>Figura {num}.</b> {legenda}</figcaption></figure>')
 
 # ---------------- card ----------------
@@ -786,6 +786,8 @@ main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg)
 .figura-img>img{{display:block;width:100%;height:auto;border:2px solid var(--gold-2)}}
 .figura-img figcaption{{font-family:'Barlow',sans-serif;font-size:.86rem;color:var(--ink2);padding:.7rem .3rem .1rem;line-height:1.5}}
 .figura-img figcaption b{{color:var(--gold-ink);font-weight:700}}
+.figura-img.sci>img{{background:#FBF9F6;padding:.5rem;border:2px solid var(--gold-2);border-radius:2px}}
+.figura-img.sci{{background:var(--card)}}
 .iludupla{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1rem}}
 .iludupla .figura-img{{margin:0}}
 /* box QR no padrão do autor */
@@ -1040,7 +1042,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 
 <section class="folha" id="comoler">
 {cap_head('Capítulo 1','Como ler este guia')}
-{figura('1', ILU2['conc_mapa'], 'O <b>mapa geral da reologia do ácido hialurônico</b>: os cinco parâmetros que descrevem um gel injetado na face e o que cada extremo significa na clínica — <b>baixo G′</b> (flexibilidade e naturalidade), <b>alto G′</b> (suporte e projeção), <b>baixo swelling factor</b> (menor edema e maior previsibilidade), <b>alto tan δ</b> (maleabilidade e integração dinâmica) e <b>coesividade</b> (capacidade de se manter unido no tecido). Deste conjunto, este livro mede quatro; swelling factor e coesividade não foram medidos nesta rodada e aparecem sempre marcados com 💧.', 'mapa geral dos parâmetros reológicos do ácido hialurônico')}
+{figura('1', ILU2['conc_mapa'], 'O <b>mapa geral da reologia do ácido hialurônico</b>: os cinco parâmetros que descrevem um gel injetado na face e o que cada extremo significa na clínica — <b>baixo G′</b> (flexibilidade e naturalidade), <b>alto G′</b> (suporte e projeção), <b>baixo swelling factor</b> (menor edema e maior previsibilidade), <b>alto tan δ</b> (maleabilidade e integração dinâmica) e <b>coesividade</b> (capacidade de se manter unido no tecido). Deste conjunto, este livro mede quatro; swelling factor e coesividade não foram medidos nesta rodada e aparecem sempre marcados com 💧.', 'mapa geral dos parâmetros reológicos do ácido hialurônico', cls='sci')}
 <div class="box">
 <p style="margin-top:0">Os preenchedores estão organizados nos <b>seis grupos oficiais do Mapa da Reologia</b>: <b style="color:var(--fam-a)">G1 Fluidos Dinâmicos</b> · <b style="color:var(--fam-a)">G2 Fluidos com Corpo</b> · <b style="color:var(--fam-m)">G3 Equilibrados</b> · <b style="color:var(--fam-r)">G4 Projetores Puros</b> · <b style="color:var(--fam-r)">G5 Estruturais Moldáveis</b> · <b style="color:var(--sf)">G6 Precisos (Baixo SF)</b>, o grupo funcional transversal. <i>“A primeira cor mostra quanto o gel estrutura. As demais cores mostram como essa estrutura se comporta.”</i></p>
 {figura('2', ILU['esquema'], 'O <b>Esquema de Descrição dos Ácidos Hialurônicos</b> — a leitura completa do perfil reológico em quatro passos: a 1ª cor (G′), a 2ª cor (comportamento), a assinatura resultante e a leitura clínica em três perguntas. Identidade oficial do Reology Map.')}
@@ -1075,7 +1077,7 @@ figure.figura figcaption b{{color:var(--ink)}}
  'Antes de qualquer número existe química. Três desenhos explicam por que um gel de ácido hialurônico resiste, escoa e um dia desaparece.')}
 <h3>2.1 &nbsp;A molécula: um dissacarídeo repetido milhares de vezes</h3>
 <p class="lead">O ácido hialurônico é um <b>glicosaminoglicano linear</b> formado pela repetição de uma única unidade dissacarídica: <b>ácido D-glicurônico</b> (GlcA, C<sub>6</sub>H<sub>10</sub>O<sub>7</sub>) e <b>N-acetil-D-glicosamina</b> (GlcNAc, C<sub>8</sub>H<sub>15</sub>NO<sub>6</sub>). As duas unidades se unem alternadamente por ligações <b>β(1→3)</b> e <b>β(1→4)</b>, e uma única cadeia pode conter de <b>2.000 a mais de 25.000</b> dessas unidades.</p>
-{figura('3', ILU2['conc_molecula'], 'Arquitetura molecular do ácido hialurônico: as duas unidades monossacarídicas em projeção de Haworth e modelo tridimensional, com as ligações glicosídicas alternadas β(1→3) e β(1→4). Os grupos que aparecem na cadeia — carboxila (COO<sup>−</sup>), hidroxila (OH) e acetamido (NH-COCH<sub>3</sub>) — são os que dão ao HA sua avidez por água e, no passo seguinte, os pontos onde a reticulação acontece.', 'estrutura molecular do ácido hialurônico')}
+{figura('3', ILU2['conc_molecula'], 'Arquitetura molecular do ácido hialurônico: as duas unidades monossacarídicas em projeção de Haworth e modelo tridimensional, com as ligações glicosídicas alternadas β(1→3) e β(1→4). Os grupos que aparecem na cadeia — carboxila (COO<sup>−</sup>), hidroxila (OH) e acetamido (NH-COCH<sub>3</sub>) — são os que dão ao HA sua avidez por água e, no passo seguinte, os pontos onde a reticulação acontece.', 'estrutura molecular do ácido hialurônico', cls='sci')}
 <div class="box"><p style="margin:0"><b>O que distingue o HA dos outros glicosaminoglicanos:</b> ele <b>não possui grupamentos sulfatados</b> e <b>não está ligado covalentemente a proteínas</b>. É por isso que o HA nativo é solúvel, altamente hidratado e rapidamente degradado — e é justamente por isso que, para virar preenchedor, ele precisa ser <b>reticulado</b>.</p></div>
 
 {filete('cadeia', 160)}
@@ -1087,7 +1089,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 <div class="etapa"><div class="n">3</div><b>Reação de reticulação</b><p>Os grupos epóxi reagem com as <b>hidroxilas (−OH)</b> das cadeias de HA formando <b>ligações éter covalentes</b>, estáveis.</p></div>
 <div class="etapa"><div class="n">4</div><b>Rede tridimensional</b><p>Múltiplas ligações cruzadas formam uma rede 3D que <b>aprisiona grande quantidade de água</b>. É esse conjunto — rede + água — que chamamos de hidrogel.</p></div>
 </div>
-{figura('4', ILU2['conc_hidrogel'], 'Formação do hidrogel de ácido hialurônico em quatro etapas: solução, agente reticulante (BDDE), reação com as hidroxilas formando ligações éter e a rede tridimensional que retém água. O detalhe mostra a ligação éter no ponto de reticulação. <b>É deste desenho que vem o ornamento das cadeias em contas usado nos rodapés deste livro</b> — a identidade visual do Reology Map nasce da própria molécula.', 'formação do hidrogel de ácido hialurônico por reticulação')}
+{figura('4', ILU2['conc_hidrogel'], 'Formação do hidrogel de ácido hialurônico em quatro etapas: solução, agente reticulante (BDDE), reação com as hidroxilas formando ligações éter e a rede tridimensional que retém água. O detalhe mostra a ligação éter no ponto de reticulação. <b>É deste desenho que vem o ornamento das cadeias em contas usado nos rodapés deste livro</b> — a identidade visual do Reology Map nasce da própria molécula.', 'formação do hidrogel de ácido hialurônico por reticulação', cls='sci')}
 <p><b>Reticulantes descritos na literatura:</b> BDDE (1,4-butanodiol diglicidil éter) · DVS (divinil sulfona) · EGDE (etilenoglicol diglicidil éter) · PEGDGE (polietilenoglicol diglicidil éter).</p>
 <div class="box"><p style="margin-top:0"><b>O grau de reticulação governa três propriedades ao mesmo tempo</b> — e é aqui que a química encontra a reologia:</p>
 <div class="g33 passos" style="margin-top:.6rem">
@@ -1100,7 +1102,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 {filete('cadeia', 160)}
 <h3>2.3 &nbsp;A rede desfeita: hialuronidase</h3>
 <p class="lead">A mesma ligação que constrói a cadeia é a que permite desfazê-la. A <b>hialuronidase</b> cliva especificamente a ligação <b>β(1→4)</b> entre o GlcA e a GlcNAc — e só essa. É a base bioquímica da reversão de um preenchimento.</p>
-{figura('5', ILU2['conc_hialuron'], 'Degradação do gel de ácido hialurônico pela hialuronidase: o sítio de clivagem na ligação β(1→4), o mecanismo catalítico em quatro passos (reconhecimento, posicionamento da água no sítio ativo, clivagem hidrolítica e liberação dos oligossacarídeos) e o efeito progressivo sobre o gel.', 'ação da hialuronidase sobre o gel de ácido hialurônico')}
+{figura('5', ILU2['conc_hialuron'], 'Degradação do gel de ácido hialurônico pela hialuronidase: o sítio de clivagem na ligação β(1→4), o mecanismo catalítico em quatro passos (reconhecimento, posicionamento da água no sítio ativo, clivagem hidrolítica e liberação dos oligossacarídeos) e o efeito progressivo sobre o gel.', 'ação da hialuronidase sobre o gel de ácido hialurônico', cls='sci')}
 <div class="etapas">
 <div class="etapa"><div class="n">1</div><b>Gel íntegro</b><p>Alta viscosidade · rede tridimensional estável · capacidade plena de sustentação.</p></div>
 <div class="etapa"><div class="n">2</div><b>Degradação parcial</b><p>Viscosidade reduzida · perda parcial da sustentação · formação de cadeias menores.</p></div>
@@ -1117,7 +1119,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 <div class="eq"><span class="t">Material viscoso</span><span class="f">τ = η · γ̇</span><p>O <b>mel</b>. <b>Escoa</b> sob tensão e não retorna. A tensão de cisalhamento é proporcional à taxa de deformação; η é a viscosidade.</p></div>
 <div class="eq"><span class="t">Hidrogel</span><span class="f">G* = G′ + iG″</span><p>O <b>gel de ácido hialurônico</b>. Deforma, escoa lentamente até um platô e <b>recupera parte</b> da deformação — nunca toda.</p></div>
 </div>
-{figura('6', ILU2['conc_viscoel'], 'Viscoelasticidade da base ao gel: elasticidade (mola, Lei de Hooke), viscosidade (mel, τ = η·γ̇), a distinção entre fluido e sólido elástico sob tensão constante, o hidrogel como caso intermediário e os três modelos reológicos clássicos — Maxwell, Kelvin-Voigt e Burgers — aplicados aos preenchedores.', 'capítulo de viscoelasticidade: elasticidade, viscosidade e modelos reológicos')}
+{figura('6', ILU2['conc_viscoel'], 'Viscoelasticidade da base ao gel: elasticidade (mola, Lei de Hooke), viscosidade (mel, τ = η·γ̇), a distinção entre fluido e sólido elástico sob tensão constante, o hidrogel como caso intermediário e os três modelos reológicos clássicos — Maxwell, Kelvin-Voigt e Burgers — aplicados aos preenchedores.', 'capítulo de viscoelasticidade: elasticidade, viscosidade e modelos reológicos', cls='sci')}
 <h3>Os três modelos clássicos</h3>
 <div class="mods">
 <div class="mod"><b>Maxwell</b><p>Mola e amortecedor <b>em série</b>. Responde instantaneamente e depois escoa sem limite. Descreve bem a <b>relaxação</b> de tensão.</p></div>
