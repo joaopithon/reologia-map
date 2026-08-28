@@ -13,6 +13,8 @@ Um banco de dados reológico proprietário (76 géis comerciais do mercado brasi
 | Caminho | Descrição |
 |---|---|
 | [`docs/DOCUMENTO-MESTRE.md`](docs/DOCUMENTO-MESTRE.md) | **Documento mestre do projeto** — consolidação de todo o acervo: base científica, banco de dados, sistema de classificação (Mapa da Reologia), reologia clínica por região, especificação do aplicativo, estrutura do livro, fluxo editorial, governança de dados e roadmap |
+| [`docs/ENREDO-DO-LIVRO.md`](docs/ENREDO-DO-LIVRO.md) | **Contrato narrativo do livro** — a promessa, o escopo declarado × medido, as três famílias de G′ (baixo · moderado · alto), as subclasses, a cadeia capítulo a capítulo, as dívidas em aberto e a definição operacional de "informação completa". É a referência contra a qual o livro é revisado |
+| [`.claude/agents/revisora-livro.md`](.claude/agents/revisora-livro.md) | **Revisora do livro** — agente de revisão editorial-científica: lê o livro inteiro, confere o enredo contra o contrato, recalcula todo número a partir do banco canônico e fecha cada achado com texto pronto. Modos `auditar` e `corrigir` |
 | [`data/reologia_produtos_full.json`](data/reologia_produtos_full.json) | Banco canônico: 76 produtos × 6 frequências (10 · 5 · 1 · 0,7 · 0,1 · 0,01 Hz) × 4 parâmetros (G′, G″, tan δ, η*), com lote e classificação |
 | [`data/reologia_produtos_07hz.csv`](data/reologia_produtos_07hz.csv) | Recorte a 0,7 Hz (frequência de referência editorial), ordenado por G′ |
 
