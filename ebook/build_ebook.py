@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """eBook Reology Map v3 — 6 grupos oficiais, assinatura de cores por métrica,
 ilustrações face+gel, textura visual com QR (NA PRÁTICA / SAIBA MAIS)."""
-import json, math, html, re, unicodedata, importlib.util
+import json, math, html, re, os, unicodedata, importlib.util
 
-BASE = '/tmp/claude-0/-home-user-reologia-map/cd216e96-b088-57d1-abe3-2409c365400d/scratchpad'
+BASE = os.path.dirname(os.path.abspath(__file__))
 spec = importlib.util.spec_from_file_location('ebook_data', f'{BASE}/ebook_data.py')
 ed = importlib.util.module_from_spec(spec); spec.loader.exec_module(ed)
-DATA = {r['produto']: r for r in json.load(open(f'{BASE}/produtos_full.json'))}
+DATA = {r['produto']: r for r in json.load(open(os.path.join(BASE, '..', 'data', 'reologia_produtos_full.json')))}
 QR = json.load(open(f'{BASE}/qrs.json'))
 ILU = json.load(open(f'{BASE}/ilustracoes.json'))
 ILU2 = json.load(open(f'{BASE}/ilustracoes2.json'))
@@ -522,6 +522,110 @@ for _p, _g, _t, _kind, _fonte in OUTRAS_FONTES:
         f'<td class="out">G′ {_g} {_ddir}<br>tan δ {_t}</td>'
         f'<td>{_fonte}</td></tr>')
 
+
+# ---------------- mapa anatômico: regiões faciais por grupo ----------------
+FACE_CLIP = ("M150,344 C176,342 197,327 211,305 C223,287 230,261 232,229 "
+             "C234,198 233,169 229,145 C225,119 208,101 186,93 C174,89 162,87 150,87 "
+             "C138,87 126,89 114,93 C92,101 75,119 71,145 C67,169 66,198 68,229 "
+             "C70,261 77,287 89,305 C103,327 124,342 150,344 Z")
+
+# lado esquerdo do observador; as bilaterais são espelhadas por transform
+REG = {
+ 'fronte':      ('c', 'M91,133 C93,103 119,95 150,95 C181,95 207,103 209,133 '
+                      'C180,140 120,140 91,133 Z'),
+ 'temporal':    ('b', 'M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z'),
+ 'supercilio':  ('b', 'M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z'),
+ 'infraorb':    ('b', 'M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z'),
+ 'zigoma':      ('b', 'M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 '
+                      'C98,206 86,203 77,203 Z'),
+ 'bochecha':    ('b', 'M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z'),
+ 'auricular':   ('b', 'M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z'),
+ 'nariz':       ('c', 'M144,162 C147,158 153,158 156,162 C157,186 158,204 160,214 '
+                      'C158,225 142,225 140,214 C142,204 143,186 144,162 Z'),
+ 'nasolabial':  ('b', 'M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z'),
+ 'labios':      ('c', 'M129,258 C137,249 145,247 150,252 C155,247 163,249 171,258 '
+                      'C162,275 138,275 129,258 Z'),
+ 'perioral':    ('c', 'M116,252 C124,236 140,242 150,245 C160,242 176,236 184,252 '
+                      'C182,274 168,288 150,290 C132,288 118,274 116,252 Z'
+                      'M129,258 C138,275 162,275 171,258 C163,249 155,247 150,252 '
+                      'C145,247 137,249 129,258 Z'),
+ 'labiomentual':('c', 'M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z'),
+ 'mento':       ('c', 'M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 '
+                      'C137,331 128,316 129,295 Z'),
+ 'mandibula':   ('b', 'M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z'),
+ 'prejowl':     ('b', 'M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z'),
+}
+
+GRUPOS_REG = [
+ dict(n='1', nome='FLUIDOS DINÂMICOS', cores=['a', 'p'],
+      regs=['perioral'],
+      txt='Região oral e perioral.',
+      leg='Baixo G′ com componente dinâmica: acompanha a mímica sem criar relevo próprio.'),
+ dict(n='2', nome='FLUIDOS COM CORPO', cores=['a', 'm', 'p'],
+      regs=['labios', 'temporal', 'fronte', 'supercilio', 'nasolabial', 'labiomentual'],
+      txt='Região labial quando se quer mais volume · têmpora, fronte e supercílio · '
+          'sulco nasolabial e sulco labiomentual.',
+      leg='Baixo G′ com corpo: ainda integra, mas já sustenta um mínimo de volume.'),
+ dict(n='3', nome='EQUILIBRADOS', cores=['m'],
+      regs=['labiomentual', 'nasolabial', 'prejowl', 'bochecha', 'auricular', 'mandibula'],
+      txt='Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · '
+          'região auricular anterior · valorização de mandíbula.',
+      leg='G′ intermediário: preenche e equilibra sem impor projeção.'),
+ dict(n='4', nome='PROJETORES PUROS', cores=['r'],
+      regs=['mento', 'nariz', 'zigoma', 'mandibula'],
+      txt='Mento · nariz · arco zigomático · mandíbula.',
+      leg='Roxo puro — projeção: alto G′ com tan δ baixo, o gel que mantém o vértice.'),
+ dict(n='5', nome='ESTRUTURAIS MOLDÁVEIS', cores=['r', 'v'],
+      regs=['mandibula', 'mento', 'nasolabial', 'zigoma', 'temporal', 'nariz'],
+      txt='Regiões de volumização: contorno de mandíbula · mento · sulco nasolabial muito '
+          'profundo · arco zigomático · crown lift · nariz.',
+      leg='Alto G′ com uma segunda cor associada — azul, amarelo, verde ou rosa: '
+          'estrutura que ainda se deixa moldar.'),
+ dict(n='6', nome='PRECISOS — BAIXO SWELLING FACTOR', cores=['s'],
+      regs=['infraorb'],
+      txt='Exclusivamente região infraorbitária e olheiras.',
+      leg='Cor própria do critério funcional. Gel de alto G′, baixa concentração de ácido '
+          'hialurônico e partículas grandes. 💧 O swelling factor não foi medido neste estudo.'),
+]
+
+CORREG = {'a': 'var(--fam-a)', 'm': 'var(--fam-m)', 'r': 'var(--fam-r)',
+          'v': 'var(--fam-v)', 'p': 'var(--chip-rosa)', 's': 'var(--sf)'}
+
+FACE_FEATS = FACE_ART[FACE_ART.index('<g class="fc-feat">'):]
+
+def face_regioes(g, width=196):
+    """Face frontal com as regiões do grupo demarcadas nas cores da assinatura."""
+    uid = f'fr{g["n"]}'
+    fill = CORREG[g['cores'][0]]
+    stroke = CORREG[g['cores'][-1]] if len(g['cores']) > 1 else fill
+    shapes = ''
+    for r in g['regs']:
+        lado, d = REG[r]
+        rule = ' fill-rule="evenodd"' if r == 'perioral' else ''
+        shapes += f'<path d="{d}" class="rg"{rule}><title>{r}</title></path>'
+        if lado == 'b':
+            shapes += (f'<g transform="translate(300,0) scale(-1,1)">'
+                       f'<path d="{d}" class="rg"{rule}/></g>')
+    return (f'<svg class="facereg" viewBox="0 0 300 400" role="img" '
+            f'style="width:{width}px;--rg-f:{fill};--rg-s:{stroke}" '
+            f'aria-label="regiões faciais do grupo {g["n"]}: {html.escape(g["txt"])}">'
+            f'<defs><clipPath id="{uid}"><path d="{FACE_CLIP}"/></clipPath></defs>'
+            f'{FACE_ART}<g clip-path="url(#{uid})">{shapes}</g>'
+            f'<path d="{FACE_CLIP}" class="fc-edge"/>{FACE_FEATS}</svg>')
+
+def mapa_regioes():
+    cards = ''
+    for g in GRUPOS_REG:
+        chips = ''.join(f'<i style="background:{CORREG[c]}"></i>' for c in g['cores'])
+        cards += (f'<figure class="regcard rc-{g["cores"][0]}">'
+                  f'<figcaption><span class="rc-n">{g["n"]}</span>'
+                  f'<span class="rc-t">{g["nome"]}</span>'
+                  f'<span class="rc-chips">{chips}</span></figcaption>'
+                  f'{face_regioes(g)}'
+                  f'<p class="rc-reg">{g["txt"]}</p>'
+                  f'<p class="rc-leg">{g["leg"]}</p></figure>')
+    return f'<div class="mapareg">{cards}</div>'
+
 # ---------------- seções de grupos ----------------
 fam_secs=[]; CH0=9
 for gi,g in enumerate(['G1','G2','G3','G4','G5']):
@@ -781,6 +885,28 @@ main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg)
 .etapa p{{margin:0;font-family:'Barlow',sans-serif;font-size:.82rem;color:var(--ink2);line-height:1.5}}
 .etapa p b,.mod p b,.camada p b,.podio p b,.pd-nota b{{display:inline;font-family:inherit;font-size:inherit;letter-spacing:normal;text-transform:none;color:var(--ink);font-weight:700}}
 .etapa code{{font-family:'JetBrains Mono',monospace;font-size:.78em;color:var(--accent-ink)}}
+
+/* mapa anatômico de regiões por grupo */
+.mapareg{{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:1rem;margin:1.2rem 0}}
+.regcard{{margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;
+ padding:.55rem .8rem 1rem;text-align:center;display:flex;flex-direction:column}}
+.regcard figcaption{{display:flex;align-items:center;gap:.5rem;text-align:left;
+ border-bottom:1px solid var(--linesoft);padding-bottom:.45rem;margin-bottom:.3rem}}
+.rc-n{{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.5rem;
+ line-height:1;color:var(--gold);flex:0 0 auto}}
+.rc-t{{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:600;
+ letter-spacing:.04em;text-transform:uppercase;color:var(--title-ink);flex:1;line-height:1.05}}
+.rc-chips{{display:flex;gap:3px;flex:0 0 auto}}
+.rc-chips i{{width:11px;height:11px;border-radius:50%;display:block;
+ border:1px solid rgba(0,0,0,.18)}}
+.facereg{{display:block;margin:.2rem auto .5rem;height:auto}}
+.facereg .rg{{fill:var(--rg-f);fill-opacity:.30;stroke:var(--rg-s);stroke-width:1.7;
+ stroke-linejoin:round}}
+.facereg .fc-edge{{fill:none;stroke:var(--face-line);stroke-width:2.2;opacity:.9}}
+.rc-reg{{font-family:'Barlow',sans-serif;font-size:.82rem;color:var(--ink);
+ margin:.1rem 0 .35rem;line-height:1.45;text-align:left;font-weight:600}}
+.rc-leg{{font-family:'Barlow',sans-serif;font-size:.76rem;color:var(--ink2);
+ margin:0;line-height:1.45;text-align:left}}
 /* figuras e ilustrações com moldura dourada */
 .figura-img{{margin:1.4rem 0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.7rem}}
 .figura-img>img{{display:block;width:100%;height:auto;border:2px solid var(--gold-2)}}
@@ -1171,8 +1297,11 @@ figure.figura figcaption b{{color:var(--ink)}}
 {scatter_main()}
 {LEG3}
 <p class="lead" style="font-size:.9rem">Achados: apenas <b>2 dos 76 ensaios</b> são “roxo completo” (grupo 4); os pares sobrepostos (Volift=Voluma, Belotero Volume+=Neauvia Intense, Stimulate=Singderm) estão em re-verificação; famílias comerciais inteiras vivem numa mesma zona — a cor classifica, o número posiciona.</p>
-<figure class="figura">{FACE_GEO}
-<figcaption><b>Figura 7.</b> As cinco tarefas geométricas do preenchimento sobre a face: <b>LINHA</b> (microdepressão superficial — perioral), <b>VALE</b> (depressão — sulco nasolabial, pré-jowl), <b>CURVA</b> (convexidade difusa — malar/bochecha), <b>SUPORTE</b> (sustentação profunda — fossa piriforme, supraperiostal) e <b>VÉRTICE</b> (projeção focal — mento, ângulo, zigoma). A cor de cada ponto indica a família de G′ tipicamente exigida: <span style="color:var(--fam-a)"><b>azul</b></span> baixo, <span style="color:var(--fam-m)"><b>amarelo</b></span> intermediário, <span style="color:var(--fam-r)"><b>roxo</b></span> alto. O gel é escolhido para a tarefa, não para a região inteira.</figcaption></figure>
+<h3 style="margin-top:1.6rem">Mapa anatômico — que região pede qual assinatura</h3>
+<p class="lead">Uma face por grupo, com as regiões demarcadas na cor da assinatura correspondente. As regiões se repetem entre grupos de propósito: <b>a mesma mandíbula</b> aparece no grupo 3 (valorizar o contorno), no 4 (projetar o ângulo) e no 5 (volumizar). O que muda não é a região — é a tarefa.</p>
+{mapa_regioes()}
+<p class="lead" style="font-size:.92rem"><b>Como ler as cores:</b> o preenchimento traz a <b>1ª cor</b> (a família de G′) e o contorno traz a <b>2ª cor</b> (o comportamento em tan δ). O grupo 4 é <b>roxo puro</b> — estrutura sem modificador. O grupo 6 tem <b>cor própria</b> (<span style="color:var(--sf)"><b>turquesa</b></span>), porque não é uma família de G′ e sim um critério funcional transversal.</p>
+<p class="qt">A regra que atravessa o mapa: <b>o gel é escolhido para a tarefa, não para a região</b>. Um sulco nasolabial raso e um sulco nasolabial muito profundo estão em grupos diferentes — 2 e 5 — apesar de terem o mesmo nome anatômico.</p>
 </section>
 
 <section class="folha" id="forma">

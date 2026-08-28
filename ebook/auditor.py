@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """Auditor: confere valores alegados nas imagens contra o banco canônico."""
-import json, sys, unicodedata, re
+import json, os, sys, unicodedata, re
 
-BASE = '/tmp/claude-0/-home-user-reologia-map/cd216e96-b088-57d1-abe3-2409c365400d/scratchpad'
-DATA = {r['produto']: r for r in json.load(open(f'{BASE}/produtos_full.json'))}
+BASE = os.path.dirname(os.path.abspath(__file__))
+DATA = {r['produto']: r for r in json.load(open(os.path.join(BASE, '..', 'data', 'reologia_produtos_full.json')))}
 
 def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode().lower()

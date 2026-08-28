@@ -110,7 +110,24 @@ O gel vendido como o mais estrutural tem o **menor** G′ dos três medidos. Iss
 
 ---
 
-## 8. Imagens integradas ao livro
+## 8. Mapa anatômico de regiões
+
+A face esquemática do capítulo 5 foi refeita como **mapa anatômico por grupo**: seis faces, cada uma com as regiões demarcadas na cor da assinatura correspondente (preenchimento = 1ª cor/família de G′, contorno = 2ª cor/tan δ). O grupo 6 recebe cor própria (turquesa), por ser critério funcional transversal e não família de G′.
+
+| Grupo | Cores | Regiões |
+|---|---|---|
+| 1 Fluidos Dinâmicos | azul + rosa | região oral e perioral |
+| 2 Fluidos com Corpo | azul + amarelo + rosa | lábio para volume · têmpora, fronte, supercílio · sulco nasolabial e labiomentual |
+| 3 Equilibrados | amarelo | sulco labiomentual e nasolabial · pré-jowl · bochecha · auricular anterior · valorização de mandíbula |
+| 4 Projetores Puros | roxo puro | mento · nariz · arco zigomático · mandíbula |
+| 5 Estruturais Moldáveis | roxo + 2ª cor | contorno de mandíbula · mento · sulco nasolabial muito profundo · arco zigomático · crown lift · nariz |
+| 6 Precisos (baixo SF) | turquesa | exclusivamente infraorbitária e olheiras |
+
+As regiões se repetem entre grupos de propósito — a mesma mandíbula aparece nos grupos 3, 4 e 5. O que muda é a tarefa, não a região.
+
+---
+
+## 9. Imagens integradas ao livro
 
 Aprovadas e embutidas — todas **conceituais, sem dado de produto a auditar**:
 
@@ -128,7 +145,7 @@ O desenho das cadeias de AH em contas (Figura 4) virou **ornamento da identidade
 
 ---
 
-## 9. Duplicatas identificadas no acervo
+## 10. Duplicatas identificadas no acervo
 
 - `16_25_23` ≡ `16_25_24` — byte-idênticas (1.621.958 bytes cada)
 - `13_03_53` ≡ `12_51_45` — mesma peça Belotero em duas capturas
@@ -138,7 +155,7 @@ O desenho das cadeias de AH em contas (Figura 4) virou **ornamento da identidade
 
 ---
 
-## 10. Pendências do banco (mantidas com ⚑)
+## 11. Pendências do banco (mantidas com ⚑)
 
 Já sinalizadas antes desta auditoria e **confirmadas** por ela — as imagens reproduzem fielmente o banco, o que indica que a duplicação está na origem:
 
