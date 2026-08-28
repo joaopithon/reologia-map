@@ -110,20 +110,21 @@ O gel vendido como o mais estrutural tem o **menor** G′ dos três medidos. Iss
 
 ---
 
-## 8. Mapa anatômico de regiões
+## 8. Mapa anatômico — as três famílias
 
-A face esquemática do capítulo 5 foi refeita como **mapa anatômico por grupo**: seis faces, cada uma com as regiões demarcadas na cor da assinatura correspondente (preenchimento = 1ª cor/família de G′, contorno = 2ª cor/tan δ). O grupo 6 recebe cor própria (turquesa), por ser critério funcional transversal e não família de G′.
+O livro passou a ter **três famílias** como eixo principal, definidas pelo G′ e reconhecidas pela cor. As nove assinaturas e os seis grupos continuam existindo como detalhamento, não como sistema paralelo.
 
-| Grupo | Cores | Regiões |
-|---|---|---|
-| 1 Fluidos Dinâmicos | azul + rosa | região oral e perioral |
-| 2 Fluidos com Corpo | azul + amarelo + rosa | lábio para volume · têmpora, fronte, supercílio · sulco nasolabial e labiomentual |
-| 3 Equilibrados | amarelo | sulco labiomentual e nasolabial · pré-jowl · bochecha · auricular anterior · valorização de mandíbula |
-| 4 Projetores Puros | roxo puro | mento · nariz · arco zigomático · mandíbula |
-| 5 Estruturais Moldáveis | roxo + 2ª cor | contorno de mandíbula · mento · sulco nasolabial muito profundo · arco zigomático · crown lift · nariz |
-| 6 Precisos (baixo SF) | turquesa | exclusivamente infraorbitária e olheiras |
+| Família | Cor | Grupos | Subclasses | Regiões |
+|---|---|---|---|---|
+| 1 · Baixo G′ | azul | 1 e 2 | azul+rosa · azul+amarelo+rosa — **mesmas regiões** | oral e perioral · lábio · têmpora, fronte, supercílio · sulco nasolabial · sulco labiomentual |
+| 2 · Moderado G′ | amarelo | 3 | uma só, sem subclasse | sulco labiomentual e nasolabial · pré-jowl · bochecha · auricular anterior · valorização de mandíbula |
+| 3 · Alto G′ | roxo | 4 e 5 (+ baixo SF) | roxo puro (projeção) · roxo + 2ª cor (volumização) · baixo SF (olheira) | mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · infraorbitária |
 
-As regiões se repetem entre grupos de propósito — a mesma mandíbula aparece nos grupos 3, 4 e 5. O que muda é a tarefa, não a região.
+**A correção conceitual mais importante:** as duas assinaturas do baixo G′ **não têm indicações diferentes**. A diferença entre azul+rosa e azul+amarelo+rosa é quanto cada uma valoriza — a segunda entrega um pouco mais de volume, por ter G″ intermediário. Onde vai uma, vai a outra. A versão anterior deste mapa dava listas de regiões distintas para os grupos 1 e 2, o que estava errado.
+
+**O alto G′ tem três destinos**, não um: projeção (roxo puro), volumização (roxo com segunda cor) e o uso preciso na região infraorbitária, onde entra o gel de alto G′ com **baixo swelling factor** — baixa concentração de AH e partículas grandes. 💧 O SF não foi medido neste estudo: esse uso é identificado por declaração de fabricante e experiência clínica, nunca deduzido do G′.
+
+As regiões se repetem entre famílias de propósito — a mesma mandíbula aparece no amarelo, no roxo puro e no roxo modulado. O que muda é a tarefa.
 
 ---
 

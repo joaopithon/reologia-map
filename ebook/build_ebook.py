@@ -241,32 +241,59 @@ def regua(k, fam):
 
 # ---------------- ilustrações: face e gel ----------------
 FACE_ART = """
-<g class="fc-hair">
- <path d="M94,150 C100,116 122,99 150,99 C178,99 200,116 206,150"/>
+<defs>
+ <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+  <stop offset="0%" stop-color="var(--face-hi)"/>
+  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="100%" stop-color="var(--face-sh)"/>
+ </radialGradient>
+ <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0%" stop-color="var(--hair-2)"/>
+  <stop offset="100%" stop-color="var(--hair-1)"/>
+ </linearGradient>
+</defs>
+<g class="fc-body">
+ <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
+  C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
+  C178,357 175,345 176,322 Z"/>
+ <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
+  L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
-<path class="fc-face" d="M150,324 C165,322 178,311 188,294 C198,276 207,250 211,222
- C215,194 215,161 210,137 C204,111 187,96 165,90 C160,88.6 155,88 150,88
- C145,88 140,88.6 135,90 C113,96 96,111 90,137 C85,161 85,194 89,222
- C93,250 102,276 112,294 C122,311 135,322 150,324 Z"/>
+<path class="fc-hairb" d="M150,60 C205,60 241,97 243,157 C244,192 241,228 234,260
+ C231,273 227,284 222,293 L208,284 C217,252 222,215 220,178 C216,130 194,100 150,100
+ C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
+ C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
+<path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+<path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
+ C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
+<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
 <g class="fc-feat">
- <path d="M105,157 C113,147 130,145 142,153"/>
- <path d="M158,153 C170,145 187,147 195,157"/>
- <path d="M106,175 C114,164 132,164 140,175 C132,185 114,185 106,175 Z"/>
- <path d="M160,175 C168,164 186,164 194,175 C186,185 168,185 160,175 Z"/>
- <path d="M106,175 C101,171 99,167 100,163"/>
- <path d="M194,175 C199,171 201,167 200,163"/>
- <path d="M150,186 C149,202 148,214 146,223"/>
- <path d="M140,229 C145,234 155,234 160,229"/>
- <path d="M140,229 C135,225 137,219 141,218"/>
- <path d="M160,229 C165,225 163,219 159,218"/>
- <path d="M150,236 L150,253"/>
- <path d="M132,266 C139,257 146,255 150,260 C154,255 161,257 168,266 C160,269 140,269 132,266 Z"/>
- <path d="M132,266 C141,283 159,283 168,266"/>
- <path d="M128,318 C127,338 124,354 121,370"/>
- <path d="M172,318 C173,338 176,354 179,370"/>
+ <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
+ <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
+ <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
+ <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
+ <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
+ <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
+ <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
+ <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
+ <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
+ <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
+ <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
+ <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
+ <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
+  C165,276 135,276 125,257 Z"/>
+ <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
+ <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
 </g>
-<circle class="fc-iris" cx="123" cy="175" r="4.6"/>
-<circle class="fc-iris" cx="177" cy="175" r="4.6"/>
+<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
+<g class="fc-pupil">
+ <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
+ <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
+</g>
+<g class="fc-lash">
+ <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
+ <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
+</g>
 """
 
 def face_svg(width=250, marks=None, cls='facesvg', aria='rosto feminino em vista frontal',
@@ -529,10 +556,7 @@ for _p, _g, _t, _kind, _fonte in OUTRAS_FONTES:
 
 
 # ---------------- mapa anatômico: regiões faciais por grupo ----------------
-FACE_CLIP = ("M150,344 C176,342 197,327 211,305 C223,287 230,261 232,229 "
-             "C234,198 233,169 229,145 C225,119 208,101 186,93 C174,89 162,87 150,87 "
-             "C138,87 126,89 114,93 C92,101 75,119 71,145 C67,169 66,198 68,229 "
-             "C70,261 77,287 89,305 C103,327 124,342 150,344 Z")
+FACE_CLIP = ("M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z")
 
 # lado esquerdo do observador; as bilaterais são espelhadas por transform
 REG = {
@@ -548,12 +572,12 @@ REG = {
  'nariz':       ('c', 'M144,162 C147,158 153,158 156,162 C157,186 158,204 160,214 '
                       'C158,225 142,225 140,214 C142,204 143,186 144,162 Z'),
  'nasolabial':  ('b', 'M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z'),
- 'labios':      ('c', 'M129,258 C137,249 145,247 150,252 C155,247 163,249 171,258 '
-                      'C162,275 138,275 129,258 Z'),
- 'perioral':    ('c', 'M116,252 C124,236 140,242 150,245 C160,242 176,236 184,252 '
-                      'C182,274 168,288 150,290 C132,288 118,274 116,252 Z'
-                      'M129,258 C138,275 162,275 171,258 C163,249 155,247 150,252 '
-                      'C145,247 137,249 129,258 Z'),
+ 'labios':      ('c', 'M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257 '
+                      'C165,276 135,276 125,257 Z'),
+ 'perioral':    ('c', 'M117,252 C126,239 141,241 150,245 C159,241 174,239 183,252 '
+                      'C181,270 169,285 150,287 C131,285 119,270 117,252 Z'
+                      'M125,257 C135,276 165,276 175,257 C166,246 156,244 150,250 '
+                      'C144,244 134,246 125,257 Z'),
  'labiomentual':('c', 'M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z'),
  'mento':       ('c', 'M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 '
                       'C137,331 128,316 129,295 Z'),
@@ -598,7 +622,7 @@ CORREG = {'a': 'var(--fam-a)', 'm': 'var(--fam-m)', 'r': 'var(--fam-r)',
 
 FACE_FEATS = FACE_ART[FACE_ART.index('<g class="fc-feat">'):]
 
-def face_regioes(g, width=196):
+def face_regioes(g, width=196, cls='facereg'):
     """Face frontal com as regiões do grupo demarcadas nas cores da assinatura."""
     uid = f'fr{g["n"]}'
     fill = CORREG[g['cores'][0]]
@@ -611,7 +635,7 @@ def face_regioes(g, width=196):
         if lado == 'b':
             shapes += (f'<g transform="translate(300,0) scale(-1,1)">'
                        f'<path d="{d}" class="rg"{rule}/></g>')
-    return (f'<svg class="facereg" viewBox="0 0 300 400" role="img" '
+    return (f'<svg class="{cls}" viewBox="0 0 300 400" role="img" '
             f'style="width:{width}px;--rg-f:{fill};--rg-s:{stroke}" '
             f'aria-label="regiões faciais do grupo {g["n"]}: {html.escape(g["txt"])}">'
             f'<defs><clipPath id="{uid}"><path d="{FACE_CLIP}"/></clipPath></defs>'
@@ -779,9 +803,9 @@ def esquema_passos():
 
 ROTEIRO = [
  ('1', 'Como ler este guia', 'a'), ('2–3', 'A molécula, a rede e a viscoelasticidade', 'a'),
- ('4', 'Os quatro números', 'm'), ('5', 'O mapa e as regiões da face', 'm'),
+ ('4', 'Os quatro números', 'm'), ('5', 'O mapa: três famílias sobre a face', 'm'),
  ('6', 'A forma do gel', 'm'), ('7', 'Textura visual', 'm'),
- ('8', 'Atlas de gráficos', 'r'), ('9–14', 'Os seis grupos, produto a produto', 'r'),
+ ('8', 'Atlas de gráficos', 'r'), ('9–14', 'As famílias em seis grupos, produto a produto', 'r'),
  ('15', 'Rankings completos', 'r'), ('16', 'Quando as fontes discordam', 's'),
  ('17', 'Guia rápido por região', 's'),
 ]
@@ -790,7 +814,90 @@ def roteiro():
     it = ''.join(f'<li class="rt-{c}"><b>{n}</b><span>{t}</span></li>' for n, t, c in ROTEIRO)
     return f'<ol class="roteiro">{it}</ol>'
 
+
+# ---------------- AS TRÊS FAMÍLIAS (estrutura principal do livro) ----------------
+REG_AZUL = ['perioral', 'labios', 'temporal', 'fronte', 'supercilio', 'nasolabial', 'labiomentual']
+REG_AMAR = ['labiomentual', 'nasolabial', 'prejowl', 'bochecha', 'auricular', 'mandibula']
+REG_ROXO = ['mento', 'nariz', 'zigoma', 'mandibula', 'temporal', 'infraorb']
+
+FAMILIAS = [
+ dict(n='1', nome='BAIXO G′', cor='a', grupos='grupos 1 e 2', regs=REG_AZUL,
+      sub=[('azul + rosa', ['a', 'p']), ('azul + amarelo + rosa', ['a', 'm', 'p'])],
+      lead='Integra, acompanha o movimento e cria pouco relevo próprio.',
+      regs_txt='Região oral e perioral · lábio · têmpora, fronte e supercílio · '
+               'sulco nasolabial · sulco labiomentual.',
+      nota='<b>As duas assinaturas atendem as mesmas regiões.</b> A diferença entre '
+           'azul + rosa e azul + amarelo + rosa é <i>quanto</i> cada uma valoriza — '
+           'a segunda entrega um pouco mais de volume. A indicação não muda.'),
+ dict(n='2', nome='MODERADO G′', cor='m', grupos='grupo 3', regs=REG_AMAR,
+      sub=[('amarelo', ['m'])],
+      lead='Preenche e equilibra: corpo sem impor projeção.',
+      regs_txt='Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · '
+               'região auricular anterior · valorização de mandíbula.',
+      nota='A família de transição — a cor do vale. Uma assinatura só, sem subclasse: '
+           'é o produto que preenche onde não se quer nem espalhar nem projetar.'),
+ dict(n='3', nome='ALTO G′', cor='r', grupos='grupos 4 e 5', regs=REG_ROXO,
+      sub=[('roxo puro', ['r']), ('roxo + 2ª cor', ['r', 'v']), ('na olheira 💧', ['r', 's'])],
+      lead='Sustenta. Conforme a segunda cor, projeta ou volumiza.',
+      regs_txt='Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · '
+               'e, no uso preciso, a região infraorbitária.',
+      nota='<b>Três usos, não um.</b> O <b>roxo puro</b> projeta — é o vértice. '
+           'O <b>roxo com segunda cor</b> volumiza, com menos projeção. E o mesmo alto G′, '
+           'quando tem baixo swelling factor, é o que se usa na <b>olheira</b>.'),
+]
+
+USOS_ROXO = [
+ ('PROJEÇÃO', ['r'], ['mento', 'nariz', 'zigoma', 'mandibula'],
+  'Roxo puro: tan δ baixo, estrutura sem modificador. Mantém o vértice onde foi colocado.'),
+ ('VOLUMIZAÇÃO', ['r', 'v'], ['mandibula', 'zigoma', 'temporal', 'nasolabial', 'mento'],
+  'Roxo com segunda cor: sustenta com mais curva e mais corpo. Volume estrutural, '
+  'não projeção focal.'),
+ ('OLHEIRA', ['r', 's'], ['infraorb'],
+  'Alto G′ de <b>baixo swelling factor</b> — baixa concentração de AH e partículas grandes. '
+  'É a exceção que a família comporta: estrutura numa região que não tolera inchaço. 💧'),
+]
+
+def face_fam(f, width=210, cls='facereg'):
+    g = dict(n=f['n'], regs=f['regs'], cores=[f['cor'], f['sub'][-1][1][-1]], txt=f['regs_txt'])
+    return face_regioes(g, width, cls)
+
+def mapa_familias():
+    cards = ''
+    for f in FAMILIAS:
+        subs = ''.join(
+            f'<span class="fm-sub">{"".join(dotchip(c, 11) for c in cores)}<em>{nome}</em></span>'
+            for nome, cores in f['sub'])
+        cards += (f'<figure class="famcard fc-{f["cor"]}">'
+                  f'<figcaption><span class="fm-n">{f["n"]}</span>'
+                  f'<span class="fm-t">{f["nome"]}</span>'
+                  f'<span class="fm-g">{f["grupos"]}</span></figcaption>'
+                  f'<p class="fm-lead">{f["lead"]}</p>'
+                  f'<div class="fm-subs">{subs}</div>'
+                  f'{face_fam(f)}'
+                  f'<p class="fm-regs">{f["regs_txt"]}</p>'
+                  f'<p class="fm-nota">{f["nota"]}</p></figure>')
+    return f'<div class="mapafam">{cards}</div>'
+
+def usos_roxo():
+    out = ''
+    for nome, cores, regs, txt in USOS_ROXO:
+        g = dict(n='3', regs=regs, cores=cores, txt=nome)
+        chips = ''.join(dotchip(c, 12) for c in cores)
+        out += (f'<figure class="usocard"><figcaption>{chips}<b>{nome}</b></figcaption>'
+                f'{face_regioes(g, 150)}<p>{txt}</p></figure>')
+    return f'<div class="usos">{out}</div>'
+
+
+def capa_familias():
+    """Trio da capa: as três famílias em traço claro sobre o navy."""
+    out = ''
+    for f in FAMILIAS:
+        out += (f'<figure class="cf"><span class="cf-t">{f["nome"]}</span>'
+                f'{face_fam(f, 168, "facereg capa-face")}</figure>')
+    return f'<div class="capa-trio">{out}</div>'
+
 # ---------------- seções de grupos ----------------
+FAM_DE = {'G1': 'FAMÍLIA AZUL', 'G2': 'FAMÍLIA AZUL', 'G3': 'FAMÍLIA AMARELA', 'G4': 'FAMÍLIA ROXA', 'G5': 'FAMÍLIA ROXA'}
 fam_secs=[]; CH0=9
 for gi,g in enumerate(['G1','G2','G3','G4','G5']):
     G=GRUPOS[g]; prods=[p for p in ed.PRODUTOS if grp(p)==g]
@@ -805,7 +912,7 @@ for gi,g in enumerate(['G1','G2','G3','G4','G5']):
 {figura(f'{G["num"]}.2', ILU[f'g{G["num"]}b'], 'Exemplos do grupo com os valores medidos a 0,7 Hz, na linguagem de cores do Mapa. As fichas a seguir detalham cada produto.')}
 </div>'''
     fam_secs.append(f'''<section class="famsec folha" id="grupo-{G['num']}">
-<div class="fambanner bn-{G['fam']}"><div><p class="fam-eyebrow">CAPÍTULO {CH0+gi} · GRUPO {G['num']} · {html.escape(G['tec'])}</p><h2>{G['nome']}</h2>
+<div class="fambanner bn-{G['fam']}"><div><p class="fam-eyebrow"><b class="fam-de">{FAM_DE[g]}</b> · CAPÍTULO {CH0+gi} · GRUPO {G['num']} · {html.escape(G['tec'])}</p><h2>{G['nome']}</h2>
 <p class="famchave">“{html.escape(G['chave'])}”</p></div>
 <div><p class="famdesc"><b>Faixas do grupo:</b> {G['bandas']}<br><b>Melhores contextos:</b> {html.escape(G['ctx'])} · <b>Produto-exemplo:</b> {html.escape(G['ex'])}</p>{extra}
 <p class="famdesc" style="margin-top:.3rem"><b>{len(prods)} produtos</b> · G′ de {br(gmin)} a {br(gmax)} Pa</p></div></div>
@@ -821,7 +928,7 @@ sf_cards=''.join(f'''<article class="sfcard"><header>{dotchip('s',12)}<h4>{html.
 <div class="sfnum"><span>G′ <b>{br(DATA[k]['G1_0.7Hz'])}</b> Pa</span><span>tan δ <b>{br(td_of(k))}</b></span>{radar(k, GRUPOS[grp(next(q for q in ed.PRODUTOS if q['k']==k))]['fam'],72,'radar radar-sm')}</div>
 <p>{html.escape(why)}</p><a class="sflink" href="#{slug(k)}">ver ficha completa ↓</a></article>''' for k,why in SF)
 sf_sec=f'''<section class="famsec folha" id="grupo-6">
-<div class="fambanner bn-s"><div><p class="fam-eyebrow">CAPÍTULO 14 · GRUPO 6 · critério funcional transversal · 💧</p><h2>PRECISOS — BAIXO SWELLING FACTOR</h2>
+<div class="fambanner bn-s"><div><p class="fam-eyebrow"><b class="fam-de">FAMÍLIA ROXA · USO NA OLHEIRA</b> · CAPÍTULO 14 · GRUPO 6 · critério funcional transversal · 💧</p><h2>PRECISOS — BAIXO SWELLING FACTOR</h2>
 <p class="famchave">“Alta projeção + baixa expansão + mais precisão + melhor controle de edema.”</p></div>
 <div><p class="famdesc"><b>Padrão funcional:</b> alto G′ + AH em baixa concentração (20–22 mg/mL) + partículas grandes + maior estabilidade química. <b>Melhores contextos:</b> olheiras e áreas em que o controle de expansão é determinante. Regra do autor: <i>nunca escolher olheira pelo G′</i> — “o tamanho da partícula ajuda a explicar; o SF medido é o que confirma”.</p>
 <p class="famdesc" style="margin-top:.3rem"><b>⚠ SF ainda não foi medido em nenhum produto</b> — prioridade da 2ª rodada laboratorial. Até lá, grupo clínico-declarativo (💧); sem SF confiável, não existe “ranking definitivo” para olheiras.</p></div></div>
@@ -882,7 +989,7 @@ page=f'''<title>eBook Reology Map</title>
  --chip-rosa:#C4557F; --sf:#0F7480; --sf-soft:rgba(15,116,128,.09);
  --warn:#A8501F; --flag:#B23B3B;
  --za:rgba(46,125,191,.05); --zm:rgba(143,109,18,.06); --zr:rgba(124,58,237,.045);
- --title-ink:#10486F; --gold-ink:#10486F; --face-line:#5A6C7A; --face-fill:#FFFCF7;
+ --title-ink:#10486F; --gold-ink:#10486F; --face-line:#7C6A61; --face-fill:#FBEDE2; --face-hi:#FFF8F1; --face-sh:#F0DACA; --hair-1:#4A3428; --hair-2:#6B4A37; --hair-line:#3A281E; --blush:#E9B6A4; --lip:#D89A94; --lip-line:#B4726C; --eye-white:#FFFDFB; --iris:#7B5B43; --pupil:#2B1D14; --lash:#3A281E;
  --n1bg:#10486F; --n1ink:#FFFFFF; --n2bg:#DCE8F1; --n2ink:#0E4269; --n3bd:#A9BFD1; --n3ink:#31536E; --n4ink:#7A8794;
  --tint:12%; --book-bg:#EDE7DD;
 }}
@@ -895,7 +1002,7 @@ page=f'''<title>eBook Reology Map</title>
  --chip-rosa:#C96B92; --sf:#3DA0AC; --sf-soft:rgba(61,160,172,.15);
  --warn:#D08A5E; --flag:#DC7E7E;
  --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
- --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#8CA3B5; --face-fill:rgba(255,255,255,.04);
+ --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#A08C80; --face-fill:#E6CDBB; --face-hi:#F2DECF; --face-sh:#D2B29B; --hair-1:#3A281E; --hair-2:#573D2C; --hair-line:#2A1C14; --blush:#D99A86; --lip:#C8867F; --lip-line:#9E5F59; --eye-white:#FBF6F1; --iris:#8A6A50; --pupil:#221610; --lash:#2A1C14;
  --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
  --tint:22%; --book-bg:#04141F;
 }} }}
@@ -908,7 +1015,7 @@ page=f'''<title>eBook Reology Map</title>
  --chip-rosa:#C96B92; --sf:#3DA0AC; --sf-soft:rgba(61,160,172,.15);
  --warn:#D08A5E; --flag:#DC7E7E;
  --za:rgba(63,135,196,.10); --zm:rgba(172,131,31,.12); --zr:rgba(142,104,216,.10);
- --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#8CA3B5; --face-fill:rgba(255,255,255,.04);
+ --title-ink:#E8EEF4; --gold-ink:#E9B968; --face-line:#A08C80; --face-fill:#E6CDBB; --face-hi:#F2DECF; --face-sh:#D2B29B; --hair-1:#3A281E; --hair-2:#573D2C; --hair-line:#2A1C14; --blush:#D99A86; --lip:#C8867F; --lip-line:#9E5F59; --eye-white:#FBF6F1; --iris:#8A6A50; --pupil:#221610; --lash:#2A1C14;
  --n1bg:#2A6C9C; --n1ink:#08192A; --n2bg:#173F5C; --n2ink:#A9D2EE; --n3bd:#2F5B7C; --n3ink:#8CC0E8; --n4ink:#7A93A6;
  --tint:22%; --book-bg:#04141F;
 }}
@@ -940,7 +1047,7 @@ h1,h2,h3,h4{{font-family:'Barlow Condensed','Barlow',sans-serif;text-wrap:balanc
 .capa-sub{{border:1px solid var(--gold-2);display:inline-block;padding:.5rem 1.4rem;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:clamp(.86rem,2.1vw,1.12rem);font-weight:500;letter-spacing:.075em;text-transform:uppercase;margin:.2rem auto 1.2rem}}
 .capa-autor{{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.15rem,3vw,1.6rem);font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);margin:0}}
 .capa-ed{{font-family:'Barlow',sans-serif;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);margin:.7rem 0 0}}
-.capa-band{{height:7px;background:linear-gradient(90deg,var(--fam-a) 0 25%,var(--fam-m) 25% 50%,var(--fam-r) 50% 75%,var(--fam-v) 75% 100%)}}
+.capa-band{{height:8px;background:linear-gradient(90deg,var(--fam-a) 0 33.33%,var(--fam-m) 33.33% 66.66%,var(--fam-r) 66.66% 100%)}}
 
 /* ================= FORMATO DE LIVRO: folhas, rodapés e ornamentos ================= */
 main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg);counter-reset:folha}}
@@ -1178,6 +1285,65 @@ main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg)
 .roteiro span{{color:var(--ink2)}}
 .rt-a b{{color:var(--fam-a)}} .rt-m b{{color:var(--fam-m)}} .rt-r b{{color:var(--fam-r)}}
 .rt-s b{{color:var(--sf)}}
+
+/* as três famílias */
+.mapafam{{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:1.1rem;margin:1.2rem 0}}
+.famcard{{margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;
+ padding:.65rem .95rem 1.1rem;display:flex;flex-direction:column;border-top:4px solid var(--fam-a)}}
+.famcard.fc-m{{border-top-color:var(--fam-m)}} .famcard.fc-r{{border-top-color:var(--fam-r)}}
+.famcard figcaption{{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;
+ border-bottom:1px solid var(--linesoft);padding-bottom:.4rem;text-align:left}}
+.fm-n{{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.7rem;
+ line-height:1;color:var(--gold)}}
+.fm-t{{font-family:'Barlow Condensed',sans-serif;font-size:1.2rem;font-weight:700;letter-spacing:.05em;
+ text-transform:uppercase;color:var(--title-ink);flex:1}}
+.fm-g{{font-family:'Barlow',sans-serif;font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;
+ color:var(--ink3);font-weight:700}}
+.fm-lead{{font-family:'Barlow',sans-serif;font-size:.85rem;color:var(--ink);margin:.45rem 0 .5rem;
+ line-height:1.45;text-align:left;font-weight:600}}
+.fm-subs{{display:flex;flex-direction:column;gap:.22rem;margin-bottom:.3rem}}
+.fm-sub{{display:flex;align-items:center;gap:.18rem}}
+.fm-sub em{{font-family:'Barlow',sans-serif;font-style:normal;font-size:.74rem;color:var(--ink2);
+ margin-left:.3rem;letter-spacing:.02em}}
+.famcard .facereg{{margin:.3rem auto .5rem}}
+.fm-regs{{font-family:'Barlow',sans-serif;font-size:.81rem;color:var(--ink);margin:0 0 .45rem;
+ line-height:1.45;text-align:left;font-weight:600}}
+.fm-nota{{font-family:'Barlow',sans-serif;font-size:.78rem;color:var(--ink2);margin:auto 0 0;
+ line-height:1.5;text-align:left;border-top:1px solid var(--linesoft);padding-top:.45rem}}
+/* os três usos do alto G' */
+.usos{{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;margin:1rem 0}}
+.usocard{{margin:0;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--fam-r);
+ border-radius:3px;padding:.55rem .8rem .9rem;text-align:center}}
+.usocard figcaption{{display:flex;align-items:center;justify-content:center;gap:.25rem;
+ padding-bottom:.35rem;border-bottom:1px solid var(--linesoft)}}
+.usocard figcaption b{{font-family:'Barlow Condensed',sans-serif;font-size:1rem;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--title-ink);margin-left:.3rem}}
+.usocard p{{font-family:'Barlow',sans-serif;font-size:.78rem;color:var(--ink2);margin:.2rem 0 0;
+ line-height:1.45;text-align:left}}
+
+.capa-trio{{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.4rem,1.6vw,1.1rem);
+ margin:clamp(1rem,3vw,1.7rem) auto;max-width:600px}}
+.capa-trio .cf{{margin:0;border:1px solid var(--gold-2);padding:.5rem .3rem .2rem;
+ background:rgba(255,255,255,.04);display:flex;flex-direction:column;align-items:center}}
+.cf-t{{font-family:'Barlow Condensed',sans-serif;font-size:clamp(.62rem,1.7vw,.86rem);
+ font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-3);
+ margin-bottom:.15rem;text-align:center}}
+.capa-trio .facereg{{width:100%;height:auto;max-width:168px}}
+.capa-face .rg{{fill-opacity:.72;stroke-width:2.4}}
+
+.fam3{{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.85rem;margin:1rem 0}}
+.f3{{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--fam-a);
+ border-radius:3px;padding:.75rem .9rem}}
+.f3-m{{border-left-color:var(--fam-m)}} .f3-r{{border-left-color:var(--fam-r)}}
+.f3 b{{font-family:'Barlow Condensed',sans-serif;font-size:1.12rem;letter-spacing:.05em;
+ text-transform:uppercase;color:var(--title-ink);display:block;line-height:1.1}}
+.f3 span{{font-family:'Barlow',sans-serif;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;
+ font-weight:700;display:block;margin-bottom:.35rem}}
+.f3-a span{{color:var(--fam-a)}} .f3-m span{{color:var(--fam-m)}} .f3-r span{{color:var(--fam-r)}}
+.f3 p{{margin:0;font-family:'Barlow',sans-serif;font-size:.81rem;color:var(--ink2);line-height:1.5}}
+.stat.st-a{{border-top:3px solid var(--fam-a)}} .stat.st-m{{border-top:3px solid var(--fam-m)}}
+.stat.st-r{{border-top:3px solid var(--fam-r)}} .stat.st-s{{border-top:3px solid var(--sf)}}
+.fam-de{{color:var(--gold-3);letter-spacing:.16em}}
 /* figuras e ilustrações com moldura dourada */
 .figura-img{{margin:1.4rem 0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.7rem}}
 .figura-img>img{{display:block;width:100%;height:auto;border:2px solid var(--gold-2)}}
@@ -1255,20 +1421,39 @@ p{{max-width:76ch}} .lead{{color:var(--ink2)}}
 .rdemo{{margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.9rem;text-align:center}}
 .rdemo figcaption{{font-size:.82rem;color:var(--ink2);margin-top:.4rem}} .rdemo b{{color:var(--ink)}}
 /* face / figuras */
-.fc-face{{fill:var(--face-fill);stroke:var(--face-line);stroke-width:2.2;stroke-linejoin:round}}
-.fc-hair path{{fill:none;stroke:var(--face-line);stroke-width:1.4;stroke-linecap:round;opacity:.5}}
-.fc-feat path{{fill:none;stroke:var(--face-line);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}}
-.fc-iris{{fill:var(--face-line);opacity:.62}}
+.fc-face{{fill:url(#fcSkin);stroke:var(--face-line);stroke-width:1.6;stroke-linejoin:round}}
+.fc-neck{{fill:var(--face-sh);stroke:var(--face-line);stroke-width:1.3;opacity:.92}}
+.fc-sh{{fill:var(--face-fill);stroke:var(--face-line);stroke-width:1.2;opacity:.75}}
+.fc-hairb{{fill:url(#fcHair);stroke:var(--hair-line);stroke-width:1.3;stroke-linejoin:round}}
+.fc-hairf{{fill:url(#fcHair);stroke:var(--hair-line);stroke-width:1.2;stroke-linejoin:round}}
+.fc-blush ellipse{{fill:var(--blush);opacity:.5}}
+.fc-feat path{{fill:none;stroke:var(--face-line);stroke-width:1.35;stroke-linecap:round;stroke-linejoin:round}}
+.fc-eye{{fill:var(--eye-white);stroke:var(--face-line);stroke-width:1.35}}
+.fc-lid{{stroke:var(--lash);stroke-width:2.1}}
+.fc-brow{{stroke:var(--hair-1);stroke-width:3.4;stroke-linecap:round}}
+.fc-crease{{stroke:var(--face-line);stroke-width:.9;opacity:.55}}
+.fc-nose{{stroke-width:1.2;opacity:.8}}
+.fc-lip{{fill:var(--lip);stroke:var(--lip-line);stroke-width:1.1}}
+.fc-lipline{{stroke:var(--lip-line);stroke-width:1.2}}
+.fc-chin{{stroke-width:1;opacity:.5}}
+.fc-iris circle{{fill:var(--iris)}}
+.fc-pupil circle{{fill:var(--pupil)}}
+.fc-glint{{fill:#fff;opacity:.9}}
+.fc-lash path{{fill:none;stroke:var(--lash);stroke-width:1.5;stroke-linecap:round}}
 .fc-dot{{stroke:var(--card);stroke-width:2.2}}
 .fc-halo{{opacity:.17}}
 .fc-ld{{stroke:var(--ink3);stroke-width:1;stroke-dasharray:2 3}}
-.fc-lb{{fill:var(--ink2);font:700 12px 'Barlow',sans-serif;letter-spacing:.02em}}
-.facesvg{{width:100%;height:auto;display:block;margin:0 auto}}
-.fc-ld{{opacity:.55}}
-.capa-face .fc-face{{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.62)}}
-.capa-face .fc-hair path{{stroke:rgba(255,255,255,.5)}}
-.capa-face .fc-feat path{{stroke:rgba(255,255,255,.58)}}
-.capa-face .fc-iris{{fill:rgba(255,255,255,.6)}}
+.fc-lb{{fill:var(--ink2);font:600 11.5px 'Barlow',sans-serif;letter-spacing:.02em}}
+.capa-face .fc-face{{fill:rgba(255,255,255,.14);stroke:rgba(255,255,255,.78)}}
+.capa-face .fc-hairb,.capa-face .fc-hairf{{fill:rgba(255,255,255,.07);stroke:rgba(255,255,255,.42)}}
+.capa-face .fc-neck,.capa-face .fc-sh{{fill:rgba(255,255,255,.05);stroke:rgba(255,255,255,.4)}}
+.capa-face .fc-feat path{{stroke:rgba(255,255,255,.62)}}
+.capa-face .fc-eye{{fill:rgba(255,255,255,.22)}}
+.capa-face .fc-lip{{fill:rgba(255,255,255,.18);stroke:rgba(255,255,255,.55)}}
+.capa-face .fc-blush ellipse{{opacity:.18}}
+.capa-face .fc-iris circle{{fill:rgba(255,255,255,.55)}}
+.capa-face .fc-pupil circle{{fill:rgba(10,53,87,.8)}}
+.capa-face .fc-brow{{stroke:rgba(255,255,255,.55)}}
 .capa-face .fc-dot{{stroke:rgba(10,53,87,.9)}}
 figure.figura{{margin:1.2rem 0;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1rem 1.2rem;text-align:center}}
 figure.figura figcaption{{text-align:left;font-size:.85rem;color:var(--ink2);border-top:1px solid var(--linesoft);margin-top:.8rem;padding-top:.6rem}}
@@ -1417,13 +1602,8 @@ figure.figura figcaption b{{color:var(--ink)}}
 <div class="capa-frame">
 <p class="capa-brand">Reology Map · Ciência que guia escolhas</p>
 <h1><span class="gold">Reologia do<br>Ácido Hialurônico</span><span class="wht">Guia dos preenchedores do mercado brasileiro</span></h1>
-<div class="capa-grid">
-<figure><img src="{ILU['g1a']}" alt="Grupo 1 — fluidos dinâmicos" loading="eager"></figure>
-<figure><img src="{ILU['g3a']}" alt="Grupo 3 — equilibrados" loading="eager"></figure>
-<figure><img src="{ILU['g4a']}" alt="Grupo 4 — projetores puros" loading="lazy"></figure>
-<figure><img src="{ILU['g6a']}" alt="Grupo 6 — baixo swelling factor" loading="lazy"></figure>
-</div>
-<p class="capa-sub">75 produtos canônicos · 76 ensaios · 6 grupos · 9 assinaturas</p>
+{capa_familias()}
+<p class="capa-sub">3 famílias · 6 grupos · 9 assinaturas · 76 ensaios</p>
 <p class="capa-autor">Por Dr. João Pithon</p>
 <p class="capa-ed">Primeira edição · São Paulo · 2026</p>
 </div>
@@ -1433,7 +1613,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 
 <div class="fichatec">
 <p class="meta"><span>Estudo <b>Reológico Pithon Napoli (2026)</b> — 76 ensaios · 75 produtos canônicos sob protocolo único</span><span>Ensaio <b>reômetro rotacional TA Instruments AR-1500ex</b> · 25&nbsp;°C · placas Ø20&nbsp;mm · gap 500&nbsp;µm · varredura 10&nbsp;→&nbsp;0,01&nbsp;Hz</span><span>Frequência de referência <b>0,7&nbsp;Hz</b></span></p>
-<div class="stats"><div class="stat"><b>34</b><span>baixo G′ — grupos 1–2</span></div><div class="stat"><b>14</b><span>intermediário — grupo 3</span></div><div class="stat"><b>28</b><span>alto G′ — grupos 4–5</span></div><div class="stat"><b>💧 6º</b><span>grupo funcional: baixo SF</span></div></div>
+<div class="stats"><div class="stat st-a"><b>34</b><span>família azul · baixo G′</span></div><div class="stat st-m"><b>14</b><span>família amarela · moderado G′</span></div><div class="stat st-r"><b>28</b><span>família roxa · alto G′</span></div><div class="stat st-s"><b>💧</b><span>baixo swelling factor: uso na olheira</span></div></div>
 <p class="qt" style="margin:1rem 0 .2rem">“Não existe o melhor preenchedor. Existe a propriedade reológica mais adequada para o comportamento que queremos produzir em cada região.”</p>
 </div>
 
@@ -1466,12 +1646,18 @@ figure.figura figcaption b{{color:var(--ink)}}
 <div class="box"><p style="margin:0"><b>Os quatro pontos coloridos de cada ficha.</b> Além da assinatura, toda ficha traz um ponto por parâmetro medido, na cor daquela métrica: <b>G′</b>, <b>G″</b> e <b>η*</b> em {dotchip('a',11)} azul (baixo) / {dotchip('m',11)} amarelo (intermediário) / {dotchip('r',11)} roxo (alto); <b>tan δ</b> em {dotchip('r',11)} roxo (elástico) / {dotchip('v',11)} verde (maleável) / {dotchip('p',11)} rosa (dinâmico). Cortes: G′ 200 e 300 Pa · G″ 50 e 100 Pa · tan δ 0,15 e 0,20 · η* 50 e 100 Pa·s. As zonas de transição são tratadas com curadoria versionada — o Restylane Defyne, a 292,62 Pa, é lido como roxo por comportamento.</p></div>
 
 {filete('cadeia', 160)}
-<h3>1.3 &nbsp;Os seis grupos e as três perguntas</h3>
-<p class="lead">Os produtos estão organizados em <b>seis grupos oficiais</b>. Os cinco primeiros são famílias de G′; o sexto é um <b>critério funcional transversal</b> — atravessa as famílias e tem cor própria.</p>
+<h3>1.3 &nbsp;As três famílias — o eixo do livro</h3>
+<p class="lead">Toda a organização deste guia repousa em <b>três famílias</b>, definidas pelo G′ e reconhecidas pela cor. É o que se deve levar daqui: <b style="color:var(--fam-a)">azul integra</b>, <b style="color:var(--fam-m)">amarelo preenche</b>, <b style="color:var(--fam-r)">roxo sustenta</b>.</p>
+<div class="fam3">
+<div class="f3 f3-a"><b>1 · BAIXO G′</b><span>azul</span><p>Espalha e integra, com pouco relevo próprio. Tem <b>duas assinaturas</b> — azul + rosa e azul + amarelo + rosa — que <b>atendem as mesmas regiões</b>: a segunda apenas valoriza um pouco mais.</p></div>
+<div class="f3 f3-m"><b>2 · MODERADO G′</b><span>amarelo</span><p>Preenche e equilibra. <b>Uma assinatura só</b>, sem subclasse — a família de transição, a cor do vale.</p></div>
+<div class="f3 f3-r"><b>3 · ALTO G′</b><span>roxo</span><p>Sustenta. <b>Roxo puro</b> projeta; <b>roxo com segunda cor</b> volumiza com menos projeção; e o alto G′ de <b>baixo swelling factor</b> é o que se usa na olheira. 💧</p></div>
+</div>
+<p>Os <b>seis grupos</b> dos capítulos 9 a 14 e as <b>nove assinaturas</b> não são um segundo sistema: são o detalhamento destas três famílias. A correspondência é direta — família azul = grupos 1 e 2 · família amarela = grupo 3 · família roxa = grupos 4 e 5, mais o critério funcional de baixo swelling factor.</p>
 <div class="g33 passos">
-<div class="box passo"><b>O que eu quero fazer?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Espalhar → <b style="color:var(--fam-a)">grupos 1–2</b> · Preencher → <b style="color:var(--fam-m)">grupo 3</b> · Projetar → <b style="color:var(--fam-r)">grupos 4–5</b>.</p></div>
-<div class="box passo"><b>Esse tecido se move muito?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Se sim, procure perfil <b style="color:var(--chip-rosa)">DINÂMICO</b> (tan δ rosa): acompanha o movimento.</p></div>
-<div class="box passo"><b>Preciso moldar e distribuir?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Se sim, procure perfil <b style="color:var(--fam-v)">MALEÁVEL</b> (tan δ verde): adapta e distribui.</p></div>
+<div class="box passo"><b>O que eu quero fazer?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Espalhar → <b style="color:var(--fam-a)">azul</b> · Preencher → <b style="color:var(--fam-m)">amarelo</b> · Sustentar → <b style="color:var(--fam-r)">roxo</b>.</p></div>
+<div class="box passo"><b>Esse tecido se move muito?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Se sim, procure a segunda cor <b style="color:var(--chip-rosa)">rosa</b> — o perfil dinâmico acompanha o movimento.</p></div>
+<div class="box passo"><b>Preciso moldar e distribuir?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Se sim, procure a segunda cor <b style="color:var(--fam-v)">verde</b> — o perfil maleável adapta e distribui.</p></div>
 </div>
 <p style="margin-bottom:.2rem"><b>Níveis de indicação nas fichas:</b> <span class="pill n1">região<i>1ª escolha</i></span> <span class="pill n2">região<i>forte</i></span> <span class="pill n3">região<i>boa</i></span> <span class="pill n4">região<i>seletiva</i></span></p>
 <p class="qt">A sequência decisória do Reology Map: <b>ANATOMIA → DEFEITO → OBJETIVO → PLANO → PRODUTO → VOLUME → TÉCNICA</b>. O produto é a <b>quinta</b> decisão, não a primeira.</p>
@@ -1588,16 +1774,26 @@ figure.figura figcaption b{{color:var(--ink)}}
 </section>
 
 <section class="folha" id="mapasec">
-{cap_head('Capítulo 5','O Mapa da Reologia — todos os géis em um plano')}
+{cap_head('Capítulo 5','O Mapa da Reologia — três famílias sobre a face',
+ 'Três cores organizam o livro inteiro: azul integra, amarelo preenche, roxo sustenta. As subclasses refinam — não criam famílias novas.')}
 <p class="lead">Cada ponto é um ensaio (0,7&nbsp;Hz). As faixas coloridas são as três famílias da 1ª cor (cortes 200 e 300&nbsp;Pa); a altura é o caráter dinâmico (tan δ). Passe o mouse/toque para identificar.</p>
 {scatter_main()}
 {LEG3}
 <p class="lead" style="font-size:.9rem">Achados: apenas <b>2 dos 76 ensaios</b> são “roxo completo” (grupo 4); os pares sobrepostos (Volift=Voluma, Belotero Volume+=Neauvia Intense, Stimulate=Singderm) estão em re-verificação; famílias comerciais inteiras vivem numa mesma zona — a cor classifica, o número posiciona.</p>
-<h3 style="margin-top:1.6rem">Mapa anatômico — que região pede qual assinatura</h3>
-<p class="lead">Uma face por grupo, com as regiões demarcadas na cor da assinatura correspondente. As regiões se repetem entre grupos de propósito: <b>a mesma mandíbula</b> aparece no grupo 3 (valorizar o contorno), no 4 (projetar o ângulo) e no 5 (volumizar). O que muda não é a região — é a tarefa.</p>
-{mapa_regioes()}
-<p class="lead" style="font-size:.92rem"><b>Como ler as cores:</b> o preenchimento traz a <b>1ª cor</b> (a família de G′) e o contorno traz a <b>2ª cor</b> (o comportamento em tan δ). O grupo 4 é <b>roxo puro</b> — estrutura sem modificador. O grupo 6 tem <b>cor própria</b> (<span style="color:var(--sf)"><b>turquesa</b></span>), porque não é uma família de G′ e sim um critério funcional transversal.</p>
-<p class="qt">A regra que atravessa o mapa: <b>o gel é escolhido para a tarefa, não para a região</b>. Um sulco nasolabial raso e um sulco nasolabial muito profundo estão em grupos diferentes — 2 e 5 — apesar de terem o mesmo nome anatômico.</p>
+<h3 style="margin-top:1.6rem">Mapa anatômico — as três famílias sobre a face</h3>
+<p class="lead">Este é o mapa central do livro. <b>Três famílias</b>, definidas pelo G′ e reconhecidas pela cor: <b style="color:var(--fam-a)">azul</b> quando o gel integra, <b style="color:var(--fam-m)">amarelo</b> quando preenche, <b style="color:var(--fam-r)">roxo</b> quando sustenta. Tudo o mais no livro — as nove assinaturas, os seis grupos, as fichas — é detalhamento destas três.</p>
+{mapa_familias()}
+<p class="lead" style="font-size:.92rem"><b>Como ler cada face:</b> o preenchimento traz a cor da família (a 1ª cor, o G′) e o contorno traz a segunda cor da assinatura. As regiões se repetem entre famílias de propósito — <b>a mesma mandíbula</b> aparece no amarelo (valorizar o contorno), no roxo puro (projetar o ângulo) e no roxo modulado (volumizar). O que muda não é a região: é a tarefa.</p>
+
+<div class="box"><p style="margin-top:0"><b>A subclasse do baixo G′ — duas assinaturas, uma indicação.</b> Dentro do azul existem dois perfis: <b>azul + rosa</b> {dotchip('a',11)}{dotchip('p',11)} e <b>azul + amarelo + rosa</b> {dotchip('a',11)}{dotchip('m',11)}{dotchip('p',11)}. A diferença entre eles é <i>quanto valorizam</i> — o segundo entrega um pouco mais de volume, porque tem G″ intermediário. <b>As regiões são as mesmas.</b> Não existe uma indicação para um e outra para o outro: onde vai o azul + rosa, vai também o azul + amarelo + rosa, e a escolha entre os dois é de quanto corpo se quer naquele mesmo lugar.</p>
+<p style="margin-bottom:0"><b>O moderado se mantém.</b> A família amarela tem uma assinatura só e não se subdivide: é o produto de transição, o que preenche o vale sem espalhar nem projetar.</p></div>
+
+{filete('cadeia', 160)}
+<h4 style="margin-bottom:.2rem">Os três usos do alto G′</h4>
+<p class="lead">A família roxa é a única com três destinos clínicos distintos — e é por isso que ela concentra mais produtos que qualquer outra no banco.</p>
+{usos_roxo()}
+<div class="box"><p style="margin:0"><b>O terceiro uso merece atenção.</b> A região infraorbitária não tolera inchaço: ali um gel que capte muita água produz edema visível e resultado imprevisível. A resposta não é usar um gel fraco — é usar um gel de <b>alto G′ com baixo swelling factor</b>, tipicamente de baixa concentração de ácido hialurônico e partículas grandes. É a família roxa entrando numa região que, à primeira vista, pediria a azul. <b>💧 O swelling factor não foi medido neste estudo</b>: os produtos deste uso são identificados por declaração de fabricante e pela experiência clínica do autor, nunca por dedução a partir do G′.</p></div>
+<p class="qt">A regra que atravessa o mapa: <b>o gel é escolhido para a tarefa, não para a região</b>. Um sulco nasolabial raso e um sulco nasolabial muito profundo estão em famílias diferentes — azul e roxa — apesar de terem o mesmo nome anatômico.</p>
 </section>
 
 <section class="folha" id="forma">
