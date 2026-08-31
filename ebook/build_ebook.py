@@ -907,16 +907,11 @@ for gi,g in enumerate(['G1','G2','G3','G4','G5']):
     extra=''
     if g=='G5':
         extra='<p class="famdesc" style="margin-top:.3rem">Caso de borda com curadoria oficial: Restylane Defyne (292,62 Pa) permanece neste grupo, com o G′ marcado em roxo por decisão do mapa.</p>'
-    ilus = f'''<div class="iludupla">
-{figura(f'{G["num"]}.1', ILU[f'g{G["num"]}a'], f'<b>{G["nome"]}</b> — leitura conceitual do grupo: características, leitura clínica, comportamento e mensagem-chave. Ilustração oficial do Mapa da Reologia.')}
-{figura(f'{G["num"]}.2', ILU[f'g{G["num"]}b'], 'Exemplos do grupo com os valores medidos a 0,7 Hz, na linguagem de cores do Mapa. As fichas a seguir detalham cada produto.')}
-</div>'''
     fam_secs.append(f'''<section class="famsec folha" id="grupo-{G['num']}">
 <div class="fambanner bn-{G['fam']}"><div><p class="fam-eyebrow"><b class="fam-de">{FAM_DE[g]}</b> · CAPÍTULO {CH0+gi} · GRUPO {G['num']} · {html.escape(G['tec'])}</p><h2>{G['nome']}</h2>
 <p class="famchave">“{html.escape(G['chave'])}”</p></div>
 <div><p class="famdesc"><b>Faixas do grupo:</b> {G['bandas']}<br><b>Melhores contextos:</b> {html.escape(G['ctx'])} · <b>Produto-exemplo:</b> {html.escape(G['ex'])}</p>{extra}
 <p class="famdesc" style="margin-top:.3rem"><b>{len(prods)} produtos</b> · G′ de {br(gmin)} a {br(gmax)} Pa</p></div></div>
-{ilus}
 <div class="grid2">{cards}</div></section>''')
 
 SF=[('Yvoire Contour+ Lido','1ª escolha do autor para olheiras: G′ alto (580 Pa) com baixa expansão declarada — "projeção com precisão volumétrica". Plano subcutâneo superficial na técnica do autor.'),
@@ -932,10 +927,6 @@ sf_sec=f'''<section class="famsec folha" id="grupo-6">
 <p class="famchave">“Alta projeção + baixa expansão + mais precisão + melhor controle de edema.”</p></div>
 <div><p class="famdesc"><b>Padrão funcional:</b> alto G′ + AH em baixa concentração (20–22 mg/mL) + partículas grandes + maior estabilidade química. <b>Melhores contextos:</b> olheiras e áreas em que o controle de expansão é determinante. Regra do autor: <i>nunca escolher olheira pelo G′</i> — “o tamanho da partícula ajuda a explicar; o SF medido é o que confirma”.</p>
 <p class="famdesc" style="margin-top:.3rem"><b>⚠ SF ainda não foi medido em nenhum produto</b> — prioridade da 2ª rodada laboratorial. Até lá, grupo clínico-declarativo (💧); sem SF confiável, não existe “ranking definitivo” para olheiras.</p></div></div>
-<div class="iludupla">
-{figura('6.1', ILU['g6a'], '<b>Baixo Swelling Factor</b> — o padrão funcional: alto G′ + baixa concentração de AH + partículas grandes + estabilidade química. Ilustração oficial do Mapa da Reologia.')}
-{figura('6.2', ILU['g6b'], 'Os produtos do grupo com G′ medido e a concentração declarada de AH (20–22 mg/mL). O Swelling Factor em si ainda não foi medido — é a prioridade da 2ª rodada.')}
-</div>
 <div class="grid3">{sf_cards}</div></section>'''
 
 def radar_demo(k,cap):
@@ -1351,8 +1342,6 @@ main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg)
 .figura-img figcaption b{{color:var(--gold-ink);font-weight:700}}
 .figura-img.sci>img{{background:#FBF9F6;padding:.5rem;border:2px solid var(--gold-2);border-radius:2px}}
 .figura-img.sci{{background:var(--card)}}
-.iludupla{{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:1rem}}
-.iludupla .figura-img{{margin:0}}
 /* box QR no padrão do autor */
 .qrbox{{margin:1.6rem 0;border:1px solid var(--line);border-left:4px solid var(--gold-2);background:var(--card);border-radius:4px;overflow:hidden}}
 .bx-head{{font-size:.9rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;padding:.5rem 1.2rem;color:var(--gold-3);background:linear-gradient(100deg,var(--navy) 0%,var(--navy-2) 70%,var(--navy-3) 130%)}}
@@ -1623,7 +1612,7 @@ figure.figura figcaption b{{color:var(--ink)}}
  'Antes de qualquer número existe química. Três desenhos explicam por que um gel de ácido hialurônico resiste, escoa e um dia desaparece.')}
 <h3>2.1 &nbsp;A molécula: um dissacarídeo repetido milhares de vezes</h3>
 <p class="lead">O ácido hialurônico é um <b>glicosaminoglicano linear</b> formado pela repetição de uma única unidade dissacarídica: <b>ácido D-glicurônico</b> (GlcA, C<sub>6</sub>H<sub>10</sub>O<sub>7</sub>) e <b>N-acetil-D-glicosamina</b> (GlcNAc, C<sub>8</sub>H<sub>15</sub>NO<sub>6</sub>). As duas unidades se unem alternadamente por ligações <b>β(1→3)</b> e <b>β(1→4)</b>, e uma única cadeia pode conter de <b>2.000 a mais de 25.000</b> dessas unidades.</p>
-{figura('3', ILU2['conc_molecula'], 'Arquitetura molecular do ácido hialurônico: as duas unidades monossacarídicas em projeção de Haworth e modelo tridimensional, com as ligações glicosídicas alternadas β(1→3) e β(1→4). Os grupos que aparecem na cadeia — carboxila (COO<sup>−</sup>), hidroxila (OH) e acetamido (NH-COCH<sub>3</sub>) — são os que dão ao HA sua avidez por água e, no passo seguinte, os pontos onde a reticulação acontece.', 'estrutura molecular do ácido hialurônico', cls='sci')}
+{figura('1', ILU2['conc_molecula'], 'Arquitetura molecular do ácido hialurônico: as duas unidades monossacarídicas em projeção de Haworth e modelo tridimensional, com as ligações glicosídicas alternadas β(1→3) e β(1→4). Os grupos que aparecem na cadeia — carboxila (COO<sup>−</sup>), hidroxila (OH) e acetamido (NH-COCH<sub>3</sub>) — são os que dão ao HA sua avidez por água e, no passo seguinte, os pontos onde a reticulação acontece.', 'estrutura molecular do ácido hialurônico', cls='sci')}
 <div class="box"><p style="margin:0"><b>O que distingue o HA dos outros glicosaminoglicanos:</b> ele <b>não possui grupamentos sulfatados</b> e <b>não está ligado covalentemente a proteínas</b>. É por isso que o HA nativo é solúvel, altamente hidratado e rapidamente degradado — e é justamente por isso que, para virar preenchedor, ele precisa ser <b>reticulado</b>.</p></div>
 
 {filete('cadeia', 160)}
@@ -1635,7 +1624,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 <div class="etapa"><div class="n">3</div><b>Reação de reticulação</b><p>Os grupos epóxi reagem com as <b>hidroxilas (−OH)</b> das cadeias de HA formando <b>ligações éter covalentes</b>, estáveis.</p></div>
 <div class="etapa"><div class="n">4</div><b>Rede tridimensional</b><p>Múltiplas ligações cruzadas formam uma rede 3D que <b>aprisiona grande quantidade de água</b>. É esse conjunto — rede + água — que chamamos de hidrogel.</p></div>
 </div>
-{figura('4', ILU2['conc_hidrogel'], 'Formação do hidrogel de ácido hialurônico em quatro etapas: solução, agente reticulante (BDDE), reação com as hidroxilas formando ligações éter e a rede tridimensional que retém água. O detalhe mostra a ligação éter no ponto de reticulação. <b>É deste desenho que vem o ornamento das cadeias em contas usado nos rodapés deste livro</b> — a identidade visual do Reology Map nasce da própria molécula.', 'formação do hidrogel de ácido hialurônico por reticulação', cls='sci')}
+{figura('2', ILU2['conc_hidrogel'], 'Formação do hidrogel de ácido hialurônico em quatro etapas: solução, agente reticulante (BDDE), reação com as hidroxilas formando ligações éter e a rede tridimensional que retém água. O detalhe mostra a ligação éter no ponto de reticulação. <b>É deste desenho que vem o ornamento das cadeias em contas usado nos rodapés deste livro</b> — a identidade visual do Reology Map nasce da própria molécula.', 'formação do hidrogel de ácido hialurônico por reticulação', cls='sci')}
 <p><b>Reticulantes descritos na literatura:</b> BDDE (1,4-butanodiol diglicidil éter) · DVS (divinil sulfona) · EGDE (etilenoglicol diglicidil éter) · PEGDGE (polietilenoglicol diglicidil éter).</p>
 <div class="box"><p style="margin-top:0"><b>O grau de reticulação governa três propriedades ao mesmo tempo</b> — e é aqui que a química encontra a reologia:</p>
 <div class="g33 passos" style="margin-top:.6rem">
@@ -1648,7 +1637,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 {filete('cadeia', 160)}
 <h3>2.3 &nbsp;A rede desfeita: hialuronidase</h3>
 <p class="lead">A mesma ligação que constrói a cadeia é a que permite desfazê-la. A <b>hialuronidase</b> cliva especificamente a ligação <b>β(1→4)</b> entre o GlcA e a GlcNAc — e só essa. É a base bioquímica da reversão de um preenchimento.</p>
-{figura('5', ILU2['conc_hialuron'], 'Degradação do gel de ácido hialurônico pela hialuronidase: o sítio de clivagem na ligação β(1→4), o mecanismo catalítico em quatro passos (reconhecimento, posicionamento da água no sítio ativo, clivagem hidrolítica e liberação dos oligossacarídeos) e o efeito progressivo sobre o gel.', 'ação da hialuronidase sobre o gel de ácido hialurônico', cls='sci')}
+{figura('3', ILU2['conc_hialuron'], 'Degradação do gel de ácido hialurônico pela hialuronidase: o sítio de clivagem na ligação β(1→4), o mecanismo catalítico em quatro passos (reconhecimento, posicionamento da água no sítio ativo, clivagem hidrolítica e liberação dos oligossacarídeos) e o efeito progressivo sobre o gel.', 'ação da hialuronidase sobre o gel de ácido hialurônico', cls='sci')}
 <div class="etapas">
 <div class="etapa"><div class="n">1</div><b>Gel íntegro</b><p>Alta viscosidade · rede tridimensional estável · capacidade plena de sustentação.</p></div>
 <div class="etapa"><div class="n">2</div><b>Degradação parcial</b><p>Viscosidade reduzida · perda parcial da sustentação · formação de cadeias menores.</p></div>
@@ -1665,7 +1654,7 @@ figure.figura figcaption b{{color:var(--ink)}}
 <div class="eq"><span class="t">Material viscoso</span><span class="f">τ = η · γ̇</span><p>O <b>mel</b>. <b>Escoa</b> sob tensão e não retorna. A tensão de cisalhamento é proporcional à taxa de deformação; η é a viscosidade.</p></div>
 <div class="eq"><span class="t">Hidrogel</span><span class="f">G* = G′ + iG″</span><p>O <b>gel de ácido hialurônico</b>. Deforma, escoa lentamente até um platô e <b>recupera parte</b> da deformação — nunca toda.</p></div>
 </div>
-{figura('6', ILU2['conc_viscoel'], 'Viscoelasticidade da base ao gel: elasticidade (mola, Lei de Hooke), viscosidade (mel, τ = η·γ̇), a distinção entre fluido e sólido elástico sob tensão constante, o hidrogel como caso intermediário e os três modelos reológicos clássicos — Maxwell, Kelvin-Voigt e Burgers — aplicados aos preenchedores.', 'capítulo de viscoelasticidade: elasticidade, viscosidade e modelos reológicos', cls='sci')}
+{figura('4', ILU2['conc_viscoel'], 'Viscoelasticidade da base ao gel: elasticidade (mola, Lei de Hooke), viscosidade (mel, τ = η·γ̇), a distinção entre fluido e sólido elástico sob tensão constante, o hidrogel como caso intermediário e os três modelos reológicos clássicos — Maxwell, Kelvin-Voigt e Burgers — aplicados aos preenchedores.', 'capítulo de viscoelasticidade: elasticidade, viscosidade e modelos reológicos', cls='sci')}
 <h3>Os três modelos clássicos</h3>
 <div class="mods">
 <div class="mod"><b>Maxwell</b><p>Mola e amortecedor <b>em série</b>. Responde instantaneamente e depois escoa sem limite. Descreve bem a <b>relaxação</b> de tensão.</p></div>
