@@ -888,13 +888,122 @@ def usos_roxo():
     return f'<div class="usos">{out}</div>'
 
 
-def capa_familias():
-    """Trio da capa: as três famílias em traço claro sobre o navy."""
-    out = ''
-    for f in FAMILIAS:
-        out += (f'<figure class="cf"><span class="cf-t">{f["nome"]}</span>'
-                f'{face_fam(f, 168, "facereg capa-face")}</figure>')
-    return f'<div class="capa-trio">{out}</div>'
+
+# ---------------- arte da capa: varredura de frequência + rede molecular ----------------
+CAPA_CURVAS = [('Restylane Shaype Lido', 'c-r'), ('Belotero Volume + Lido', 'c-m'),
+               ('Belotero Balance Lido', 'c-a')]
+CAPA_FRQ = [(0.01, '0.01Hz'), (0.1, '0.1Hz'), (0.7, '0.7Hz'), (1.0, '1Hz'), (5.0, '5Hz'), (10.0, '10Hz')]
+
+def _suave(pts):
+    """Catmull-Rom convertida em bézier: curva contínua pelos pontos medidos."""
+    if len(pts) < 3:
+        return 'M' + ' L'.join(f'{x},{y}' for x, y in pts)
+    d = f'M{pts[0][0]},{pts[0][1]}'
+    for i in range(len(pts) - 1):
+        p0 = pts[i - 1] if i else pts[0]
+        p1, p2 = pts[i], pts[i + 1]
+        p3 = pts[i + 2] if i + 2 < len(pts) else p2
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6)
+        d += f' C{c1[0]:.1f},{c1[1]:.1f} {c2[0]:.1f},{c2[1]:.1f} {p2[0]},{p2[1]}'
+    return d
+
+def _hexring(cx, cy, r, rot=0):
+    return [(round(cx + r * math.cos(math.radians(a + rot)), 1),
+             round(cy + r * math.sin(math.radians(a + rot)), 1)) for a in range(30, 390, 60)]
+
+def capa_arte():
+    """Arte central da capa, nativa e auditável: as curvas são G′ medido a
+    0,01–10 Hz de um produto de cada família — não são traço decorativo."""
+    gx0, gx1, gy0, gy1 = 104, 556, 44, 424
+    LX0, LX1 = -2.0, 2.0
+    LY0, LY1 = math.log10(7), math.log10(1500)
+    def px(f): return round(gx0 + (math.log10(f) - LX0) / (LX1 - LX0) * (gx1 - gx0), 1)
+    def py(v): return round(gy1 - (math.log10(v) - LY0) / (LY1 - LY0) * (gy1 - gy0), 1)
+
+    # ondas decorativas ao fundo — o gel escoando sob solicitação
+    ondas = ''
+    for i in range(9):
+        amp = 34 - i * 2.2
+        yb = 96 + i * 21
+        ph = i * 33.0
+        op = round(.34 - i * .030, 3)
+        pts = [(round(x, 1),
+                round(yb - amp * math.sin((x + ph - 40) / 190)
+                      - amp * .42 * math.sin((x + ph * 1.7 - 40) / 71)
+                      - amp * .18 * math.sin((x - ph - 40) / 38), 1))
+               for x in range(20, 1011, 22)]
+        ondas += f'<path d="{_suave(pts)}" class="cp-onda" opacity="{op}"/>'
+
+    # eixos e escala logarítmica
+    eixos = (f'<path d="M{gx0},{gy0 - 6} L{gx0},{gy1} L{gx1 + 16},{gy1}" class="cp-eixo"/>')
+    for e in range(-2, 3):
+        x = px(10 ** e)
+        sup = {-2: '⁻²', -1: '⁻¹', 0: '⁰', 1: '¹', 2: '²'}[e]
+        eixos += (f'<path d="M{x},{gy1} L{x},{gy1 + 7}" class="cp-eixo"/>'
+                  f'<text x="{x}" y="{gy1 + 26}" class="cp-tick" text-anchor="middle">10{sup}</text>')
+    for v in (10, 100, 1000):
+        y = py(v)
+        eixos += (f'<path d="M{gx0 - 6},{y} L{gx0},{y}" class="cp-eixo"/>'
+                  f'<path d="M{gx0},{y} L{gx1 + 16},{y}" class="cp-grade"/>')
+    eixos += (f'<text x="{gx0 - 18}" y="{(gy0 + gy1) / 2}" class="cp-ax" text-anchor="middle" '
+              f'transform="rotate(-90 {gx0 - 18} {(gy0 + gy1) / 2})">G′, G″ (Pa)</text>'
+              f'<text x="{(gx0 + gx1) / 2}" y="{gy1 + 50}" class="cp-ax" text-anchor="middle">Frequência (Hz)</text>')
+
+    # curvas medidas: G′ de um produto por família, com as contas nos pontos reais
+    curvas = ''
+    for k, cls in CAPA_CURVAS:
+        r = DATA[k]
+        pts = [(px(f), py(r[f'G1_{fk}'])) for f, fk in CAPA_FRQ]
+        curvas += f'<path d="{_suave(pts)}" class="cp-linha {cls}"/>'
+        curvas += ''.join(f'<circle cx="{x}" cy="{y}" r="3.1" class="cp-pt {cls}"/>' for x, y in pts)
+    # G″ do estrutural, tracejado — o contraponto viscoso
+    kr = CAPA_CURVAS[0][0]
+    ptsg2 = [(px(f), py(DATA[kr][f'G2_{fk}'])) for f, fk in CAPA_FRQ]
+    curvas += f'<path d="{_suave(ptsg2)}" class="cp-linha cp-g2"/>'
+
+    # rede molecular: anéis fundidos em bola-e-bastão, pendentes ancorados
+    bonds, atoms = '', {}
+    CEN = [(752, 248, 64), (860, 184, 64), (868, 318, 64)]
+    rings = [_hexring(cx, cy, r) for cx, cy, r in CEN]
+    for ring in rings:
+        for i, p in enumerate(ring):
+            q = ring[(i + 1) % 6]
+            bonds += f'<line x1="{p[0]}" y1="{p[1]}" x2="{q[0]}" y2="{q[1]}" class="cp-bond"/>'
+            atoms[p] = 15.5
+    # ramos externos: partem de um vértice real, na direção que sai do anel
+    for ri, vi, ln, rr in ((0, 3, 48, 11.5), (1, 1, 46, 11.0), (2, 5, 50, 11.5), (0, 4, 42, 10.0)):
+        cx, cy, _ = CEN[ri]
+        vx, vy = rings[ri][vi]
+        dx, dy = vx - cx, vy - cy
+        n = math.hypot(dx, dy) or 1
+        ex, ey = round(vx + dx / n * ln, 1), round(vy + dy / n * ln, 1)
+        bonds += f'<line x1="{vx}" y1="{vy}" x2="{ex}" y2="{ey}" class="cp-bond"/>'
+        atoms.setdefault((ex, ey), rr)
+    spheres = ''
+    for (x, y), r2 in sorted(atoms.items(), key=lambda kv: kv[0][1]):
+        spheres += (f'<circle cx="{x}" cy="{y}" r="{r2}" class="cp-sph"/>'
+                    f'<circle cx="{round(x - r2 * .32, 1)}" cy="{round(y - r2 * .36, 1)}" '
+                    f'r="{round(r2 * .34, 1)}" class="cp-sph-hi"/>')
+    mol = f'<g class="cp-mol">{bonds}{spheres}</g>'
+
+    return (f'<svg class="capa-arte" viewBox="0 0 1000 500" role="img" '
+            f'aria-label="Varredura de frequência de 0,01 a 10 Hz: curvas de G′ medidas de um produto '
+            f'de cada família reológica, sobre a representação da rede molecular do ácido hialurônico">'
+            f'<g class="cp-ondas">{ondas}</g>{mol}{eixos}{curvas}</svg>')
+
+def capa_orn():
+    """Losango floral dourado — divisor da capa."""
+    pet = ''
+    for a in (0, 90, 180, 270):
+        pet += (f'<path d="M0,0 C7,-8 7,-19 0,-27 C-7,-19 -7,-8 0,0 Z" class="co-p" '
+                f'transform="rotate({a})"/>')
+    for a in (45, 135, 225, 315):
+        pet += (f'<path d="M0,0 C4.4,-5 4.4,-12 0,-17 C-4.4,-12 -4.4,-5 0,0 Z" class="co-p2" '
+                f'transform="rotate({a})"/>')
+    return ('<svg class="capa-orn" viewBox="-42 -42 84 84" role="presentation" aria-hidden="true">'
+            f'<g>{pet}</g><circle r="4.2" class="co-c"/>'
+            '<path d="M-40,0 L-27,0 M40,0 L27,0" class="co-l"/></svg>')
 
 # ---------------- seções de grupos ----------------
 FAM_DE = {'G1': 'FAMÍLIA AZUL', 'G2': 'FAMÍLIA AZUL', 'G3': 'FAMÍLIA AMARELA', 'G4': 'FAMÍLIA ROXA', 'G5': 'FAMÍLIA ROXA'}
@@ -1023,22 +1132,63 @@ a{{color:var(--accent-ink)}} a:focus-visible{{outline:2px solid var(--accent);ou
 .chip{{display:inline-block;border-radius:50%;border:1.5px solid rgba(0,0,0,.16);margin-right:4px;vertical-align:-1px}}
 h1,h2,h3,h4{{font-family:'Barlow Condensed','Barlow',sans-serif;text-wrap:balance;line-height:1.06}}
 .capa{{padding:0;margin-bottom:1.6rem;border:none;background:none;border-radius:0}}
-.capa-in{{background:linear-gradient(142deg,#0A3557 0%,#0E4269 46%,#2E76A8 100%);padding:clamp(1rem,3vw,2rem);position:relative;overflow:hidden}}
-.capa-in::before{{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 8%,rgba(255,255,255,.13),transparent 55%);pointer-events:none}}
-.capa-frame{{border:1.5px solid var(--gold-2);padding:clamp(1.6rem,4vw,2.8rem) clamp(1rem,3vw,2.2rem);text-align:center;position:relative}}
+.capa-in{{background:linear-gradient(160deg,#0B2647 0%,#0A2141 38%,#0C2B50 72%,#0A1E3B 100%);
+ padding:clamp(.9rem,2.6vw,1.7rem);position:relative;overflow:hidden}}
+.capa-in::before{{content:"";position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(ellipse at 72% 18%,rgba(88,150,214,.20),transparent 58%),
+ radial-gradient(ellipse at 20% 88%,rgba(60,110,170,.14),transparent 62%)}}
+.capa-spine{{position:absolute;left:0;top:0;bottom:0;width:clamp(10px,1.5vw,20px);pointer-events:none;
+ background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.22) 45%,transparent);
+ border-right:1px solid rgba(224,166,75,.16)}}
+.capa-frame{{border:1px solid rgba(224,166,75,.62);padding:clamp(1.5rem,3.6vw,2.6rem) clamp(1rem,3vw,2.4rem) clamp(1.2rem,3vw,2rem);
+ text-align:center;position:relative}}
 .capa-frame p{{max-width:none}}
-.capa-brand{{font-size:.8rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-3);margin:0 0 1.1rem}}
-.capa h1{{font-size:clamp(2.4rem,7.6vw,5rem);font-weight:700;line-height:.94;letter-spacing:.005em;margin:0 0 .2rem;text-transform:uppercase}}
-.capa h1 .gold{{background:linear-gradient(178deg,#F7DA96 4%,#E0A64B 42%,#C08A2E 74%,#F0C878 100%);-webkit-background-clip:text;background-clip:text;color:#E0A64B;-webkit-text-fill-color:transparent;display:block}}
-@supports not (-webkit-background-clip:text){{.capa h1 .gold{{-webkit-text-fill-color:#E0A64B;color:#E0A64B}}}}
-.capa h1 .wht{{color:#fff;font-weight:500;font-size:.5em;letter-spacing:.045em;display:block;margin-top:.2em}}
-.capa-grid{{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.5rem,1.6vw,1rem);margin:clamp(1.1rem,3vw,1.9rem) auto;max-width:660px}}
-.capa-grid figure{{margin:0;border:2px solid var(--gold-2);background:#08283F;overflow:hidden}}
-.capa-grid img{{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}}
-.capa-sub{{border:1px solid var(--gold-2);display:inline-block;padding:.5rem 1.4rem;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:clamp(.86rem,2.1vw,1.12rem);font-weight:500;letter-spacing:.075em;text-transform:uppercase;margin:.2rem auto 1.2rem}}
-.capa-autor{{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.15rem,3vw,1.6rem);font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);margin:0}}
-.capa-ed{{font-family:'Barlow',sans-serif;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);margin:.7rem 0 0}}
+.capa-brand{{font-family:'Barlow',sans-serif;font-size:clamp(.6rem,1.5vw,.78rem);font-weight:600;
+ letter-spacing:.30em;text-transform:uppercase;color:var(--gold-2);margin:0}}
+.capa-dot{{display:block;width:5px;height:5px;background:var(--gold-2);margin:.9rem auto 1.1rem;
+ transform:rotate(45deg)}}
+.capa h1{{margin:0;font-family:'Source Serif 4',Georgia,serif;font-weight:600;text-transform:uppercase;
+ line-height:.98;letter-spacing:.012em}}
+.capa h1 .t1,.capa h1 .t3{{display:block;
+ background:linear-gradient(176deg,#F3D69A 2%,#E3B063 34%,#C89237 70%,#EFCB84 100%);
+ -webkit-background-clip:text;background-clip:text;color:#E0A64B;-webkit-text-fill-color:transparent}}
+@supports not (-webkit-background-clip:text){{.capa h1 .t1,.capa h1 .t3{{-webkit-text-fill-color:#E0A64B;color:#E0A64B}}}}
+.capa h1 .t1{{font-size:clamp(2.1rem,8.4vw,5.1rem)}}
+.capa h1 .t3{{font-size:clamp(1.6rem,6.3vw,3.85rem)}}
+.capa h1 .t2{{display:flex;align-items:center;justify-content:center;gap:clamp(.7rem,2.4vw,1.5rem);
+ font-size:clamp(.92rem,2.9vw,1.75rem);font-weight:400;letter-spacing:.34em;color:var(--gold-3);
+ margin:.18em 0 .1em}}
+.capa h1 .t2 i{{height:1px;width:clamp(28px,7vw,86px);background:rgba(224,166,75,.55)}}
+.capa-sub{{font-family:'Barlow',sans-serif;font-size:clamp(.8rem,2.15vw,1.24rem);font-weight:400;
+ color:rgba(238,245,251,.94);margin:clamp(.9rem,2.4vw,1.5rem) 0 0;letter-spacing:.012em}}
+.capa-autor{{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(1.3rem,4vw,2.35rem);
+ font-weight:600;color:var(--gold-2);margin:0;letter-spacing:.01em}}
+.capa-ed{{font-family:'Barlow',sans-serif;font-size:clamp(.56rem,1.4vw,.74rem);letter-spacing:.26em;
+ text-transform:uppercase;color:var(--gold-3);opacity:.82;margin:.85rem 0 0}}
 .capa-band{{height:8px;background:linear-gradient(90deg,var(--fam-a) 0 33.33%,var(--fam-m) 33.33% 66.66%,var(--fam-r) 66.66% 100%)}}
+/* arte nativa da capa: varredura de frequência real + rede molecular */
+.capa-arte{{display:block;width:100%;max-width:760px;height:auto;margin:clamp(1rem,2.8vw,1.9rem) auto 0;overflow:visible}}
+.cp-onda{{fill:none;stroke:#8FC0EC;stroke-width:1.1}}
+.cp-eixo{{fill:none;stroke:rgba(214,232,247,.55);stroke-width:1.1}}
+.cp-grade{{fill:none;stroke:rgba(214,232,247,.13);stroke-width:1;stroke-dasharray:3 6}}
+.cp-tick,.cp-ax{{fill:rgba(214,232,247,.72);font-family:'Barlow',sans-serif;font-size:15px}}
+.cp-ax{{font-size:16px;fill:rgba(214,232,247,.8)}}
+.cp-linha{{fill:none;stroke-width:2.1;stroke-linecap:round}}
+.cp-pt{{stroke:rgba(10,33,65,.85);stroke-width:1}}
+.c-a{{stroke:#7FB6E8}} circle.c-a{{fill:#7FB6E8}}
+.c-m{{stroke:#E8C577}} circle.c-m{{fill:#E8C577}}
+.c-r{{stroke:#B79BEA}} circle.c-r{{fill:#B79BEA}}
+.cp-g2{{stroke:rgba(190,214,238,.62);stroke-dasharray:5 5;stroke-width:1.6}}
+.cp-bond{{stroke:#3E7BB4;stroke-width:2.6;opacity:.62;stroke-linecap:round}}
+.cp-sph{{fill:#1D4E80;stroke:#4A88C0;stroke-width:1.2;opacity:.88}}
+.cp-sph-hi{{fill:#8CBEE8;opacity:.55}}
+.cp-mol{{opacity:.8}}
+.capa-orn{{display:block;width:clamp(52px,9vw,76px);height:auto;margin:clamp(.9rem,2.6vw,1.5rem) auto clamp(.7rem,2vw,1.1rem);overflow:visible}}
+.co-p{{fill:none;stroke:var(--gold-2);stroke-width:1.5}}
+.co-p2{{fill:none;stroke:var(--gold-2);stroke-width:1.1;opacity:.6}}
+.co-c{{fill:var(--gold-2)}}
+.co-l{{stroke:var(--gold-2);stroke-width:1;opacity:.6}}
+@media (max-width:640px){{.capa-arte{{max-width:none}} .cp-tick{{font-size:19px}} .cp-ax{{font-size:20px}}}}
 
 /* ================= FORMATO DE LIVRO: folhas, rodapés e ornamentos ================= */
 main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg);counter-reset:folha}}
@@ -1312,14 +1462,6 @@ main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg)
 .usocard p{{font-family:'Barlow',sans-serif;font-size:.78rem;color:var(--ink2);margin:.2rem 0 0;
  line-height:1.45;text-align:left}}
 
-.capa-trio{{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.4rem,1.6vw,1.1rem);
- margin:clamp(1rem,3vw,1.7rem) auto;max-width:600px}}
-.capa-trio .cf{{margin:0;border:1px solid var(--gold-2);padding:.5rem .3rem .2rem;
- background:rgba(255,255,255,.04);display:flex;flex-direction:column;align-items:center}}
-.cf-t{{font-family:'Barlow Condensed',sans-serif;font-size:clamp(.62rem,1.7vw,.86rem);
- font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-3);
- margin-bottom:.15rem;text-align:center}}
-.capa-trio .facereg{{width:100%;height:auto;max-width:168px}}
 .capa-face .rg{{fill-opacity:.72;stroke-width:2.4}}
 
 .fam3{{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.85rem;margin:1rem 0}}
@@ -1588,12 +1730,15 @@ figure.figura figcaption b{{color:var(--ink)}}
 <main>
 <header class="capa">
 <div class="capa-in">
+<div class="capa-spine"></div>
 <div class="capa-frame">
 <p class="capa-brand">Reology Map · Ciência que guia escolhas</p>
-<h1><span class="gold">Reologia do<br>Ácido Hialurônico</span><span class="wht">Guia dos preenchedores do mercado brasileiro</span></h1>
-{capa_familias()}
-<p class="capa-sub">3 famílias · 6 grupos · 9 assinaturas · 76 ensaios</p>
-<p class="capa-autor">Por Dr. João Pithon</p>
+<span class="capa-dot"></span>
+<h1><span class="t1">Reologia</span><span class="t2"><i></i>dos<i></i></span><span class="t1">Géis de</span><span class="t3">Ácido Hialurônico</span></h1>
+<p class="capa-sub">Fundamentos, Classificação e Aplicações Clínicas</p>
+{capa_arte()}
+{capa_orn()}
+<p class="capa-autor">Dr. João Pithon</p>
 <p class="capa-ed">Primeira edição · São Paulo · 2026</p>
 </div>
 </div>

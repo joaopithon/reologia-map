@@ -56,22 +56,63 @@ a{color:var(--accent-ink)} a:focus-visible{outline:2px solid var(--accent);outli
 .chip{display:inline-block;border-radius:50%;border:1.5px solid rgba(0,0,0,.16);margin-right:4px;vertical-align:-1px}
 h1,h2,h3,h4{font-family:'Barlow Condensed','Barlow',sans-serif;text-wrap:balance;line-height:1.06}
 .capa{padding:0;margin-bottom:1.6rem;border:none;background:none;border-radius:0}
-.capa-in{background:linear-gradient(142deg,#0A3557 0%,#0E4269 46%,#2E76A8 100%);padding:clamp(1rem,3vw,2rem);position:relative;overflow:hidden}
-.capa-in::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 8%,rgba(255,255,255,.13),transparent 55%);pointer-events:none}
-.capa-frame{border:1.5px solid var(--gold-2);padding:clamp(1.6rem,4vw,2.8rem) clamp(1rem,3vw,2.2rem);text-align:center;position:relative}
+.capa-in{background:linear-gradient(160deg,#0B2647 0%,#0A2141 38%,#0C2B50 72%,#0A1E3B 100%);
+ padding:clamp(.9rem,2.6vw,1.7rem);position:relative;overflow:hidden}
+.capa-in::before{content:"";position:absolute;inset:0;pointer-events:none;
+ background:radial-gradient(ellipse at 72% 18%,rgba(88,150,214,.20),transparent 58%),
+ radial-gradient(ellipse at 20% 88%,rgba(60,110,170,.14),transparent 62%)}
+.capa-spine{position:absolute;left:0;top:0;bottom:0;width:clamp(10px,1.5vw,20px);pointer-events:none;
+ background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.22) 45%,transparent);
+ border-right:1px solid rgba(224,166,75,.16)}
+.capa-frame{border:1px solid rgba(224,166,75,.62);padding:clamp(1.5rem,3.6vw,2.6rem) clamp(1rem,3vw,2.4rem) clamp(1.2rem,3vw,2rem);
+ text-align:center;position:relative}
 .capa-frame p{max-width:none}
-.capa-brand{font-size:.8rem;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--gold-3);margin:0 0 1.1rem}
-.capa h1{font-size:clamp(2.4rem,7.6vw,5rem);font-weight:700;line-height:.94;letter-spacing:.005em;margin:0 0 .2rem;text-transform:uppercase}
-.capa h1 .gold{background:linear-gradient(178deg,#F7DA96 4%,#E0A64B 42%,#C08A2E 74%,#F0C878 100%);-webkit-background-clip:text;background-clip:text;color:#E0A64B;-webkit-text-fill-color:transparent;display:block}
-@supports not (-webkit-background-clip:text){.capa h1 .gold{-webkit-text-fill-color:#E0A64B;color:#E0A64B}}
-.capa h1 .wht{color:#fff;font-weight:500;font-size:.5em;letter-spacing:.045em;display:block;margin-top:.2em}
-.capa-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(.5rem,1.6vw,1rem);margin:clamp(1.1rem,3vw,1.9rem) auto;max-width:660px}
-.capa-grid figure{margin:0;border:2px solid var(--gold-2);background:#08283F;overflow:hidden}
-.capa-grid img{display:block;width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}
-.capa-sub{border:1px solid var(--gold-2);display:inline-block;padding:.5rem 1.4rem;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:clamp(.86rem,2.1vw,1.12rem);font-weight:500;letter-spacing:.075em;text-transform:uppercase;margin:.2rem auto 1.2rem}
-.capa-autor{font-family:'Barlow Condensed',sans-serif;font-size:clamp(1.15rem,3vw,1.6rem);font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);margin:0}
-.capa-ed{font-family:'Barlow',sans-serif;font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.62);margin:.7rem 0 0}
+.capa-brand{font-family:'Barlow',sans-serif;font-size:clamp(.6rem,1.5vw,.78rem);font-weight:600;
+ letter-spacing:.30em;text-transform:uppercase;color:var(--gold-2);margin:0}
+.capa-dot{display:block;width:5px;height:5px;background:var(--gold-2);margin:.9rem auto 1.1rem;
+ transform:rotate(45deg)}
+.capa h1{margin:0;font-family:'Source Serif 4',Georgia,serif;font-weight:600;text-transform:uppercase;
+ line-height:.98;letter-spacing:.012em}
+.capa h1 .t1,.capa h1 .t3{display:block;
+ background:linear-gradient(176deg,#F3D69A 2%,#E3B063 34%,#C89237 70%,#EFCB84 100%);
+ -webkit-background-clip:text;background-clip:text;color:#E0A64B;-webkit-text-fill-color:transparent}
+@supports not (-webkit-background-clip:text){.capa h1 .t1,.capa h1 .t3{-webkit-text-fill-color:#E0A64B;color:#E0A64B}}
+.capa h1 .t1{font-size:clamp(2.1rem,8.4vw,5.1rem)}
+.capa h1 .t3{font-size:clamp(1.6rem,6.3vw,3.85rem)}
+.capa h1 .t2{display:flex;align-items:center;justify-content:center;gap:clamp(.7rem,2.4vw,1.5rem);
+ font-size:clamp(.92rem,2.9vw,1.75rem);font-weight:400;letter-spacing:.34em;color:var(--gold-3);
+ margin:.18em 0 .1em}
+.capa h1 .t2 i{height:1px;width:clamp(28px,7vw,86px);background:rgba(224,166,75,.55)}
+.capa-sub{font-family:'Barlow',sans-serif;font-size:clamp(.8rem,2.15vw,1.24rem);font-weight:400;
+ color:rgba(238,245,251,.94);margin:clamp(.9rem,2.4vw,1.5rem) 0 0;letter-spacing:.012em}
+.capa-autor{font-family:'Source Serif 4',Georgia,serif;font-size:clamp(1.3rem,4vw,2.35rem);
+ font-weight:600;color:var(--gold-2);margin:0;letter-spacing:.01em}
+.capa-ed{font-family:'Barlow',sans-serif;font-size:clamp(.56rem,1.4vw,.74rem);letter-spacing:.26em;
+ text-transform:uppercase;color:var(--gold-3);opacity:.82;margin:.85rem 0 0}
 .capa-band{height:8px;background:linear-gradient(90deg,var(--fam-a) 0 33.33%,var(--fam-m) 33.33% 66.66%,var(--fam-r) 66.66% 100%)}
+/* arte nativa da capa: varredura de frequência real + rede molecular */
+.capa-arte{display:block;width:100%;max-width:760px;height:auto;margin:clamp(1rem,2.8vw,1.9rem) auto 0;overflow:visible}
+.cp-onda{fill:none;stroke:#8FC0EC;stroke-width:1.1}
+.cp-eixo{fill:none;stroke:rgba(214,232,247,.55);stroke-width:1.1}
+.cp-grade{fill:none;stroke:rgba(214,232,247,.13);stroke-width:1;stroke-dasharray:3 6}
+.cp-tick,.cp-ax{fill:rgba(214,232,247,.72);font-family:'Barlow',sans-serif;font-size:15px}
+.cp-ax{font-size:16px;fill:rgba(214,232,247,.8)}
+.cp-linha{fill:none;stroke-width:2.1;stroke-linecap:round}
+.cp-pt{stroke:rgba(10,33,65,.85);stroke-width:1}
+.c-a{stroke:#7FB6E8} circle.c-a{fill:#7FB6E8}
+.c-m{stroke:#E8C577} circle.c-m{fill:#E8C577}
+.c-r{stroke:#B79BEA} circle.c-r{fill:#B79BEA}
+.cp-g2{stroke:rgba(190,214,238,.62);stroke-dasharray:5 5;stroke-width:1.6}
+.cp-bond{stroke:#3E7BB4;stroke-width:2.6;opacity:.62;stroke-linecap:round}
+.cp-sph{fill:#1D4E80;stroke:#4A88C0;stroke-width:1.2;opacity:.88}
+.cp-sph-hi{fill:#8CBEE8;opacity:.55}
+.cp-mol{opacity:.8}
+.capa-orn{display:block;width:clamp(52px,9vw,76px);height:auto;margin:clamp(.9rem,2.6vw,1.5rem) auto clamp(.7rem,2vw,1.1rem);overflow:visible}
+.co-p{fill:none;stroke:var(--gold-2);stroke-width:1.5}
+.co-p2{fill:none;stroke:var(--gold-2);stroke-width:1.1;opacity:.6}
+.co-c{fill:var(--gold-2)}
+.co-l{stroke:var(--gold-2);stroke-width:1;opacity:.6}
+@media (max-width:640px){.capa-arte{max-width:none} .cp-tick{font-size:19px} .cp-ax{font-size:20px}}
 
 /* ================= FORMATO DE LIVRO: folhas, rodapés e ornamentos ================= */
 main{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg);counter-reset:folha}
@@ -345,14 +386,6 @@ main{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg);
 .usocard p{font-family:'Barlow',sans-serif;font-size:.78rem;color:var(--ink2);margin:.2rem 0 0;
  line-height:1.45;text-align:left}
 
-.capa-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.4rem,1.6vw,1.1rem);
- margin:clamp(1rem,3vw,1.7rem) auto;max-width:600px}
-.capa-trio .cf{margin:0;border:1px solid var(--gold-2);padding:.5rem .3rem .2rem;
- background:rgba(255,255,255,.04);display:flex;flex-direction:column;align-items:center}
-.cf-t{font-family:'Barlow Condensed',sans-serif;font-size:clamp(.62rem,1.7vw,.86rem);
- font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-3);
- margin-bottom:.15rem;text-align:center}
-.capa-trio .facereg{width:100%;height:auto;max-width:168px}
 .capa-face .rg{fill-opacity:.72;stroke-width:2.4}
 
 .fam3{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:.85rem;margin:1rem 0}
@@ -621,255 +654,15 @@ figure.figura figcaption b{color:var(--ink)}
 <main>
 <header class="capa">
 <div class="capa-in">
+<div class="capa-spine"></div>
 <div class="capa-frame">
 <p class="capa-brand">Reology Map · Ciência que guia escolhas</p>
-<h1><span class="gold">Reologia do<br>Ácido Hialurônico</span><span class="wht">Guia dos preenchedores do mercado brasileiro</span></h1>
-<div class="capa-trio"><figure class="cf"><span class="cf-t">BAIXO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-a);--rg-s:var(--chip-rosa)" aria-label="regiões faciais do grupo 1: Região oral e perioral · lábio · têmpora, fronte e supercílio · sulco nasolabial · sulco labiomentual."><defs><clipPath id="fr1"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
-<defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
-  <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
-  <stop offset="100%" stop-color="var(--face-sh)"/>
- </radialGradient>
- <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0%" stop-color="var(--hair-2)"/>
-  <stop offset="100%" stop-color="var(--hair-1)"/>
- </linearGradient>
-</defs>
-<g class="fc-body">
- <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
-  C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
-  C178,357 175,345 176,322 Z"/>
- <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
-  L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
-</g>
-<path class="fc-hairb" d="M150,60 C205,60 241,97 243,157 C244,192 241,228 234,260
- C231,273 227,284 222,293 L208,284 C217,252 222,215 220,178 C216,130 194,100 150,100
- C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
- C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
-<path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
-<path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
- C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
-<g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-<g clip-path="url(#fr1)"><path d="M117,252 C126,239 141,241 150,245 C159,241 174,239 183,252 C181,270 169,285 150,287 C131,285 119,270 117,252 ZM125,257 C135,276 165,276 175,257 C166,246 156,244 150,250 C144,244 134,246 125,257 Z" class="rg" fill-rule="evenodd"><title>perioral</title></path><path d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257 C165,276 135,276 125,257 Z" class="rg"><title>labios</title></path><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"><title>temporal</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"/></g><path d="M91,133 C93,103 119,95 150,95 C181,95 207,103 209,133 C180,140 120,140 91,133 Z" class="rg"><title>fronte</title></path><path d="M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z" class="rg"><title>supercilio</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z" class="rg"/></g><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"/></g><path d="M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z" class="rg"><title>labiomentual</title></path></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg></figure><figure class="cf"><span class="cf-t">MODERADO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-m);--rg-s:var(--fam-m)" aria-label="regiões faciais do grupo 2: Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · região auricular anterior · valorização de mandíbula."><defs><clipPath id="fr2"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
-<defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
-  <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
-  <stop offset="100%" stop-color="var(--face-sh)"/>
- </radialGradient>
- <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0%" stop-color="var(--hair-2)"/>
-  <stop offset="100%" stop-color="var(--hair-1)"/>
- </linearGradient>
-</defs>
-<g class="fc-body">
- <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
-  C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
-  C178,357 175,345 176,322 Z"/>
- <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
-  L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
-</g>
-<path class="fc-hairb" d="M150,60 C205,60 241,97 243,157 C244,192 241,228 234,260
- C231,273 227,284 222,293 L208,284 C217,252 222,215 220,178 C216,130 194,100 150,100
- C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
- C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
-<path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
-<path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
- C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
-<g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-<g clip-path="url(#fr2)"><path d="M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z" class="rg"><title>labiomentual</title></path><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"/></g><path d="M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z" class="rg"><title>prejowl</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z" class="rg"/></g><path d="M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z" class="rg"><title>bochecha</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z" class="rg"/></g><path d="M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z" class="rg"><title>auricular</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z" class="rg"/></g><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg></figure><figure class="cf"><span class="cf-t">ALTO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-r);--rg-s:var(--sf)" aria-label="regiões faciais do grupo 3: Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · e, no uso preciso, a região infraorbitária."><defs><clipPath id="fr3"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
-<defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
-  <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
-  <stop offset="100%" stop-color="var(--face-sh)"/>
- </radialGradient>
- <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
-  <stop offset="0%" stop-color="var(--hair-2)"/>
-  <stop offset="100%" stop-color="var(--hair-1)"/>
- </linearGradient>
-</defs>
-<g class="fc-body">
- <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
-  C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
-  C178,357 175,345 176,322 Z"/>
- <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
-  L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
-</g>
-<path class="fc-hairb" d="M150,60 C205,60 241,97 243,157 C244,192 241,228 234,260
- C231,273 227,284 222,293 L208,284 C217,252 222,215 220,178 C216,130 194,100 150,100
- C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
- C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
-<path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
-<path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
- C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
-<g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-<g clip-path="url(#fr3)"><path d="M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 C137,331 128,316 129,295 Z" class="rg"><title>mento</title></path><path d="M144,162 C147,158 153,158 156,162 C157,186 158,204 160,214 C158,225 142,225 140,214 C142,204 143,186 144,162 Z" class="rg"><title>nariz</title></path><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"><title>zigoma</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"/></g><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"><title>temporal</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"/></g><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"><title>infraorb</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg></figure></div>
-<p class="capa-sub">3 famílias · 6 grupos · 9 assinaturas · 76 ensaios</p>
-<p class="capa-autor">Por Dr. João Pithon</p>
+<span class="capa-dot"></span>
+<h1><span class="t1">Reologia</span><span class="t2"><i></i>dos<i></i></span><span class="t1">Géis de</span><span class="t3">Ácido Hialurônico</span></h1>
+<p class="capa-sub">Fundamentos, Classificação e Aplicações Clínicas</p>
+<svg class="capa-arte" viewBox="0 0 1000 500" role="img" aria-label="Varredura de frequência de 0,01 a 10 Hz: curvas de G′ medidas de um produto de cada família reológica, sobre a representação da rede molecular do ácido hialurônico"><g class="cp-ondas"><path d="M20,106.6 C23.7,104.6 34.7,98.8 42,94.9 C49.3,91.0 56.7,87.0 64,83.4 C71.3,79.8 78.7,76.3 86,73.5 C93.3,70.7 100.7,68.2 108,66.4 C115.3,64.6 122.7,63.4 130,62.6 C137.3,61.8 144.7,61.6 152,61.6 C159.3,61.6 166.7,62.2 174,62.7 C181.3,63.2 188.7,64.0 196,64.6 C203.3,65.2 210.7,65.9 218,66.3 C225.3,66.7 232.7,67.0 240,67.1 C247.3,67.2 254.7,67.2 262,67.1 C269.3,67.0 276.7,66.8 284,66.7 C291.3,66.6 298.7,66.5 306,66.6 C313.3,66.7 320.7,67.0 328,67.5 C335.3,68.0 342.7,68.8 350,69.7 C357.3,70.6 364.7,71.8 372,72.9 C379.3,74.0 386.7,75.4 394,76.5 C401.3,77.6 408.7,78.8 416,79.5 C423.3,80.2 430.7,80.7 438,80.8 C445.3,80.9 452.7,80.6 460,80.0 C467.3,79.4 474.7,78.2 482,77.0 C489.3,75.8 496.7,74.2 504,72.7 C511.3,71.2 518.7,69.5 526,68.3 C533.3,67.1 540.7,65.8 548,65.3 C555.3,64.8 562.7,64.6 570,65.1 C577.3,65.6 584.7,66.5 592,68.1 C599.3,69.7 606.7,72.0 614,74.5 C621.3,77.0 628.7,80.2 636,83.4 C643.3,86.6 650.7,90.2 658,93.6 C665.3,96.9 672.7,100.4 680,103.5 C687.3,106.6 694.7,109.5 702,112.0 C709.3,114.5 716.7,116.7 724,118.6 C731.3,120.5 738.7,121.9 746,123.2 C753.3,124.5 760.7,125.4 768,126.3 C775.3,127.2 782.7,127.9 790,128.7 C797.3,129.5 804.7,130.3 812,131.2 C819.3,132.1 826.7,133.0 834,133.9 C841.3,134.8 848.7,135.8 856,136.6 C863.3,137.4 870.7,138.2 878,138.7 C885.3,139.1 892.7,139.5 900,139.3 C907.3,139.1 914.7,138.6 922,137.7 C929.3,136.8 936.7,135.3 944,133.6 C951.3,131.9 958.7,129.6 966,127.3 C973.3,125.0 980.7,122.2 988,119.7 C995.3,117.2 1006.3,113.6 1010,112.4" class="cp-onda" opacity="0.34"/><path d="M20,114.0 C23.7,112.6 34.7,108.4 42,105.6 C49.3,102.8 56.7,99.7 64,96.9 C71.3,94.1 78.7,91.3 86,89.0 C93.3,86.7 100.7,84.7 108,83.2 C115.3,81.8 122.7,80.7 130,80.3 C137.3,79.9 144.7,80.1 152,80.7 C159.3,81.3 166.7,82.6 174,83.9 C181.3,85.2 188.7,87.1 196,88.8 C203.3,90.5 210.7,92.6 218,94.2 C225.3,95.8 232.7,97.4 240,98.5 C247.3,99.6 254.7,100.5 262,100.9 C269.3,101.3 276.7,101.3 284,101.0 C291.3,100.7 298.7,100.0 306,99.2 C313.3,98.4 320.7,97.3 328,96.3 C335.3,95.3 342.7,94.2 350,93.3 C357.3,92.4 364.7,91.6 372,91.1 C379.3,90.6 386.7,90.3 394,90.3 C401.3,90.2 408.7,90.5 416,90.8 C423.3,91.1 430.7,91.7 438,92.2 C445.3,92.7 452.7,93.2 460,93.6 C467.3,94.0 474.7,94.4 482,94.6 C489.3,94.8 496.7,94.9 504,94.9 C511.3,94.9 518.7,94.7 526,94.7 C533.3,94.7 540.7,94.6 548,94.9 C555.3,95.2 562.7,95.5 570,96.3 C577.3,97.1 584.7,98.2 592,99.8 C599.3,101.4 606.7,103.5 614,106.0 C621.3,108.5 628.7,111.5 636,114.7 C643.3,117.9 650.7,121.6 658,125.1 C665.3,128.6 672.7,132.4 680,135.8 C687.3,139.2 694.7,142.7 702,145.5 C709.3,148.3 716.7,150.8 724,152.7 C731.3,154.6 738.7,155.9 746,156.7 C753.3,157.5 760.7,157.8 768,157.6 C775.3,157.4 782.7,156.7 790,155.8 C797.3,155.0 804.7,153.7 812,152.5 C819.3,151.3 826.7,150.0 834,148.9 C841.3,147.8 848.7,146.8 856,146.0 C863.3,145.2 870.7,144.6 878,144.1 C885.3,143.6 892.7,143.3 900,143.1 C907.3,142.8 914.7,142.8 922,142.6 C929.3,142.4 936.7,142.1 944,141.7 C951.3,141.3 958.7,140.8 966,140.0 C973.3,139.2 980.7,138.2 988,137.2 C995.3,136.1 1006.3,134.3 1010,133.7" class="cp-onda" opacity="0.31"/><path d="M20,123.0 C23.7,122.6 34.7,121.4 42,120.5 C49.3,119.6 56.7,118.6 64,117.6 C71.3,116.6 78.7,115.4 86,114.4 C93.3,113.4 100.7,112.3 108,111.5 C115.3,110.7 122.7,109.9 130,109.6 C137.3,109.2 144.7,109.2 152,109.4 C159.3,109.7 166.7,110.3 174,111.1 C181.3,111.9 188.7,113.1 196,114.4 C203.3,115.7 210.7,117.3 218,118.7 C225.3,120.1 232.7,121.5 240,122.6 C247.3,123.7 254.7,124.8 262,125.3 C269.3,125.8 276.7,125.9 284,125.6 C291.3,125.3 298.7,124.6 306,123.6 C313.3,122.6 320.7,121.0 328,119.4 C335.3,117.8 342.7,115.9 350,114.2 C357.3,112.5 364.7,110.6 372,109.2 C379.3,107.8 386.7,106.5 394,105.7 C401.3,104.9 408.7,104.4 416,104.4 C423.3,104.4 430.7,105.0 438,105.8 C445.3,106.6 452.7,108.0 460,109.5 C467.3,111.0 474.7,112.8 482,114.6 C489.3,116.4 496.7,118.5 504,120.4 C511.3,122.3 518.7,124.2 526,125.9 C533.3,127.6 540.7,129.3 548,130.8 C555.3,132.3 562.7,133.7 570,135.1 C577.3,136.5 584.7,137.8 592,139.2 C599.3,140.6 606.7,142.1 614,143.8 C621.3,145.5 628.7,147.2 636,149.2 C643.3,151.2 650.7,153.4 658,155.6 C665.3,157.8 672.7,160.2 680,162.5 C687.3,164.8 694.7,167.1 702,169.1 C709.3,171.1 716.7,173.0 724,174.3 C731.3,175.6 738.7,176.6 746,177.1 C753.3,177.6 760.7,177.6 768,177.1 C775.3,176.6 782.7,175.5 790,174.2 C797.3,172.9 804.7,171.0 812,169.1 C819.3,167.2 826.7,164.9 834,163.0 C841.3,161.1 848.7,159.0 856,157.4 C863.3,155.8 870.7,154.2 878,153.2 C885.3,152.2 892.7,151.6 900,151.3 C907.3,151.0 914.7,151.2 922,151.5 C929.3,151.8 936.7,152.7 944,153.4 C951.3,154.2 958.7,155.2 966,156.0 C973.3,156.8 980.7,157.7 988,158.3 C995.3,158.9 1006.3,159.3 1010,159.5" class="cp-onda" opacity="0.28"/><path d="M20,138.0 C23.7,138.3 34.7,139.4 42,140.1 C49.3,140.8 56.7,141.6 64,142.2 C71.3,142.8 78.7,143.3 86,143.5 C93.3,143.7 100.7,143.7 108,143.6 C115.3,143.5 122.7,143.1 130,142.7 C137.3,142.3 144.7,141.6 152,141.1 C159.3,140.6 166.7,140.0 174,139.6 C181.3,139.2 188.7,138.9 196,138.8 C203.3,138.7 210.7,138.7 218,138.8 C225.3,138.9 232.7,139.2 240,139.5 C247.3,139.8 254.7,140.2 262,140.4 C269.3,140.6 276.7,140.8 284,140.7 C291.3,140.6 298.7,140.4 306,139.9 C313.3,139.4 320.7,138.5 328,137.6 C335.3,136.7 342.7,135.5 350,134.4 C357.3,133.3 364.7,131.9 372,130.8 C379.3,129.7 386.7,128.6 394,128.0 C401.3,127.4 408.7,126.9 416,127.1 C423.3,127.2 430.7,127.8 438,128.9 C445.3,130.0 452.7,131.5 460,133.5 C467.3,135.5 474.7,138.1 482,140.7 C489.3,143.3 496.7,146.4 504,149.3 C511.3,152.2 518.7,155.5 526,158.3 C533.3,161.2 540.7,164.0 548,166.4 C555.3,168.8 562.7,171.0 570,172.8 C577.3,174.6 584.7,176.1 592,177.3 C599.3,178.5 606.7,179.2 614,179.9 C621.3,180.6 628.7,180.9 636,181.3 C643.3,181.7 650.7,182.0 658,182.3 C665.3,182.7 672.7,183.0 680,183.4 C687.3,183.8 694.7,184.3 702,184.8 C709.3,185.3 716.7,186.0 724,186.4 C731.3,186.8 738.7,187.3 746,187.5 C753.3,187.7 760.7,187.9 768,187.7 C775.3,187.5 782.7,187.0 790,186.3 C797.3,185.6 804.7,184.6 812,183.4 C819.3,182.2 826.7,180.8 834,179.4 C841.3,178.0 848.7,176.4 856,175.1 C863.3,173.8 870.7,172.4 878,171.5 C885.3,170.6 892.7,169.8 900,169.5 C907.3,169.2 914.7,169.3 922,169.7 C929.3,170.1 936.7,171.0 944,172.0 C951.3,173.0 958.7,174.5 966,175.8 C973.3,177.1 980.7,178.7 988,180.0 C995.3,181.3 1006.3,182.8 1010,183.4" class="cp-onda" opacity="0.25"/><path d="M20,159.8 C23.7,160.3 34.7,161.8 42,162.9 C49.3,164.0 56.7,165.5 64,166.6 C71.3,167.7 78.7,168.9 86,169.7 C93.3,170.5 100.7,171.2 108,171.4 C115.3,171.6 122.7,171.4 130,171.0 C137.3,170.6 144.7,169.7 152,168.7 C159.3,167.7 166.7,166.2 174,164.9 C181.3,163.6 188.7,162.0 196,160.6 C203.3,159.2 210.7,157.8 218,156.7 C225.3,155.6 232.7,154.6 240,153.9 C247.3,153.2 254.7,152.9 262,152.7 C269.3,152.5 276.7,152.5 284,152.7 C291.3,152.9 298.7,153.3 306,153.7 C313.3,154.1 320.7,154.6 328,155.0 C335.3,155.4 342.7,155.8 350,156.2 C357.3,156.5 364.7,156.8 372,157.1 C379.3,157.4 386.7,157.5 394,157.9 C401.3,158.3 408.7,158.6 416,159.3 C423.3,160.0 430.7,160.8 438,161.9 C445.3,163.0 452.7,164.4 460,166.1 C467.3,167.8 474.7,169.9 482,172.2 C489.3,174.5 496.7,177.2 504,179.8 C511.3,182.5 518.7,185.4 526,188.1 C533.3,190.8 540.7,193.6 548,196.0 C555.3,198.4 562.7,200.6 570,202.3 C577.3,204.0 584.7,205.3 592,206.2 C599.3,207.1 606.7,207.5 614,207.6 C621.3,207.7 628.7,207.2 636,206.6 C643.3,206.0 650.7,204.9 658,204.0 C665.3,203.1 672.7,201.9 680,200.9 C687.3,199.9 694.7,198.8 702,198.1 C709.3,197.3 716.7,196.7 724,196.4 C731.3,196.1 738.7,196.1 746,196.1 C753.3,196.1 760.7,196.4 768,196.7 C775.3,197.0 782.7,197.5 790,197.8 C797.3,198.2 804.7,198.6 812,198.8 C819.3,199.0 826.7,199.1 834,199.0 C841.3,198.9 848.7,198.7 856,198.4 C863.3,198.1 870.7,197.7 878,197.3 C885.3,196.9 892.7,196.5 900,196.2 C907.3,195.9 914.7,195.6 922,195.6 C929.3,195.6 936.7,195.7 944,196.0 C951.3,196.3 958.7,196.9 966,197.5 C973.3,198.1 980.7,198.9 988,199.6 C995.3,200.3 1006.3,201.2 1010,201.5" class="cp-onda" opacity="0.22"/><path d="M20,185.9 C23.7,186.0 34.7,186.3 42,186.7 C49.3,187.1 56.7,187.8 64,188.3 C71.3,188.9 78.7,189.5 86,190.0 C93.3,190.5 100.7,190.9 108,191.1 C115.3,191.2 122.7,191.3 130,190.9 C137.3,190.5 144.7,189.8 152,188.8 C159.3,187.9 166.7,186.6 174,185.2 C181.3,183.8 188.7,182.0 196,180.4 C203.3,178.8 210.7,177.1 218,175.6 C225.3,174.1 232.7,172.6 240,171.6 C247.3,170.6 254.7,169.8 262,169.4 C269.3,169.1 276.7,169.1 284,169.5 C291.3,169.9 298.7,170.8 306,171.9 C313.3,173.0 320.7,174.4 328,176.0 C335.3,177.6 342.7,179.4 350,181.2 C357.3,182.9 364.7,184.8 372,186.5 C379.3,188.2 386.7,189.8 394,191.3 C401.3,192.8 408.7,194.2 416,195.4 C423.3,196.7 430.7,197.7 438,198.8 C445.3,199.9 452.7,200.9 460,202.0 C467.3,203.1 474.7,204.1 482,205.3 C489.3,206.5 496.7,207.8 504,209.2 C511.3,210.6 518.7,212.0 526,213.5 C533.3,215.0 540.7,216.6 548,218.0 C555.3,219.4 562.7,220.8 570,221.9 C577.3,223.0 584.7,224.0 592,224.6 C599.3,225.2 606.7,225.6 614,225.6 C621.3,225.6 628.7,225.2 636,224.5 C643.3,223.8 650.7,222.8 658,221.7 C665.3,220.6 672.7,219.2 680,218.0 C687.3,216.8 694.7,215.3 702,214.2 C709.3,213.1 716.7,212.1 724,211.4 C731.3,210.8 738.7,210.4 746,210.3 C753.3,210.2 760.7,210.6 768,211.1 C775.3,211.6 782.7,212.6 790,213.6 C797.3,214.6 804.7,215.9 812,217.1 C819.3,218.3 826.7,219.6 834,220.6 C841.3,221.6 848.7,222.6 856,223.3 C863.3,224.0 870.7,224.4 878,224.6 C885.3,224.8 892.7,224.7 900,224.4 C907.3,224.1 914.7,223.5 922,222.9 C929.3,222.3 936.7,221.5 944,220.7 C951.3,219.9 958.7,219.1 966,218.3 C973.3,217.5 980.7,216.8 988,216.1 C995.3,215.4 1006.3,214.4 1010,214.1" class="cp-onda" opacity="0.19"/><path d="M20,211.8 C23.7,211.4 34.7,210.1 42,209.3 C49.3,208.6 56.7,207.9 64,207.3 C71.3,206.8 78.7,206.3 86,206.0 C93.3,205.7 100.7,205.5 108,205.3 C115.3,205.1 122.7,204.9 130,204.7 C137.3,204.4 144.7,204.2 152,203.8 C159.3,203.4 166.7,202.9 174,202.3 C181.3,201.7 188.7,200.9 196,200.1 C203.3,199.3 210.7,198.4 218,197.6 C225.3,196.8 232.7,195.9 240,195.4 C247.3,194.9 254.7,194.5 262,194.4 C269.3,194.3 276.7,194.5 284,195.1 C291.3,195.7 298.7,196.6 306,197.9 C313.3,199.2 320.7,200.9 328,202.8 C335.3,204.7 342.7,207.0 350,209.2 C357.3,211.4 364.7,213.9 372,216.2 C379.3,218.5 386.7,220.8 394,222.8 C401.3,224.8 408.7,226.8 416,228.3 C423.3,229.9 430.7,231.1 438,232.1 C445.3,233.1 452.7,233.6 460,234.1 C467.3,234.6 474.7,234.8 482,234.9 C489.3,235.0 496.7,234.9 504,234.9 C511.3,234.9 518.7,234.9 526,234.9 C533.3,234.9 540.7,235.0 548,235.2 C555.3,235.4 562.7,235.6 570,235.9 C577.3,236.2 584.7,236.7 592,237.0 C599.3,237.3 606.7,237.8 614,238.0 C621.3,238.2 628.7,238.4 636,238.4 C643.3,238.4 650.7,238.3 658,238.0 C665.3,237.7 672.7,237.3 680,236.8 C687.3,236.3 694.7,235.6 702,235.0 C709.3,234.4 716.7,233.8 724,233.4 C731.3,233.0 738.7,232.7 746,232.6 C753.3,232.5 760.7,232.7 768,233.1 C775.3,233.5 782.7,234.2 790,235.1 C797.3,236.0 804.7,237.2 812,238.3 C819.3,239.4 826.7,240.8 834,241.9 C841.3,243.1 848.7,244.3 856,245.2 C863.3,246.1 870.7,246.8 878,247.2 C885.3,247.5 892.7,247.6 900,247.3 C907.3,247.0 914.7,246.2 922,245.2 C929.3,244.2 936.7,242.7 944,241.2 C951.3,239.7 958.7,237.8 966,236.0 C973.3,234.2 980.7,232.2 988,230.3 C995.3,228.5 1006.3,225.8 1010,224.9" class="cp-onda" opacity="0.16"/><path d="M20,234.1 C23.7,233.4 34.7,231.2 42,229.8 C49.3,228.4 56.7,226.8 64,225.5 C71.3,224.2 78.7,222.9 86,222.0 C93.3,221.1 100.7,220.3 108,219.8 C115.3,219.3 122.7,219.0 130,218.9 C137.3,218.8 144.7,219.0 152,219.2 C159.3,219.4 166.7,219.9 174,220.3 C181.3,220.7 188.7,221.2 196,221.7 C203.3,222.2 210.7,222.7 218,223.1 C225.3,223.5 232.7,223.9 240,224.3 C247.3,224.7 254.7,225.1 262,225.6 C269.3,226.1 276.7,226.6 284,227.3 C291.3,228.0 298.7,228.9 306,229.9 C313.3,230.9 320.7,232.1 328,233.5 C335.3,234.9 342.7,236.5 350,238.2 C357.3,239.9 364.7,241.8 372,243.6 C379.3,245.4 386.7,247.4 394,249.1 C401.3,250.8 408.7,252.5 416,253.8 C423.3,255.1 430.7,256.2 438,257.0 C445.3,257.8 452.7,258.3 460,258.5 C467.3,258.7 474.7,258.5 482,258.1 C489.3,257.8 496.7,257.1 504,256.4 C511.3,255.7 518.7,254.8 526,254.1 C533.3,253.3 540.7,252.5 548,251.9 C555.3,251.3 562.7,250.8 570,250.5 C577.3,250.2 584.7,250.2 592,250.4 C599.3,250.6 606.7,251.0 614,251.5 C621.3,252.0 628.7,252.7 636,253.4 C643.3,254.1 650.7,254.9 658,255.6 C665.3,256.3 672.7,256.9 680,257.5 C687.3,258.1 694.7,258.6 702,258.9 C709.3,259.2 716.7,259.4 724,259.5 C731.3,259.6 738.7,259.6 746,259.6 C753.3,259.6 760.7,259.5 768,259.5 C775.3,259.5 782.7,259.6 790,259.7 C797.3,259.8 804.7,260.1 812,260.4 C819.3,260.7 826.7,261.0 834,261.4 C841.3,261.8 848.7,262.2 856,262.5 C863.3,262.8 870.7,263.0 878,263.0 C885.3,263.0 892.7,262.9 900,262.4 C907.3,261.9 914.7,261.2 922,260.1 C929.3,259.0 936.7,257.6 944,256.0 C951.3,254.4 958.7,252.5 966,250.5 C973.3,248.5 980.7,246.2 988,244.1 C995.3,242.0 1006.3,238.9 1010,237.8" class="cp-onda" opacity="0.13"/><path d="M20,252.7 C23.7,252.1 34.7,250.3 42,249.1 C49.3,247.8 56.7,246.4 64,245.2 C71.3,244.0 78.7,242.7 86,241.7 C93.3,240.7 100.7,239.9 108,239.4 C115.3,238.9 122.7,238.6 130,238.7 C137.3,238.8 144.7,239.2 152,239.8 C159.3,240.4 166.7,241.4 174,242.5 C181.3,243.6 188.7,245.0 196,246.3 C203.3,247.6 210.7,249.2 218,250.5 C225.3,251.8 232.7,253.2 240,254.4 C247.3,255.6 254.7,256.8 262,257.8 C269.3,258.8 276.7,259.6 284,260.3 C291.3,261.1 298.7,261.7 306,262.3 C313.3,262.9 320.7,263.4 328,264.0 C335.3,264.6 342.7,265.2 350,265.8 C357.3,266.4 364.7,267.1 372,267.9 C379.3,268.6 386.7,269.5 394,270.3 C401.3,271.1 408.7,272.0 416,272.7 C423.3,273.4 430.7,274.2 438,274.7 C445.3,275.2 452.7,275.7 460,275.9 C467.3,276.1 474.7,276.1 482,276.0 C489.3,275.9 496.7,275.5 504,275.0 C511.3,274.5 518.7,273.8 526,273.2 C533.3,272.6 540.7,271.8 548,271.2 C555.3,270.6 562.7,270.0 570,269.7 C577.3,269.4 584.7,269.2 592,269.3 C599.3,269.4 606.7,269.7 614,270.2 C621.3,270.7 628.7,271.6 636,272.5 C643.3,273.4 650.7,274.6 658,275.7 C665.3,276.8 672.7,278.1 680,279.2 C687.3,280.3 694.7,281.4 702,282.3 C709.3,283.2 716.7,283.9 724,284.4 C731.3,284.9 738.7,285.2 746,285.2 C753.3,285.2 760.7,285.0 768,284.6 C775.3,284.2 782.7,283.6 790,283.0 C797.3,282.4 804.7,281.5 812,280.8 C819.3,280.1 826.7,279.3 834,278.6 C841.3,277.9 848.7,277.1 856,276.4 C863.3,275.7 870.7,275.1 878,274.5 C885.3,273.9 892.7,273.3 900,272.6 C907.3,271.9 914.7,271.2 922,270.4 C929.3,269.5 936.7,268.6 944,267.5 C951.3,266.4 958.7,265.2 966,263.9 C973.3,262.6 980.7,261.1 988,259.6 C995.3,258.1 1006.3,255.8 1010,255.1" class="cp-onda" opacity="0.1"/></g><g class="cp-mol"><line x1="807.4" y1="280.0" x2="752.0" y2="312.0" class="cp-bond"/><line x1="752.0" y1="312.0" x2="696.6" y2="280.0" class="cp-bond"/><line x1="696.6" y1="280.0" x2="696.6" y2="216.0" class="cp-bond"/><line x1="696.6" y1="216.0" x2="752.0" y2="184.0" class="cp-bond"/><line x1="752.0" y1="184.0" x2="807.4" y2="216.0" class="cp-bond"/><line x1="807.4" y1="216.0" x2="807.4" y2="280.0" class="cp-bond"/><line x1="915.4" y1="216.0" x2="860.0" y2="248.0" class="cp-bond"/><line x1="860.0" y1="248.0" x2="804.6" y2="216.0" class="cp-bond"/><line x1="804.6" y1="216.0" x2="804.6" y2="152.0" class="cp-bond"/><line x1="804.6" y1="152.0" x2="860.0" y2="120.0" class="cp-bond"/><line x1="860.0" y1="120.0" x2="915.4" y2="152.0" class="cp-bond"/><line x1="915.4" y1="152.0" x2="915.4" y2="216.0" class="cp-bond"/><line x1="923.4" y1="350.0" x2="868.0" y2="382.0" class="cp-bond"/><line x1="868.0" y1="382.0" x2="812.6" y2="350.0" class="cp-bond"/><line x1="812.6" y1="350.0" x2="812.6" y2="286.0" class="cp-bond"/><line x1="812.6" y1="286.0" x2="868.0" y2="254.0" class="cp-bond"/><line x1="868.0" y1="254.0" x2="923.4" y2="286.0" class="cp-bond"/><line x1="923.4" y1="286.0" x2="923.4" y2="350.0" class="cp-bond"/><line x1="696.6" y1="216.0" x2="655.0" y2="192.0" class="cp-bond"/><line x1="860.0" y1="248.0" x2="860.0" y2="294.0" class="cp-bond"/><line x1="923.4" y1="286.0" x2="966.7" y2="261.0" class="cp-bond"/><line x1="752.0" y1="184.0" x2="752.0" y2="142.0" class="cp-bond"/><circle cx="860.0" cy="120.0" r="15.5" class="cp-sph"/><circle cx="855.0" cy="114.4" r="5.3" class="cp-sph-hi"/><circle cx="752.0" cy="142.0" r="10.0" class="cp-sph"/><circle cx="748.8" cy="138.4" r="3.4" class="cp-sph-hi"/><circle cx="804.6" cy="152.0" r="15.5" class="cp-sph"/><circle cx="799.6" cy="146.4" r="5.3" class="cp-sph-hi"/><circle cx="915.4" cy="152.0" r="15.5" class="cp-sph"/><circle cx="910.4" cy="146.4" r="5.3" class="cp-sph-hi"/><circle cx="752.0" cy="184.0" r="15.5" class="cp-sph"/><circle cx="747.0" cy="178.4" r="5.3" class="cp-sph-hi"/><circle cx="655.0" cy="192.0" r="11.5" class="cp-sph"/><circle cx="651.3" cy="187.9" r="3.9" class="cp-sph-hi"/><circle cx="696.6" cy="216.0" r="15.5" class="cp-sph"/><circle cx="691.6" cy="210.4" r="5.3" class="cp-sph-hi"/><circle cx="807.4" cy="216.0" r="15.5" class="cp-sph"/><circle cx="802.4" cy="210.4" r="5.3" class="cp-sph-hi"/><circle cx="915.4" cy="216.0" r="15.5" class="cp-sph"/><circle cx="910.4" cy="210.4" r="5.3" class="cp-sph-hi"/><circle cx="804.6" cy="216.0" r="15.5" class="cp-sph"/><circle cx="799.6" cy="210.4" r="5.3" class="cp-sph-hi"/><circle cx="860.0" cy="248.0" r="15.5" class="cp-sph"/><circle cx="855.0" cy="242.4" r="5.3" class="cp-sph-hi"/><circle cx="868.0" cy="254.0" r="15.5" class="cp-sph"/><circle cx="863.0" cy="248.4" r="5.3" class="cp-sph-hi"/><circle cx="966.7" cy="261.0" r="11.5" class="cp-sph"/><circle cx="963.0" cy="256.9" r="3.9" class="cp-sph-hi"/><circle cx="807.4" cy="280.0" r="15.5" class="cp-sph"/><circle cx="802.4" cy="274.4" r="5.3" class="cp-sph-hi"/><circle cx="696.6" cy="280.0" r="15.5" class="cp-sph"/><circle cx="691.6" cy="274.4" r="5.3" class="cp-sph-hi"/><circle cx="812.6" cy="286.0" r="15.5" class="cp-sph"/><circle cx="807.6" cy="280.4" r="5.3" class="cp-sph-hi"/><circle cx="923.4" cy="286.0" r="15.5" class="cp-sph"/><circle cx="918.4" cy="280.4" r="5.3" class="cp-sph-hi"/><circle cx="860.0" cy="294.0" r="11.0" class="cp-sph"/><circle cx="856.5" cy="290.0" r="3.7" class="cp-sph-hi"/><circle cx="752.0" cy="312.0" r="15.5" class="cp-sph"/><circle cx="747.0" cy="306.4" r="5.3" class="cp-sph-hi"/><circle cx="923.4" cy="350.0" r="15.5" class="cp-sph"/><circle cx="918.4" cy="344.4" r="5.3" class="cp-sph-hi"/><circle cx="812.6" cy="350.0" r="15.5" class="cp-sph"/><circle cx="807.6" cy="344.4" r="5.3" class="cp-sph-hi"/><circle cx="868.0" cy="382.0" r="15.5" class="cp-sph"/><circle cx="863.0" cy="376.4" r="5.3" class="cp-sph-hi"/></g><path d="M104,38 L104,424 L572,424" class="cp-eixo"/><path d="M104.0,424 L104.0,431" class="cp-eixo"/><text x="104.0" y="450" class="cp-tick" text-anchor="middle">10⁻²</text><path d="M217.0,424 L217.0,431" class="cp-eixo"/><text x="217.0" y="450" class="cp-tick" text-anchor="middle">10⁻¹</text><path d="M330.0,424 L330.0,431" class="cp-eixo"/><text x="330.0" y="450" class="cp-tick" text-anchor="middle">10⁰</text><path d="M443.0,424 L443.0,431" class="cp-eixo"/><text x="443.0" y="450" class="cp-tick" text-anchor="middle">10¹</text><path d="M556.0,424 L556.0,431" class="cp-eixo"/><text x="556.0" y="450" class="cp-tick" text-anchor="middle">10²</text><path d="M98,398.7 L104,398.7" class="cp-eixo"/><path d="M104,398.7 L572,398.7" class="cp-grade"/><path d="M98,235.7 L104,235.7" class="cp-eixo"/><path d="M104,235.7 L572,235.7" class="cp-grade"/><path d="M98,72.7 L104,72.7" class="cp-eixo"/><path d="M104,72.7 L572,72.7" class="cp-grade"/><text x="86" y="234.0" class="cp-ax" text-anchor="middle" transform="rotate(-90 86 234.0)">G′, G″ (Pa)</text><text x="330.0" y="474" class="cp-ax" text-anchor="middle">Frequência (Hz)</text><path d="M104.0,97.1 C122.8,95.8 182.2,92.9 217.0,89.6 C251.8,86.3 293.7,79.8 312.5,77.4 C331.3,75.1 313.9,77.4 330.0,75.5 C346.1,73.6 390.2,68.1 409.0,66.0 C427.8,63.9 437.3,63.6 443.0,63.1" class="cp-linha c-r"/><circle cx="104.0" cy="97.1" r="3.1" class="cp-pt c-r"/><circle cx="217.0" cy="89.6" r="3.1" class="cp-pt c-r"/><circle cx="312.5" cy="77.4" r="3.1" class="cp-pt c-r"/><circle cx="330.0" cy="75.5" r="3.1" class="cp-pt c-r"/><circle cx="409.0" cy="66.0" r="3.1" class="cp-pt c-r"/><circle cx="443.0" cy="63.1" r="3.1" class="cp-pt c-r"/><path d="M104.0,206.9 C122.8,203.7 182.2,193.7 217.0,187.6 C251.8,181.5 293.7,173.5 312.5,170.1 C331.3,166.7 313.9,170.5 330.0,167.3 C346.1,164.1 390.2,154.9 409.0,151.1 C427.8,147.3 437.3,145.7 443.0,144.6" class="cp-linha c-m"/><circle cx="104.0" cy="206.9" r="3.1" class="cp-pt c-m"/><circle cx="217.0" cy="187.6" r="3.1" class="cp-pt c-m"/><circle cx="312.5" cy="170.1" r="3.1" class="cp-pt c-m"/><circle cx="330.0" cy="167.3" r="3.1" class="cp-pt c-m"/><circle cx="409.0" cy="151.1" r="3.1" class="cp-pt c-m"/><circle cx="443.0" cy="144.6" r="3.1" class="cp-pt c-m"/><path d="M104.0,404.7 C122.8,397.5 182.2,376.6 217.0,361.3 C251.8,346.0 293.7,322.3 312.5,312.9 C331.3,303.5 313.9,313.1 330.0,304.9 C346.1,296.7 390.2,272.5 409.0,263.8 C427.8,255.1 437.3,254.7 443.0,252.9" class="cp-linha c-a"/><circle cx="104.0" cy="404.7" r="3.1" class="cp-pt c-a"/><circle cx="217.0" cy="361.3" r="3.1" class="cp-pt c-a"/><circle cx="312.5" cy="312.9" r="3.1" class="cp-pt c-a"/><circle cx="330.0" cy="304.9" r="3.1" class="cp-pt c-a"/><circle cx="409.0" cy="263.8" r="3.1" class="cp-pt c-a"/><circle cx="443.0" cy="252.9" r="3.1" class="cp-pt c-a"/><path d="M104.0,221.4 C122.8,220.5 182.2,217.5 217.0,215.8 C251.8,214.1 293.7,211.8 312.5,211.0 C331.3,210.2 313.9,211.1 330.0,211.1 C346.1,211.1 390.2,211.3 409.0,211.2 C427.8,211.1 437.3,210.7 443.0,210.6" class="cp-linha cp-g2"/></svg>
+<svg class="capa-orn" viewBox="-42 -42 84 84" role="presentation" aria-hidden="true"><g><path d="M0,0 C7,-8 7,-19 0,-27 C-7,-19 -7,-8 0,0 Z" class="co-p" transform="rotate(0)"/><path d="M0,0 C7,-8 7,-19 0,-27 C-7,-19 -7,-8 0,0 Z" class="co-p" transform="rotate(90)"/><path d="M0,0 C7,-8 7,-19 0,-27 C-7,-19 -7,-8 0,0 Z" class="co-p" transform="rotate(180)"/><path d="M0,0 C7,-8 7,-19 0,-27 C-7,-19 -7,-8 0,0 Z" class="co-p" transform="rotate(270)"/><path d="M0,0 C4.4,-5 4.4,-12 0,-17 C-4.4,-12 -4.4,-5 0,0 Z" class="co-p2" transform="rotate(45)"/><path d="M0,0 C4.4,-5 4.4,-12 0,-17 C-4.4,-12 -4.4,-5 0,0 Z" class="co-p2" transform="rotate(135)"/><path d="M0,0 C4.4,-5 4.4,-12 0,-17 C-4.4,-12 -4.4,-5 0,0 Z" class="co-p2" transform="rotate(225)"/><path d="M0,0 C4.4,-5 4.4,-12 0,-17 C-4.4,-12 -4.4,-5 0,0 Z" class="co-p2" transform="rotate(315)"/></g><circle r="4.2" class="co-c"/><path d="M-40,0 L-27,0 M40,0 L27,0" class="co-l"/></svg>
+<p class="capa-autor">Dr. João Pithon</p>
 <p class="capa-ed">Primeira edição · São Paulo · 2026</p>
 </div>
 </div>
