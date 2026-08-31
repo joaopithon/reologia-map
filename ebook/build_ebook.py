@@ -1617,68 +1617,6 @@ figure.figura figcaption b{{color:var(--ink)}}
 <p class="qt" style="margin:1rem 0 .2rem">“Não existe o melhor preenchedor. Existe a propriedade reológica mais adequada para o comportamento que queremos produzir em cada região.”</p>
 </div>
 
-<section class="folha" id="comoler">
-{cap_head('Capítulo 1','Como ler este guia',
- 'Este livro tem uma gramática própria: quatro números medidos, três famílias de cor, nove assinaturas. Quinze minutos aqui economizam a leitura inteira.')}
-<h3>1.1 &nbsp;O que este livro mede — e o que ele não mede</h3>
-<p class="lead">A primeira coisa a saber sobre um guia de reologia é onde ele para. Cinco propriedades costumam ser citadas para descrever um preenchedor; <b>este estudo mediu quatro delas</b>, sob protocolo único. As demais existem, importam clinicamente e <b>não foram medidas aqui</b> — então não recebem número, cor nem ranking neste livro.</p>
-{figura_nat('1', painel_medidas(),
- 'O alcance deste guia. À esquerda, os quatro parâmetros medidos a 0,7 Hz com suas faixas de cor — a barra mostra a escala e os números abaixo dela são os cortes que separam as cores. À direita, as propriedades declaradas mas não medidas nesta rodada, sempre marcadas com 💧. <b>Dado ausente é informação</b>: nenhuma delas é deduzida a partir das quatro medidas.')}
-<div class="box"><p style="margin:0"><b>Por que 0,7 Hz.</b> Um gel viscoelástico responde de forma diferente conforme a velocidade da solicitação — não existe “o G′ do produto”, existe o G′ àquela frequência. Este livro lê tudo a <b>0,7 Hz</b>, a faixa da mímica facial habitual. O mesmo Belotero Balance mede G′ 78 Pa a 10 Hz, 34 Pa a 0,7 Hz e vira praticamente líquido a 0,01 Hz. Comparar produtos só faz sentido na mesma frequência — e no mesmo protocolo.</p></div>
-
-{filete('cadeia', 160)}
-<h3>1.2 &nbsp;A gramática das cores</h3>
-<p class="lead">Todo produto deste livro é descrito por duas cores. <b>A primeira mostra quanto o gel estrutura</b>; <b>a segunda mostra como essa estrutura se comporta</b>. Somadas, dão o nome oficial do perfil — a assinatura.</p>
-{figura_nat('2', esquema_passos(),
- 'O <b>Esquema de Descrição dos Ácidos Hialurônicos</b>, a leitura completa em quatro passos: a 1ª cor (a família de G′), a 2ª cor (o comportamento em tan δ), a assinatura que nasce da soma e as três perguntas clínicas que ela responde. É a mesma gramática usada nas fichas, nos gráficos, no radar do capítulo 6 e no mapa de regiões do capítulo 5.')}
-<div class="gram">
-<div class="gramc">{ico('ondas')}<div><h4>Baixo G′</h4><span class="verbo" style="color:var(--fam-a)">ESPALHA / INTEGRA</span><p>Menor relevo próprio e menor capacidade estrutural: o gel se distribui e integra.</p></div></div>
-<div class="gramc">{ico('balanca')}<div><h4>G′ intermediário</h4><span class="verbo" style="color:var(--fam-m)">PREENCHE / EQUILIBRA</span><p>Equilíbrio entre preencher e sustentar — a cor do vale.</p></div></div>
-<div class="gramc">{ico('coluna')}<div><h4>Alto G′</h4><span class="verbo" style="color:var(--fam-r)">SUSTENTA / PROJETA</span><p>Maior manutenção de forma sob carga: o gel mantém o vértice onde foi colocado.</p></div></div>
-</div>
-<div class="gram">
-<div class="gramc">{ico('dinamico')}<div><h4>Dinâmico</h4><span class="verbo" style="color:var(--chip-rosa)">ACOMPANHA O MOVIMENTO</span><p>Componente viscosa relativa maior: acompanha melhor o tecido em movimento.</p></div></div>
-<div class="gramc">{ico('maleavel')}<div><h4>Maleável</h4><span class="verbo" style="color:var(--fam-v)">MOLDÁVEL / INTEGRATIVO</span><p>Boa adaptação e distribuição: molda e espalha sem perder corpo.</p></div></div>
-</div>
-<p><b>As nove assinaturas</b> — três famílias de G′ × três comportamentos de tan δ:</p>
-<div class="a9">{a9_cards}</div>
-<p style="font-size:.9rem;color:var(--ink2)">Nas fichas, cada produto exibe sua assinatura logo abaixo do nome. As três assinaturas puras — <b>ESPALHA</b>, <b>PREENCHE</b>, <b>PROJETA</b> — são os perfis de tan δ baixo, em que a estrutura fala mais alto que o comportamento.</p>
-<div class="box"><p style="margin:0"><b>Os quatro pontos coloridos de cada ficha.</b> Além da assinatura, toda ficha traz um ponto por parâmetro medido, na cor daquela métrica: <b>G′</b>, <b>G″</b> e <b>η*</b> em {dotchip('a',11)} azul (baixo) / {dotchip('m',11)} amarelo (intermediário) / {dotchip('r',11)} roxo (alto); <b>tan δ</b> em {dotchip('r',11)} roxo (elástico) / {dotchip('v',11)} verde (maleável) / {dotchip('p',11)} rosa (dinâmico). Cortes: G′ 200 e 300 Pa · G″ 50 e 100 Pa · tan δ 0,15 e 0,20 · η* 50 e 100 Pa·s. As zonas de transição são tratadas com curadoria versionada — o Restylane Defyne, a 292,62 Pa, é lido como roxo por comportamento.</p></div>
-
-{filete('cadeia', 160)}
-<h3>1.3 &nbsp;As três famílias — o eixo do livro</h3>
-<p class="lead">Toda a organização deste guia repousa em <b>três famílias</b>, definidas pelo G′ e reconhecidas pela cor. É o que se deve levar daqui: <b style="color:var(--fam-a)">azul integra</b>, <b style="color:var(--fam-m)">amarelo preenche</b>, <b style="color:var(--fam-r)">roxo sustenta</b>.</p>
-<div class="fam3">
-<div class="f3 f3-a"><b>1 · BAIXO G′</b><span>azul</span><p>Espalha e integra, com pouco relevo próprio. Tem <b>duas assinaturas</b> — azul + rosa e azul + amarelo + rosa — que <b>atendem as mesmas regiões</b>: a segunda apenas valoriza um pouco mais.</p></div>
-<div class="f3 f3-m"><b>2 · MODERADO G′</b><span>amarelo</span><p>Preenche e equilibra. <b>Uma assinatura só</b>, sem subclasse — a família de transição, a cor do vale.</p></div>
-<div class="f3 f3-r"><b>3 · ALTO G′</b><span>roxo</span><p>Sustenta. <b>Roxo puro</b> projeta; <b>roxo com segunda cor</b> volumiza com menos projeção; e o alto G′ de <b>baixo swelling factor</b> é o que se usa na olheira. 💧</p></div>
-</div>
-<p>Os <b>seis grupos</b> dos capítulos 9 a 14 e as <b>nove assinaturas</b> não são um segundo sistema: são o detalhamento destas três famílias. A correspondência é direta — família azul = grupos 1 e 2 · família amarela = grupo 3 · família roxa = grupos 4 e 5, mais o critério funcional de baixo swelling factor.</p>
-<div class="g33 passos">
-<div class="box passo"><b>O que eu quero fazer?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Espalhar → <b style="color:var(--fam-a)">azul</b> · Preencher → <b style="color:var(--fam-m)">amarelo</b> · Sustentar → <b style="color:var(--fam-r)">roxo</b>.</p></div>
-<div class="box passo"><b>Esse tecido se move muito?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Se sim, procure a segunda cor <b style="color:var(--chip-rosa)">rosa</b> — o perfil dinâmico acompanha o movimento.</p></div>
-<div class="box passo"><b>Preciso moldar e distribuir?</b><p style="margin:.3rem 0 0;font-size:.9rem;color:var(--ink2)">Se sim, procure a segunda cor <b style="color:var(--fam-v)">verde</b> — o perfil maleável adapta e distribui.</p></div>
-</div>
-<p style="margin-bottom:.2rem"><b>Níveis de indicação nas fichas:</b> <span class="pill n1">região<i>1ª escolha</i></span> <span class="pill n2">região<i>forte</i></span> <span class="pill n3">região<i>boa</i></span> <span class="pill n4">região<i>seletiva</i></span></p>
-<p class="qt">A sequência decisória do Reology Map: <b>ANATOMIA → DEFEITO → OBJETIVO → PLANO → PRODUTO → VOLUME → TÉCNICA</b>. O produto é a <b>quinta</b> decisão, não a primeira.</p>
-
-{filete('cadeia', 160)}
-<h3>1.4 &nbsp;De onde vem cada afirmação</h3>
-<p class="lead">Toda informação deste livro carrega a sua origem. É o que separa uma medida de uma impressão — e o que permite ao leitor discordar com precisão.</p>
-<div class="camadas">
-<div class="camada"><b>1 · Medido</b><p>Laudo do estudo, a 0,7 Hz, com lote identificado. Única camada que gera cor, grupo, assinatura e ranking.</p></div>
-<div class="camada c2"><b>2 · Fabricante *</b><p>Declarado em monografia ou material técnico. Sempre com asterisco, nunca comparado lado a lado com a camada 1.</p></div>
-<div class="camada c3"><b>3 · Literatura</b><p>Publicado por terceiros e citado como tal. Serve de contexto — não classifica.</p></div>
-<div class="camada c4"><b>4 · Interpretação</b><p>A leitura clínica do autor sobre o número medido. É opinião fundamentada, declarada como opinião.</p></div>
-</div>
-<p><b>Sinalizações que você verá nas fichas:</b> <span style="color:var(--flag);font-weight:600">⚑ dado em re-verificação laboratorial</span> · <b>◌</b> monografia do autor pendente · <b>※</b> contraindicação de bula listada · <b>💧</b> propriedade não medida nesta rodada.</p>
-<div class="box" style="border-left:4px solid var(--flag)"><p style="margin:0"><b>O aviso que vale por todo o livro:</b> reologia descreve como o gel se comporta — não descreve segurança. <b>G′ não é segurança vascular</b>, G′ não define plano de injeção, e nome comercial não é reologia. O capítulo 16 mostra o caso da linha Perfectha, em que a escada comercial e a escada medida apontam para lados opostos.</p></div>
-
-{filete('cadeia', 160)}
-<h3>1.5 &nbsp;O caminho do livro</h3>
-{roteiro()}
-</section>
-
 
 <section class="folha" id="molecula">
 {cap_head('Capítulo 2','A molécula e a rede — de onde vem o G′',
