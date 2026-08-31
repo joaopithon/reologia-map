@@ -240,22 +240,30 @@ def regua(k, fam):
             f'<circle cx="{tx:.1f}" cy="24" r="5" fill="var(--fam-{fam})" class="rg-dot"/><text x="{W+6}" y="27" class="rg-lb">tanδ {br(td)}</text></svg>')
 
 # ---------------- ilustrações: face e gel ----------------
-FACE_ART = """
+FACE_BASE = """
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -264,26 +272,86 @@ FACE_ART = """
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+"""
+
+FACE_TOP = """
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -295,6 +363,8 @@ FACE_ART = """
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
 """
+
+FACE_ART = FACE_BASE + FACE_TOP
 
 def face_svg(width=250, marks=None, cls='facesvg', aria='rosto feminino em vista frontal',
              vw=300, dx=0, leader=False, lx_l=112, lx_r=288):
@@ -322,7 +392,7 @@ def face_svg(width=250, marks=None, cls='facesvg', aria='rosto feminino em vista
     g0 = f'<g transform="translate({dx},0)">' if dx else ''
     g1 = '</g>' if dx else ''
     return (f'<svg class="{cls}" viewBox="0 0 {vw} 400" role="img" aria-label="{aria}" '
-            f'style="max-width:{width}px">{g0}{FACE_ART}{g1}{m}</svg>')
+            f'style="max-width:{width}px">{FACE_DEFS}{g0}{FACE_ART}{g1}{m}</svg>')
 
 def gel_icons():
     return {
@@ -558,31 +628,53 @@ for _p, _g, _t, _kind, _fonte in OUTRAS_FONTES:
 # ---------------- mapa anatômico: regiões faciais por grupo ----------------
 FACE_CLIP = ("M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z")
 
-# lado esquerdo do observador; as bilaterais são espelhadas por transform
+# lado esquerdo do observador; as bilaterais sao espelhadas por transform
+FACE_DEFS = ('<defs><clipPath id="fcFaceClip"><path d="' + FACE_CLIP + '"/></clipPath></defs>')
+
+# (lado, path, pino_x, pino_y) — lado 'b' = bilateral (espelhada), 'c' = central
+# o pino marca a regiao com o numero da legenda; nas bilaterais fica num lado so
 REG = {
- 'fronte':      ('c', 'M91,133 C93,103 119,95 150,95 C181,95 207,103 209,133 '
-                      'C180,140 120,140 91,133 Z'),
- 'temporal':    ('b', 'M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z'),
- 'supercilio':  ('b', 'M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z'),
- 'infraorb':    ('b', 'M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z'),
- 'zigoma':      ('b', 'M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 '
-                      'C98,206 86,203 77,203 Z'),
- 'bochecha':    ('b', 'M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z'),
- 'auricular':   ('b', 'M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z'),
- 'nariz':       ('c', 'M144,162 C147,158 153,158 156,162 C157,186 158,204 160,214 '
-                      'C158,225 142,225 140,214 C142,204 143,186 144,162 Z'),
- 'nasolabial':  ('b', 'M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z'),
- 'labios':      ('c', 'M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257 '
-                      'C165,276 135,276 125,257 Z'),
- 'perioral':    ('c', 'M117,252 C126,239 141,241 150,245 C159,241 174,239 183,252 '
-                      'C181,270 169,285 150,287 C131,285 119,270 117,252 Z'
-                      'M125,257 C135,276 165,276 175,257 C166,246 156,244 150,250 '
-                      'C144,244 134,246 125,257 Z'),
- 'labiomentual':('c', 'M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z'),
- 'mento':       ('c', 'M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 '
-                      'C137,331 128,316 129,295 Z'),
- 'mandibula':   ('b', 'M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z'),
- 'prejowl':     ('b', 'M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z'),
+ 'fronte':      ('c', 'M92,132 C95,105 120,97 150,97 C180,97 205,105 208,132 '
+                      'C196,140 172,143 150,143 C128,143 104,140 92,132 Z', 150, 120),
+ 'temporal':    ('b', 'M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 '
+                      'C72,154 74,137 80,124 Z', 85, 155),
+ 'supercilio':  ('b', 'M97,158 C108,144 129,138 145,147 L143,159 C130,151 110,155 '
+                      '100,167 Z', 119, 150),
+ 'infraorb':    ('b', 'M103,181 C113,177 132,179 141,186 C135,199 112,202 104,193 Z',
+                 121, 190),
+ 'zigoma':      ('b', 'M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 '
+                      'C99,207 87,203 78,202 Z', 101, 202),
+ 'bochecha':    ('b', 'M89,216 C102,214 117,222 125,235 C121,250 104,256 93,247 '
+                      'C87,240 85,227 89,216 Z', 104, 234),
+ 'auricular':   ('b', 'M80,201 C79,220 80,239 84,257 C74,262 66,262 62,258 '
+                      'C57,242 54,222 53,200 C62,197 72,197 80,201 Z', 68, 229),
+ 'nariz':       ('c', 'M146,168 C148,164 152,164 154,168 C155,189 156,204 158,214 '
+                      'C156,224 144,224 142,214 C144,204 145,189 146,168 Z', 150, 192),
+ 'nasolabial':  ('b', 'M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 '
+                      '143,226 Z', 127, 245),
+ 'labios':      ('c', 'M124,257 C133,245 144,243 150,249 C156,243 167,245 176,257 '
+                      'C167,277 133,277 124,257 Z', 150, 262),
+ 'perioral':    ('c', 'M116,252 C126,238 141,240 150,244 C159,240 174,238 184,252 '
+                      'C182,271 169,287 150,289 C131,287 118,271 116,252 Z'
+                      'M124,257 C133,277 167,277 176,257 C167,245 156,243 150,249 '
+                      'C144,243 133,245 124,257 Z', 122, 271),
+ 'labiomentual':('c', 'M131,280 C140,274 160,274 169,280 C161,292 139,292 131,280 Z',
+                 150, 286),
+ 'mento':       ('c', 'M128,294 C139,289 161,289 172,294 C173,317 163,332 150,337 '
+                      'C137,332 127,317 128,294 Z', 150, 316),
+ 'mandibula':   ('b', 'M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z',
+                 92, 291),
+ 'prejowl':     ('b', 'M107,297 C118,292 131,297 136,307 C129,321 112,321 104,311 Z',
+                 118, 307),
+}
+
+REG_NOME = {
+ 'fronte': 'fronte', 'temporal': 'têmpora', 'supercilio': 'supercílio',
+ 'infraorb': 'infraorbitária', 'zigoma': 'zigomático',
+ 'bochecha': 'bochecha', 'auricular': 'pré-auricular',
+ 'nariz': 'nariz', 'nasolabial': 'nasolabial', 'labios': 'lábio',
+ 'perioral': 'perioral', 'labiomentual': 'labiomentual',
+ 'mento': 'mento', 'mandibula': 'mandíbula', 'prejowl': 'pré-jowl',
 }
 
 GRUPOS_REG = [
@@ -620,27 +712,76 @@ GRUPOS_REG = [
 CORREG = {'a': 'var(--fam-a)', 'm': 'var(--fam-m)', 'r': 'var(--fam-r)',
           'v': 'var(--fam-v)', 'p': 'var(--chip-rosa)', 's': 'var(--sf)'}
 
-FACE_FEATS = FACE_ART[FACE_ART.index('<g class="fc-feat">'):]
+MARG_L, MARG_R = 132, 122          # espaco reservado a cada coluna de rotulo
 
-def face_regioes(g, width=196, cls='facereg'):
-    """Face frontal com as regiões do grupo demarcadas nas cores da assinatura."""
-    uid = f'fr{g["n"]}'
+def _rotulos(regs):
+    """Bilaterais rotulam a esquerda, centrais a direita — colunas nunca se cruzam.
+
+    Devolve (esquerda, direita) com [ancora_x, ancora_y, nome, y_do_rotulo].
+    """
+    esq = [[px, py, REG_NOME.get(r, r)] for r in regs
+           for lado, d, px, py in [REG[r]] if lado == 'b']
+    dire = [[px, py, REG_NOME.get(r, r)] for r in regs
+            for lado, d, px, py in [REG[r]] if lado == 'c']
+    for col in (esq, dire):
+        col.sort(key=lambda t: t[1])
+        y = 40.0
+        for t in col:
+            t.append(max(t[1], y))
+            y = t[3] + 26
+        sobra = (col[-1][3] if col else 0) - 366
+        if sobra > 0:
+            for t in col:
+                t[3] -= sobra
+    return esq, dire
+
+def face_regioes(g, width=196, cls='facereg', rotulos=True):
+    """Face frontal com as regioes demarcadas e nomeadas na propria figura.
+
+    Camadas: FACE_BASE (pele + relevo anatomico) recebe a cor da regiao e
+    FACE_TOP (cabelo da frente, olhos, boca) volta por cima — a mancha nunca
+    cai sobre o cabelo nem apaga uma feicao.
+    """
+    uid = f'fr{g["n"]}{abs(hash(tuple(g["regs"]))) % 9973}'
     fill = CORREG[g['cores'][0]]
     stroke = CORREG[g['cores'][-1]] if len(g['cores']) > 1 else fill
+    DX = MARG_L if rotulos else 0
+    VW = (MARG_L + 300 + MARG_R) if rotulos else 300
     shapes = ''
     for r in g['regs']:
-        lado, d = REG[r]
+        lado, d, px, py = REG[r]
         rule = ' fill-rule="evenodd"' if r == 'perioral' else ''
-        shapes += f'<path d="{d}" class="rg"{rule}><title>{r}</title></path>'
+        nome = REG_NOME.get(r, r)
+        shapes += f'<path d="{d}" class="rg"{rule}><title>{nome}</title></path>'
         if lado == 'b':
             shapes += (f'<g transform="translate(300,0) scale(-1,1)">'
-                       f'<path d="{d}" class="rg"{rule}/></g>')
-    return (f'<svg class="{cls}" viewBox="0 0 300 400" role="img" '
+                       f'<path d="{d}" class="rg"{rule}><title>{nome}</title></path></g>')
+    lbl = ''
+    if rotulos:
+        esq, dire = _rotulos(g['regs'])
+        for px, py, nome, ly in esq:
+            ax, tx = px + DX, DX - 46
+            lbl += (f'<path class="rgld" d="M{ax - 5},{py} L{DX - 18},{py} '
+                    f'L{DX - 30},{ly:.0f} L{tx + 4},{ly:.0f}"/>'
+                    f'<circle class="rgan" cx="{ax}" cy="{py}" r="2.8"/>'
+                    f'<text class="rglb" x="{tx}" y="{ly:.0f}" dy="3.5" '
+                    f'text-anchor="end">{html.escape(nome)}</text>')
+        for px, py, nome, ly in dire:
+            ax, tx = px + DX, DX + 300 + 46
+            lbl += (f'<path class="rgld" d="M{ax + 5},{py} L{DX + 318},{py} '
+                    f'L{DX + 330},{ly:.0f} L{tx - 4},{ly:.0f}"/>'
+                    f'<circle class="rgan" cx="{ax}" cy="{py}" r="2.8"/>'
+                    f'<text class="rglb" x="{tx}" y="{ly:.0f}" dy="3.5" '
+                    f'text-anchor="start">{html.escape(nome)}</text>')
+    gopen = f'<g transform="translate({DX},0)">' if DX else ''
+    gclose = '</g>' if DX else ''
+    return (f'<svg class="{cls}" viewBox="0 0 {VW} 400" role="img" '
             f'style="width:{width}px;--rg-f:{fill};--rg-s:{stroke}" '
             f'aria-label="regiões faciais do grupo {g["n"]}: {html.escape(g["txt"])}">'
+            f'{FACE_DEFS}'
             f'<defs><clipPath id="{uid}"><path d="{FACE_CLIP}"/></clipPath></defs>'
-            f'{FACE_ART}<g clip-path="url(#{uid})">{shapes}</g>'
-            f'<path d="{FACE_CLIP}" class="fc-edge"/>{FACE_FEATS}</svg>')
+            f'{gopen}{FACE_BASE}<g clip-path="url(#{uid})">{shapes}</g>'
+            f'<path d="{FACE_CLIP}" class="fc-edge"/>{FACE_TOP}{gclose}{lbl}</svg>')
 
 def mapa_regioes():
     cards = ''
@@ -857,9 +998,9 @@ USOS_ROXO = [
   'É a exceção que a família comporta: estrutura numa região que não tolera inchaço. 💧'),
 ]
 
-def face_fam(f, width=210, cls='facereg'):
+def face_fam(f, width=468, cls='facereg'):
     g = dict(n=f['n'], regs=f['regs'], cores=[f['cor'], f['sub'][-1][1][-1]], txt=f['regs_txt'])
-    return face_regioes(g, width, cls)
+    return face_regioes(g, width, cls, rotulos='capa-face' not in cls)
 
 def mapa_familias():
     cards = ''
@@ -884,7 +1025,7 @@ def usos_roxo():
         g = dict(n='3', regs=regs, cores=cores, txt=nome)
         chips = ''.join(dotchip(c, 12) for c in cores)
         out += (f'<figure class="usocard"><figcaption>{chips}<b>{nome}</b></figcaption>'
-                f'{face_regioes(g, 150)}<p>{txt}</p></figure>')
+                f'{face_regioes(g, 352)}<p>{txt}</p></figure>')
     return f'<div class="usos">{out}</div>'
 
 
@@ -1170,7 +1311,7 @@ main{{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg)
 .rc-chips{{display:flex;gap:3px;flex:0 0 auto}}
 .rc-chips i{{width:11px;height:11px;border-radius:50%;display:block;
  border:1px solid rgba(0,0,0,.18)}}
-.facereg{{display:block;margin:.2rem auto .5rem;height:auto}}
+.facereg{{display:block;margin:.2rem auto .5rem;height:auto;max-width:100%}}
 .facereg .rg{{fill:var(--rg-f);fill-opacity:.30;stroke:var(--rg-s);stroke-width:1.7;
  stroke-linejoin:round}}
 .facereg .fc-edge{{fill:none;stroke:var(--face-line);stroke-width:2.2;opacity:.9}}
@@ -1440,6 +1581,44 @@ p{{max-width:76ch}} .lead{{color:var(--ink2)}}
 .fc-pupil circle{{fill:var(--pupil)}}
 .fc-glint{{fill:#fff;opacity:.9}}
 .fc-lash path{{fill:none;stroke:var(--lash);stroke-width:1.5;stroke-linecap:round}}
+/* relevo anatomico: da apoio visual as regioes marcadas */
+.fc-model{{pointer-events:none}}
+.fc-model .fm-sh{{fill:var(--face-sh);opacity:.62;filter:url(#fcSoft)}}
+.fc-model .fm-sh2{{fill:var(--face-sh);opacity:.5;filter:url(#fcSoft2)}}
+.fc-model .fm-hi{{fill:var(--face-hi);opacity:.66;filter:url(#fcSoft)}}
+.fc-model .fm-ln{{fill:none;stroke:var(--face-line);stroke-width:1.5;opacity:.28;
+ stroke-linecap:round;filter:url(#fcSoft2)}}
+.fc-model .fm-ln2{{fill:none;stroke:var(--face-line);stroke-width:2;opacity:.2;
+ stroke-linecap:round;filter:url(#fcSoft)}}
+.fc-model .fm-ln3{{fill:none;stroke:var(--face-line);stroke-width:1;opacity:.22;
+ stroke-linecap:round}}
+.fc-necksh{{fill:var(--face-sh);opacity:.55;filter:url(#fcSoft)}}
+.fc-hairln path{{fill:none;stroke:var(--hair-line);stroke-width:1.1;opacity:.35;
+ stroke-linecap:round}}
+.fc-brow-f{{fill:var(--hair-1);stroke:none;opacity:.92}}
+.fc-lidlo{{stroke:var(--face-line);stroke-width:1.1;opacity:.55}}
+.fc-nostril ellipse{{fill:var(--face-line);opacity:.42;stroke:none}}
+.fc-lipup{{fill:var(--lip);stroke:var(--lip-line);stroke-width:1.05;opacity:.94}}
+.fc-liplo{{fill:var(--lip);stroke:var(--lip-line);stroke-width:1.05}}
+.fc-liphi{{fill:#fff;opacity:.2;stroke:none}}
+/* pinos numerados: ligam a mancha ao nome na legenda */
+.rgpin circle{{fill:var(--rg-s);stroke:#fff;stroke-width:1.9}}
+.rgpin text{{fill:#fff;font-family:'Barlow',sans-serif;font-size:10.5px;
+ font-weight:700;text-anchor:middle}}
+/* legenda numerada das regioes */
+.rglist{{display:flex;flex-wrap:wrap;gap:.18rem .6rem;margin:.1rem 0 .4rem;
+ font-family:'Barlow',sans-serif;font-size:.8rem;text-align:left}}
+.rgli{{display:inline-flex;align-items:center;gap:.28rem;color:var(--ink);
+ font-weight:600;white-space:nowrap}}
+.rgli i{{flex:0 0 auto;width:14px;height:14px;border-radius:50%;
+ background:var(--rg-s,var(--ink3));color:#fff;font-style:normal;font-weight:700;
+ font-size:.62rem;line-height:14px;text-align:center}}
+/* rotulos das regioes na figura: nome ligado a mancha por linha de chamada */
+.rgld{{fill:none;stroke:var(--rg-s);stroke-width:1.1;opacity:.62;
+ stroke-linejoin:round;stroke-linecap:round}}
+.rgan{{fill:var(--rg-s);stroke:#fff;stroke-width:1.1}}
+.rglb{{fill:var(--ink);font-family:'Barlow',sans-serif;font-size:15.5px;
+ font-weight:600;letter-spacing:-.1px}}
 .fc-dot{{stroke:var(--card);stroke-width:2.2}}
 .fc-halo{{opacity:.17}}
 .fc-ld{{stroke:var(--ink3);stroke-width:1;stroke-dasharray:2 3}}

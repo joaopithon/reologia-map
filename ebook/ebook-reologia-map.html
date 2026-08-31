@@ -194,7 +194,7 @@ main{max-width:none;margin:0;padding:1.6rem 1rem 4rem;background:var(--book-bg);
 .rc-chips{display:flex;gap:3px;flex:0 0 auto}
 .rc-chips i{width:11px;height:11px;border-radius:50%;display:block;
  border:1px solid rgba(0,0,0,.18)}
-.facereg{display:block;margin:.2rem auto .5rem;height:auto}
+.facereg{display:block;margin:.2rem auto .5rem;height:auto;max-width:100%}
 .facereg .rg{fill:var(--rg-f);fill-opacity:.30;stroke:var(--rg-s);stroke-width:1.7;
  stroke-linejoin:round}
 .facereg .fc-edge{fill:none;stroke:var(--face-line);stroke-width:2.2;opacity:.9}
@@ -464,6 +464,44 @@ p{max-width:76ch} .lead{color:var(--ink2)}
 .fc-pupil circle{fill:var(--pupil)}
 .fc-glint{fill:#fff;opacity:.9}
 .fc-lash path{fill:none;stroke:var(--lash);stroke-width:1.5;stroke-linecap:round}
+/* relevo anatomico: da apoio visual as regioes marcadas */
+.fc-model{pointer-events:none}
+.fc-model .fm-sh{fill:var(--face-sh);opacity:.62;filter:url(#fcSoft)}
+.fc-model .fm-sh2{fill:var(--face-sh);opacity:.5;filter:url(#fcSoft2)}
+.fc-model .fm-hi{fill:var(--face-hi);opacity:.66;filter:url(#fcSoft)}
+.fc-model .fm-ln{fill:none;stroke:var(--face-line);stroke-width:1.5;opacity:.28;
+ stroke-linecap:round;filter:url(#fcSoft2)}
+.fc-model .fm-ln2{fill:none;stroke:var(--face-line);stroke-width:2;opacity:.2;
+ stroke-linecap:round;filter:url(#fcSoft)}
+.fc-model .fm-ln3{fill:none;stroke:var(--face-line);stroke-width:1;opacity:.22;
+ stroke-linecap:round}
+.fc-necksh{fill:var(--face-sh);opacity:.55;filter:url(#fcSoft)}
+.fc-hairln path{fill:none;stroke:var(--hair-line);stroke-width:1.1;opacity:.35;
+ stroke-linecap:round}
+.fc-brow-f{fill:var(--hair-1);stroke:none;opacity:.92}
+.fc-lidlo{stroke:var(--face-line);stroke-width:1.1;opacity:.55}
+.fc-nostril ellipse{fill:var(--face-line);opacity:.42;stroke:none}
+.fc-lipup{fill:var(--lip);stroke:var(--lip-line);stroke-width:1.05;opacity:.94}
+.fc-liplo{fill:var(--lip);stroke:var(--lip-line);stroke-width:1.05}
+.fc-liphi{fill:#fff;opacity:.2;stroke:none}
+/* pinos numerados: ligam a mancha ao nome na legenda */
+.rgpin circle{fill:var(--rg-s);stroke:#fff;stroke-width:1.9}
+.rgpin text{fill:#fff;font-family:'Barlow',sans-serif;font-size:10.5px;
+ font-weight:700;text-anchor:middle}
+/* legenda numerada das regioes */
+.rglist{display:flex;flex-wrap:wrap;gap:.18rem .6rem;margin:.1rem 0 .4rem;
+ font-family:'Barlow',sans-serif;font-size:.8rem;text-align:left}
+.rgli{display:inline-flex;align-items:center;gap:.28rem;color:var(--ink);
+ font-weight:600;white-space:nowrap}
+.rgli i{flex:0 0 auto;width:14px;height:14px;border-radius:50%;
+ background:var(--rg-s,var(--ink3));color:#fff;font-style:normal;font-weight:700;
+ font-size:.62rem;line-height:14px;text-align:center}
+/* rotulos das regioes na figura: nome ligado a mancha por linha de chamada */
+.rgld{fill:none;stroke:var(--rg-s);stroke-width:1.1;opacity:.62;
+ stroke-linejoin:round;stroke-linecap:round}
+.rgan{fill:var(--rg-s);stroke:#fff;stroke-width:1.1}
+.rglb{fill:var(--ink);font-family:'Barlow',sans-serif;font-size:15.5px;
+ font-weight:600;letter-spacing:-.1px}
 .fc-dot{stroke:var(--card);stroke-width:2.2}
 .fc-halo{opacity:.17}
 .fc-ld{stroke:var(--ink3);stroke-width:1;stroke-dasharray:2 3}
@@ -626,22 +664,30 @@ figure.figura figcaption b{color:var(--ink)}
 <div class="capa-frame">
 <p class="capa-brand">Reology Map · Ciência que guia escolhas</p>
 <h1><span class="gold">Reologia do<br>Ácido Hialurônico</span><span class="wht">Guia dos preenchedores do mercado brasileiro</span></h1>
-<div class="capa-trio"><figure class="cf"><span class="cf-t">BAIXO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-a);--rg-s:var(--chip-rosa)" aria-label="regiões faciais do grupo 1: Região oral e perioral · lábio · têmpora, fronte e supercílio · sulco nasolabial · sulco labiomentual."><defs><clipPath id="fr1"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+<div class="capa-trio"><figure class="cf"><span class="cf-t">BAIXO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-a);--rg-s:var(--chip-rosa)" aria-label="regiões faciais do grupo 1: Região oral e perioral · lábio · têmpora, fronte e supercílio · sulco nasolabial · sulco labiomentual."><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr16110"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -650,26 +696,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr16110)"><path d="M116,252 C126,238 141,240 150,244 C159,240 174,238 184,252 C182,271 169,287 150,289 C131,287 118,271 116,252 ZM124,257 C133,277 167,277 176,257 C167,245 156,243 150,249 C144,243 133,245 124,257 Z" class="rg" fill-rule="evenodd"><title>perioral</title></path><path d="M124,257 C133,245 144,243 150,249 C156,243 167,245 176,257 C167,277 133,277 124,257 Z" class="rg"><title>lábio</title></path><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path></g><path d="M92,132 C95,105 120,97 150,97 C180,97 205,105 208,132 C196,140 172,143 150,143 C128,143 104,140 92,132 Z" class="rg"><title>fronte</title></path><path d="M97,158 C108,144 129,138 145,147 L143,159 C130,151 110,155 100,167 Z" class="rg"><title>supercílio</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,158 C108,144 129,138 145,147 L143,159 C130,151 110,155 100,167 Z" class="rg"><title>supercílio</title></path></g><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path></g><path d="M131,280 C140,274 160,274 169,280 C161,292 139,292 131,280 Z" class="rg"><title>labiomentual</title></path></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -680,49 +784,30 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr1)"><path d="M117,252 C126,239 141,241 150,245 C159,241 174,239 183,252 C181,270 169,285 150,287 C131,285 119,270 117,252 ZM125,257 C135,276 165,276 175,257 C166,246 156,244 150,250 C144,244 134,246 125,257 Z" class="rg" fill-rule="evenodd"><title>perioral</title></path><path d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257 C165,276 135,276 125,257 Z" class="rg"><title>labios</title></path><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"><title>temporal</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"/></g><path d="M91,133 C93,103 119,95 150,95 C181,95 207,103 209,133 C180,140 120,140 91,133 Z" class="rg"><title>fronte</title></path><path d="M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z" class="rg"><title>supercilio</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z" class="rg"/></g><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"/></g><path d="M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z" class="rg"><title>labiomentual</title></path></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg></figure><figure class="cf"><span class="cf-t">MODERADO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-m);--rg-s:var(--fam-m)" aria-label="regiões faciais do grupo 2: Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · região auricular anterior · valorização de mandíbula."><defs><clipPath id="fr2"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+</svg></figure><figure class="cf"><span class="cf-t">MODERADO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-m);--rg-s:var(--fam-m)" aria-label="regiões faciais do grupo 2: Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · região auricular anterior · valorização de mandíbula."><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr2606"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -731,26 +816,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr2606)"><path d="M131,280 C140,274 160,274 169,280 C161,292 139,292 131,280 Z" class="rg"><title>labiomentual</title></path><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path></g><path d="M107,297 C118,292 131,297 136,307 C129,321 112,321 104,311 Z" class="rg"><title>pré-jowl</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M107,297 C118,292 131,297 136,307 C129,321 112,321 104,311 Z" class="rg"><title>pré-jowl</title></path></g><path d="M89,216 C102,214 117,222 125,235 C121,250 104,256 93,247 C87,240 85,227 89,216 Z" class="rg"><title>bochecha</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M89,216 C102,214 117,222 125,235 C121,250 104,256 93,247 C87,240 85,227 89,216 Z" class="rg"><title>bochecha</title></path></g><path d="M80,201 C79,220 80,239 84,257 C74,262 66,262 62,258 C57,242 54,222 53,200 C62,197 72,197 80,201 Z" class="rg"><title>pré-auricular</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M80,201 C79,220 80,239 84,257 C74,262 66,262 62,258 C57,242 54,222 53,200 C62,197 72,197 80,201 Z" class="rg"><title>pré-auricular</title></path></g><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -761,49 +904,30 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr2)"><path d="M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z" class="rg"><title>labiomentual</title></path><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"/></g><path d="M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z" class="rg"><title>prejowl</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z" class="rg"/></g><path d="M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z" class="rg"><title>bochecha</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z" class="rg"/></g><path d="M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z" class="rg"><title>auricular</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z" class="rg"/></g><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg></figure><figure class="cf"><span class="cf-t">ALTO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-r);--rg-s:var(--sf)" aria-label="regiões faciais do grupo 3: Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · e, no uso preciso, a região infraorbitária."><defs><clipPath id="fr3"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+</svg></figure><figure class="cf"><span class="cf-t">ALTO G′</span><svg class="facereg capa-face" viewBox="0 0 300 400" role="img" style="width:168px;--rg-f:var(--fam-r);--rg-s:var(--sf)" aria-label="regiões faciais do grupo 3: Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · e, no uso preciso, a região infraorbitária."><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr37192"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -812,53 +936,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr37192)"><path d="M128,294 C139,289 161,289 172,294 C173,317 163,332 150,337 C137,332 127,317 128,294 Z" class="rg"><title>mento</title></path><path d="M146,168 C148,164 152,164 154,168 C155,189 156,204 158,214 C156,224 144,224 142,214 C144,204 145,189 146,168 Z" class="rg"><title>nariz</title></path><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path></g><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path></g><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path></g><path d="M103,181 C113,177 132,179 141,186 C135,199 112,202 104,193 Z" class="rg"><title>infraorbitária</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M103,181 C113,177 132,179 141,186 C135,199 112,202 104,193 Z" class="rg"><title>infraorbitária</title></path></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-<g clip-path="url(#fr3)"><path d="M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 C137,331 128,316 129,295 Z" class="rg"><title>mento</title></path><path d="M144,162 C147,158 153,158 156,162 C157,186 158,204 160,214 C158,225 142,225 140,214 C142,204 143,186 144,162 Z" class="rg"><title>nariz</title></path><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"><title>zigoma</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"/></g><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"><title>temporal</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"/></g><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"><title>infraorb</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -1040,22 +1195,30 @@ figure.figura figcaption b{color:var(--ink)}
 <p class="lead" style="font-size:.9rem">Achados: apenas <b>2 dos 76 ensaios</b> são “roxo completo” (grupo 4); os pares sobrepostos (Volift=Voluma, Belotero Volume+=Neauvia Intense, Stimulate=Singderm) estão em re-verificação; famílias comerciais inteiras vivem numa mesma zona — a cor classifica, o número posiciona.</p>
 <h3 style="margin-top:1.6rem">Mapa anatômico — as três famílias sobre a face</h3>
 <p class="lead">Este é o mapa central do livro. <b>Três famílias</b>, definidas pelo G′ e reconhecidas pela cor: <b style="color:var(--fam-a)">azul</b> quando o gel integra, <b style="color:var(--fam-m)">amarelo</b> quando preenche, <b style="color:var(--fam-r)">roxo</b> quando sustenta. Tudo o mais no livro — as nove assinaturas, os seis grupos, as fichas — é detalhamento destas três.</p>
-<div class="mapafam"><figure class="famcard fc-a"><figcaption><span class="fm-n">1</span><span class="fm-t">BAIXO G′</span><span class="fm-g">grupos 1 e 2</span></figcaption><p class="fm-lead">Integra, acompanha o movimento e cria pouco relevo próprio.</p><div class="fm-subs"><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-a)"></span><span class="chip" style="width:11px;height:11px;background:var(--chip-rosa)"></span><em>azul + rosa</em></span><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-a)"></span><span class="chip" style="width:11px;height:11px;background:var(--fam-m)"></span><span class="chip" style="width:11px;height:11px;background:var(--chip-rosa)"></span><em>azul + amarelo + rosa</em></span></div><svg class="facereg" viewBox="0 0 300 400" role="img" style="width:210px;--rg-f:var(--fam-a);--rg-s:var(--chip-rosa)" aria-label="regiões faciais do grupo 1: Região oral e perioral · lábio · têmpora, fronte e supercílio · sulco nasolabial · sulco labiomentual."><defs><clipPath id="fr1"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+<div class="mapafam"><figure class="famcard fc-a"><figcaption><span class="fm-n">1</span><span class="fm-t">BAIXO G′</span><span class="fm-g">grupos 1 e 2</span></figcaption><p class="fm-lead">Integra, acompanha o movimento e cria pouco relevo próprio.</p><div class="fm-subs"><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-a)"></span><span class="chip" style="width:11px;height:11px;background:var(--chip-rosa)"></span><em>azul + rosa</em></span><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-a)"></span><span class="chip" style="width:11px;height:11px;background:var(--fam-m)"></span><span class="chip" style="width:11px;height:11px;background:var(--chip-rosa)"></span><em>azul + amarelo + rosa</em></span></div><svg class="facereg" viewBox="0 0 554 400" role="img" style="width:468px;--rg-f:var(--fam-a);--rg-s:var(--chip-rosa)" aria-label="regiões faciais do grupo 1: Região oral e perioral · lábio · têmpora, fronte e supercílio · sulco nasolabial · sulco labiomentual."><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr16110"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><g transform="translate(132,0)">
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -1064,26 +1227,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr16110)"><path d="M116,252 C126,238 141,240 150,244 C159,240 174,238 184,252 C182,271 169,287 150,289 C131,287 118,271 116,252 ZM124,257 C133,277 167,277 176,257 C167,245 156,243 150,249 C144,243 133,245 124,257 Z" class="rg" fill-rule="evenodd"><title>perioral</title></path><path d="M124,257 C133,245 144,243 150,249 C156,243 167,245 176,257 C167,277 133,277 124,257 Z" class="rg"><title>lábio</title></path><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path></g><path d="M92,132 C95,105 120,97 150,97 C180,97 205,105 208,132 C196,140 172,143 150,143 C128,143 104,140 92,132 Z" class="rg"><title>fronte</title></path><path d="M97,158 C108,144 129,138 145,147 L143,159 C130,151 110,155 100,167 Z" class="rg"><title>supercílio</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,158 C108,144 129,138 145,147 L143,159 C130,151 110,155 100,167 Z" class="rg"><title>supercílio</title></path></g><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path></g><path d="M131,280 C140,274 160,274 169,280 C161,292 139,292 131,280 Z" class="rg"><title>labiomentual</title></path></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -1094,49 +1315,30 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr1)"><path d="M117,252 C126,239 141,241 150,245 C159,241 174,239 183,252 C181,270 169,285 150,287 C131,285 119,270 117,252 ZM125,257 C135,276 165,276 175,257 C166,246 156,244 150,250 C144,244 134,246 125,257 Z" class="rg" fill-rule="evenodd"><title>perioral</title></path><path d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257 C165,276 135,276 125,257 Z" class="rg"><title>labios</title></path><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"><title>temporal</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"/></g><path d="M91,133 C93,103 119,95 150,95 C181,95 207,103 209,133 C180,140 120,140 91,133 Z" class="rg"><title>fronte</title></path><path d="M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z" class="rg"><title>supercilio</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,157 C109,143 131,141 143,150 L141,160 C130,152 111,153 100,164 Z" class="rg"/></g><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"/></g><path d="M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z" class="rg"><title>labiomentual</title></path></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg><p class="fm-regs">Região oral e perioral · lábio · têmpora, fronte e supercílio · sulco nasolabial · sulco labiomentual.</p><p class="fm-nota"><b>As duas assinaturas atendem as mesmas regiões.</b> A diferença entre azul + rosa e azul + amarelo + rosa é <i>quanto</i> cada uma valoriza — a segunda entrega um pouco mais de volume. A indicação não muda.</p></figure><figure class="famcard fc-m"><figcaption><span class="fm-n">2</span><span class="fm-t">MODERADO G′</span><span class="fm-g">grupo 3</span></figcaption><p class="fm-lead">Preenche e equilibra: corpo sem impor projeção.</p><div class="fm-subs"><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-m)"></span><em>amarelo</em></span></div><svg class="facereg" viewBox="0 0 300 400" role="img" style="width:210px;--rg-f:var(--fam-m);--rg-s:var(--fam-m)" aria-label="regiões faciais do grupo 2: Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · região auricular anterior · valorização de mandíbula."><defs><clipPath id="fr2"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+</g><path class="rgld" d="M246,150 L114,150 L102,150 L90,150"/><circle class="rgan" cx="251" cy="150" r="2.8"/><text class="rglb" x="86" y="150" dy="3.5" text-anchor="end">supercílio</text><path class="rgld" d="M212,155 L114,155 L102,176 L90,176"/><circle class="rgan" cx="217" cy="155" r="2.8"/><text class="rglb" x="86" y="176" dy="3.5" text-anchor="end">têmpora</text><path class="rgld" d="M254,245 L114,245 L102,245 L90,245"/><circle class="rgan" cx="259" cy="245" r="2.8"/><text class="rglb" x="86" y="245" dy="3.5" text-anchor="end">nasolabial</text><path class="rgld" d="M287,120 L450,120 L462,120 L474,120"/><circle class="rgan" cx="282" cy="120" r="2.8"/><text class="rglb" x="478" y="120" dy="3.5" text-anchor="start">fronte</text><path class="rgld" d="M287,262 L450,262 L462,262 L474,262"/><circle class="rgan" cx="282" cy="262" r="2.8"/><text class="rglb" x="478" y="262" dy="3.5" text-anchor="start">lábio</text><path class="rgld" d="M259,271 L450,271 L462,288 L474,288"/><circle class="rgan" cx="254" cy="271" r="2.8"/><text class="rglb" x="478" y="288" dy="3.5" text-anchor="start">perioral</text><path class="rgld" d="M287,286 L450,286 L462,314 L474,314"/><circle class="rgan" cx="282" cy="286" r="2.8"/><text class="rglb" x="478" y="314" dy="3.5" text-anchor="start">labiomentual</text></svg><p class="fm-regs">Região oral e perioral · lábio · têmpora, fronte e supercílio · sulco nasolabial · sulco labiomentual.</p><p class="fm-nota"><b>As duas assinaturas atendem as mesmas regiões.</b> A diferença entre azul + rosa e azul + amarelo + rosa é <i>quanto</i> cada uma valoriza — a segunda entrega um pouco mais de volume. A indicação não muda.</p></figure><figure class="famcard fc-m"><figcaption><span class="fm-n">2</span><span class="fm-t">MODERADO G′</span><span class="fm-g">grupo 3</span></figcaption><p class="fm-lead">Preenche e equilibra: corpo sem impor projeção.</p><div class="fm-subs"><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-m)"></span><em>amarelo</em></span></div><svg class="facereg" viewBox="0 0 554 400" role="img" style="width:468px;--rg-f:var(--fam-m);--rg-s:var(--fam-m)" aria-label="regiões faciais do grupo 2: Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · região auricular anterior · valorização de mandíbula."><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr2606"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><g transform="translate(132,0)">
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -1145,26 +1347,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr2606)"><path d="M131,280 C140,274 160,274 169,280 C161,292 139,292 131,280 Z" class="rg"><title>labiomentual</title></path><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path></g><path d="M107,297 C118,292 131,297 136,307 C129,321 112,321 104,311 Z" class="rg"><title>pré-jowl</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M107,297 C118,292 131,297 136,307 C129,321 112,321 104,311 Z" class="rg"><title>pré-jowl</title></path></g><path d="M89,216 C102,214 117,222 125,235 C121,250 104,256 93,247 C87,240 85,227 89,216 Z" class="rg"><title>bochecha</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M89,216 C102,214 117,222 125,235 C121,250 104,256 93,247 C87,240 85,227 89,216 Z" class="rg"><title>bochecha</title></path></g><path d="M80,201 C79,220 80,239 84,257 C74,262 66,262 62,258 C57,242 54,222 53,200 C62,197 72,197 80,201 Z" class="rg"><title>pré-auricular</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M80,201 C79,220 80,239 84,257 C74,262 66,262 62,258 C57,242 54,222 53,200 C62,197 72,197 80,201 Z" class="rg"><title>pré-auricular</title></path></g><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -1175,49 +1435,30 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr2)"><path d="M132,281 C140,275 160,275 168,281 C161,291 139,291 132,281 Z" class="rg"><title>labiomentual</title></path><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"/></g><path d="M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z" class="rg"><title>prejowl</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M108,298 C118,293 130,298 135,307 C128,320 112,320 105,311 Z" class="rg"/></g><path d="M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z" class="rg"><title>bochecha</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M88,222 C101,217 118,222 127,232 C125,249 107,258 91,249 Z" class="rg"/></g><path d="M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z" class="rg"><title>auricular</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M80,204 C80,222 82,240 86,258 L62,266 C56,250 52,230 50,200 Z" class="rg"/></g><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg><p class="fm-regs">Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · região auricular anterior · valorização de mandíbula.</p><p class="fm-nota">A família de transição — a cor do vale. Uma assinatura só, sem subclasse: é o produto que preenche onde não se quer nem espalhar nem projetar.</p></figure><figure class="famcard fc-r"><figcaption><span class="fm-n">3</span><span class="fm-t">ALTO G′</span><span class="fm-g">grupos 4 e 5</span></figcaption><p class="fm-lead">Sustenta. Conforme a segunda cor, projeta ou volumiza.</p><div class="fm-subs"><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-r)"></span><em>roxo puro</em></span><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-r)"></span><span class="chip" style="width:11px;height:11px;background:var(--fam-v)"></span><em>roxo + 2ª cor</em></span><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-r)"></span><span class="chip" style="width:11px;height:11px;background:var(--sf)"></span><em>na olheira 💧</em></span></div><svg class="facereg" viewBox="0 0 300 400" role="img" style="width:210px;--rg-f:var(--fam-r);--rg-s:var(--sf)" aria-label="regiões faciais do grupo 3: Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · e, no uso preciso, a região infraorbitária."><defs><clipPath id="fr3"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+</g><path class="rgld" d="M195,229 L114,229 L102,229 L90,229"/><circle class="rgan" cx="200" cy="229" r="2.8"/><text class="rglb" x="86" y="229" dy="3.5" text-anchor="end">pré-auricular</text><path class="rgld" d="M231,234 L114,234 L102,255 L90,255"/><circle class="rgan" cx="236" cy="234" r="2.8"/><text class="rglb" x="86" y="255" dy="3.5" text-anchor="end">bochecha</text><path class="rgld" d="M254,245 L114,245 L102,281 L90,281"/><circle class="rgan" cx="259" cy="245" r="2.8"/><text class="rglb" x="86" y="281" dy="3.5" text-anchor="end">nasolabial</text><path class="rgld" d="M219,291 L114,291 L102,307 L90,307"/><circle class="rgan" cx="224" cy="291" r="2.8"/><text class="rglb" x="86" y="307" dy="3.5" text-anchor="end">mandíbula</text><path class="rgld" d="M245,307 L114,307 L102,333 L90,333"/><circle class="rgan" cx="250" cy="307" r="2.8"/><text class="rglb" x="86" y="333" dy="3.5" text-anchor="end">pré-jowl</text><path class="rgld" d="M287,286 L450,286 L462,286 L474,286"/><circle class="rgan" cx="282" cy="286" r="2.8"/><text class="rglb" x="478" y="286" dy="3.5" text-anchor="start">labiomentual</text></svg><p class="fm-regs">Sulco labiomentual e sulco nasolabial · pré-jowl · bochecha · região auricular anterior · valorização de mandíbula.</p><p class="fm-nota">A família de transição — a cor do vale. Uma assinatura só, sem subclasse: é o produto que preenche onde não se quer nem espalhar nem projetar.</p></figure><figure class="famcard fc-r"><figcaption><span class="fm-n">3</span><span class="fm-t">ALTO G′</span><span class="fm-g">grupos 4 e 5</span></figcaption><p class="fm-lead">Sustenta. Conforme a segunda cor, projeta ou volumiza.</p><div class="fm-subs"><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-r)"></span><em>roxo puro</em></span><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-r)"></span><span class="chip" style="width:11px;height:11px;background:var(--fam-v)"></span><em>roxo + 2ª cor</em></span><span class="fm-sub"><span class="chip" style="width:11px;height:11px;background:var(--fam-r)"></span><span class="chip" style="width:11px;height:11px;background:var(--sf)"></span><em>na olheira 💧</em></span></div><svg class="facereg" viewBox="0 0 554 400" role="img" style="width:468px;--rg-f:var(--fam-r);--rg-s:var(--sf)" aria-label="regiões faciais do grupo 3: Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · e, no uso preciso, a região infraorbitária."><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr37192"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><g transform="translate(132,0)">
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -1226,26 +1467,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr37192)"><path d="M128,294 C139,289 161,289 172,294 C173,317 163,332 150,337 C137,332 127,317 128,294 Z" class="rg"><title>mento</title></path><path d="M146,168 C148,164 152,164 154,168 C155,189 156,204 158,214 C156,224 144,224 142,214 C144,204 145,189 146,168 Z" class="rg"><title>nariz</title></path><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path></g><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path></g><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path></g><path d="M103,181 C113,177 132,179 141,186 C135,199 112,202 104,193 Z" class="rg"><title>infraorbitária</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M103,181 C113,177 132,179 141,186 C135,199 112,202 104,193 Z" class="rg"><title>infraorbitária</title></path></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -1256,34 +1555,7 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr3)"><path d="M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 C137,331 128,316 129,295 Z" class="rg"><title>mento</title></path><path d="M144,162 C147,158 153,158 156,162 C157,186 158,204 160,214 C158,225 142,225 140,214 C142,204 143,186 144,162 Z" class="rg"><title>nariz</title></path><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"><title>zigoma</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"/></g><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"><title>temporal</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"/></g><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"><title>infraorb</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg><p class="fm-regs">Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · e, no uso preciso, a região infraorbitária.</p><p class="fm-nota"><b>Três usos, não um.</b> O <b>roxo puro</b> projeta — é o vértice. O <b>roxo com segunda cor</b> volumiza, com menos projeção. E o mesmo alto G′, quando tem baixo swelling factor, é o que se usa na <b>olheira</b>.</p></figure></div>
+</g><path class="rgld" d="M212,155 L114,155 L102,155 L90,155"/><circle class="rgan" cx="217" cy="155" r="2.8"/><text class="rglb" x="86" y="155" dy="3.5" text-anchor="end">têmpora</text><path class="rgld" d="M248,190 L114,190 L102,190 L90,190"/><circle class="rgan" cx="253" cy="190" r="2.8"/><text class="rglb" x="86" y="190" dy="3.5" text-anchor="end">infraorbitária</text><path class="rgld" d="M228,202 L114,202 L102,216 L90,216"/><circle class="rgan" cx="233" cy="202" r="2.8"/><text class="rglb" x="86" y="216" dy="3.5" text-anchor="end">zigomático</text><path class="rgld" d="M219,291 L114,291 L102,291 L90,291"/><circle class="rgan" cx="224" cy="291" r="2.8"/><text class="rglb" x="86" y="291" dy="3.5" text-anchor="end">mandíbula</text><path class="rgld" d="M287,192 L450,192 L462,192 L474,192"/><circle class="rgan" cx="282" cy="192" r="2.8"/><text class="rglb" x="478" y="192" dy="3.5" text-anchor="start">nariz</text><path class="rgld" d="M287,316 L450,316 L462,316 L474,316"/><circle class="rgan" cx="282" cy="316" r="2.8"/><text class="rglb" x="478" y="316" dy="3.5" text-anchor="start">mento</text></svg><p class="fm-regs">Mento · nariz · arco zigomático · mandíbula · têmpora (crown lift) · e, no uso preciso, a região infraorbitária.</p><p class="fm-nota"><b>Três usos, não um.</b> O <b>roxo puro</b> projeta — é o vértice. O <b>roxo com segunda cor</b> volumiza, com menos projeção. E o mesmo alto G′, quando tem baixo swelling factor, é o que se usa na <b>olheira</b>.</p></figure></div>
 <p class="lead" style="font-size:.92rem"><b>Como ler cada face:</b> o preenchimento traz a cor da família (a 1ª cor, o G′) e o contorno traz a segunda cor da assinatura. As regiões se repetem entre famílias de propósito — <b>a mesma mandíbula</b> aparece no amarelo (valorizar o contorno), no roxo puro (projetar o ângulo) e no roxo modulado (volumizar). O que muda não é a região: é a tarefa.</p>
 
 <div class="box"><p style="margin-top:0"><b>A subclasse do baixo G′ — duas assinaturas, uma indicação.</b> Dentro do azul existem dois perfis: <b>azul + rosa</b> <span class="chip" style="width:11px;height:11px;background:var(--fam-a)"></span><span class="chip" style="width:11px;height:11px;background:var(--chip-rosa)"></span> e <b>azul + amarelo + rosa</b> <span class="chip" style="width:11px;height:11px;background:var(--fam-a)"></span><span class="chip" style="width:11px;height:11px;background:var(--fam-m)"></span><span class="chip" style="width:11px;height:11px;background:var(--chip-rosa)"></span>. A diferença entre eles é <i>quanto valorizam</i> — o segundo entrega um pouco mais de volume, porque tem G″ intermediário. <b>As regiões são as mesmas.</b> Não existe uma indicação para um e outra para o outro: onde vai o azul + rosa, vai também o azul + amarelo + rosa, e a escolha entre os dois é de quanto corpo se quer naquele mesmo lugar.</p>
@@ -1292,22 +1564,30 @@ figure.figura figcaption b{color:var(--ink)}
 <div class="filete"><span></span><svg class="orn" viewBox="0 0 150 20" role="presentation" aria-hidden="true" style="width:160px"><path d="M3.0,10.0 L7.8,6.15 L12.6,4.6 L17.4,6.28 L22.2,10.18 L27.0,13.97 L31.8,15.39 L36.6,13.59 L41.4,9.64 L46.2,5.91 L51.0,4.62 L55.8,6.54 L60.6,10.53 L65.4,14.21 L70.2,15.36 L75.0,13.32 L79.8,9.29 L84.6,5.68 L89.4,4.66 L94.2,6.83 L99.0,10.89 L103.8,14.42 L108.6,15.31 L113.4,13.03 L118.2,8.94 L123.0,5.48 L127.8,4.72 L132.6,7.12 L137.4,11.24 L142.2,14.62 L147.0,15.23" class="orn-l"/><circle cx="3.0" cy="10.0" r="1.6" class="orn-b" opacity="0.28"/><circle cx="12.6" cy="4.6" r="2.1" class="orn-b" opacity="0.56"/><circle cx="22.2" cy="10.18" r="2.4" class="orn-b" opacity="0.7"/><circle cx="31.8" cy="15.39" r="2.63" class="orn-b" opacity="0.8"/><circle cx="41.4" cy="9.64" r="2.82" class="orn-b" opacity="0.88"/><circle cx="51.0" cy="4.62" r="2.96" class="orn-b" opacity="0.94"/><circle cx="60.6" cy="10.53" r="3.05" class="orn-b" opacity="0.98"/><circle cx="70.2" cy="15.36" r="3.09" class="orn-b" opacity="1.0"/><circle cx="79.8" cy="9.29" r="3.09" class="orn-b" opacity="1.0"/><circle cx="89.4" cy="4.66" r="3.05" class="orn-b" opacity="0.98"/><circle cx="99.0" cy="10.89" r="2.96" class="orn-b" opacity="0.94"/><circle cx="108.6" cy="15.31" r="2.82" class="orn-b" opacity="0.88"/><circle cx="118.2" cy="8.94" r="2.63" class="orn-b" opacity="0.8"/><circle cx="127.8" cy="4.72" r="2.4" class="orn-b" opacity="0.7"/><circle cx="137.4" cy="11.24" r="2.1" class="orn-b" opacity="0.56"/><circle cx="147.0" cy="15.23" r="1.6" class="orn-b" opacity="0.28"/></svg><span></span></div>
 <h4 style="margin-bottom:.2rem">Os três usos do alto G′</h4>
 <p class="lead">A família roxa é a única com três destinos clínicos distintos — e é por isso que ela concentra mais produtos que qualquer outra no banco.</p>
-<div class="usos"><figure class="usocard"><figcaption><span class="chip" style="width:12px;height:12px;background:var(--fam-r)"></span><b>PROJEÇÃO</b></figcaption><svg class="facereg" viewBox="0 0 300 400" role="img" style="width:150px;--rg-f:var(--fam-r);--rg-s:var(--fam-r)" aria-label="regiões faciais do grupo 3: PROJEÇÃO"><defs><clipPath id="fr3"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+<div class="usos"><figure class="usocard"><figcaption><span class="chip" style="width:12px;height:12px;background:var(--fam-r)"></span><b>PROJEÇÃO</b></figcaption><svg class="facereg" viewBox="0 0 554 400" role="img" style="width:352px;--rg-f:var(--fam-r);--rg-s:var(--fam-r)" aria-label="regiões faciais do grupo 3: PROJEÇÃO"><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr37477"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><g transform="translate(132,0)">
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -1316,26 +1596,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr37477)"><path d="M128,294 C139,289 161,289 172,294 C173,317 163,332 150,337 C137,332 127,317 128,294 Z" class="rg"><title>mento</title></path><path d="M146,168 C148,164 152,164 154,168 C155,189 156,204 158,214 C156,224 144,224 142,214 C144,204 145,189 146,168 Z" class="rg"><title>nariz</title></path><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path></g><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -1346,49 +1684,30 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr3)"><path d="M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 C137,331 128,316 129,295 Z" class="rg"><title>mento</title></path><path d="M144,162 C147,158 153,158 156,162 C157,186 158,204 160,214 C158,225 142,225 140,214 C142,204 143,186 144,162 Z" class="rg"><title>nariz</title></path><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"><title>zigoma</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"/></g><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg><p>Roxo puro: tan δ baixo, estrutura sem modificador. Mantém o vértice onde foi colocado.</p></figure><figure class="usocard"><figcaption><span class="chip" style="width:12px;height:12px;background:var(--fam-r)"></span><span class="chip" style="width:12px;height:12px;background:var(--fam-v)"></span><b>VOLUMIZAÇÃO</b></figcaption><svg class="facereg" viewBox="0 0 300 400" role="img" style="width:150px;--rg-f:var(--fam-r);--rg-s:var(--fam-v)" aria-label="regiões faciais do grupo 3: VOLUMIZAÇÃO"><defs><clipPath id="fr3"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+</g><path class="rgld" d="M228,202 L114,202 L102,202 L90,202"/><circle class="rgan" cx="233" cy="202" r="2.8"/><text class="rglb" x="86" y="202" dy="3.5" text-anchor="end">zigomático</text><path class="rgld" d="M219,291 L114,291 L102,291 L90,291"/><circle class="rgan" cx="224" cy="291" r="2.8"/><text class="rglb" x="86" y="291" dy="3.5" text-anchor="end">mandíbula</text><path class="rgld" d="M287,192 L450,192 L462,192 L474,192"/><circle class="rgan" cx="282" cy="192" r="2.8"/><text class="rglb" x="478" y="192" dy="3.5" text-anchor="start">nariz</text><path class="rgld" d="M287,316 L450,316 L462,316 L474,316"/><circle class="rgan" cx="282" cy="316" r="2.8"/><text class="rglb" x="478" y="316" dy="3.5" text-anchor="start">mento</text></svg><p>Roxo puro: tan δ baixo, estrutura sem modificador. Mantém o vértice onde foi colocado.</p></figure><figure class="usocard"><figcaption><span class="chip" style="width:12px;height:12px;background:var(--fam-r)"></span><span class="chip" style="width:12px;height:12px;background:var(--fam-v)"></span><b>VOLUMIZAÇÃO</b></figcaption><svg class="facereg" viewBox="0 0 554 400" role="img" style="width:352px;--rg-f:var(--fam-r);--rg-s:var(--fam-v)" aria-label="regiões faciais do grupo 3: VOLUMIZAÇÃO"><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr3668"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><g transform="translate(132,0)">
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -1397,26 +1716,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr3668)"><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,227 C82,265 96,299 124,326 L115,349 C73,325 45,289 37,233 Z" class="rg"><title>mandíbula</title></path></g><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M79,192 C93,185 113,190 128,202 C126,213 119,218 110,214 C99,207 87,203 78,202 Z" class="rg"><title>zigomático</title></path></g><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M97,124 C95,144 94,164 96,186 C86,191 78,184 75,170 C72,154 74,137 80,124 Z" class="rg"><title>têmpora</title></path></g><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M134,219 C126,231 121,248 122,268 L133,269 C132,251 136,236 143,226 Z" class="rg"><title>nasolabial</title></path></g><path d="M128,294 C139,289 161,289 172,294 C173,317 163,332 150,337 C137,332 127,317 128,294 Z" class="rg"><title>mento</title></path></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -1427,49 +1804,30 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr3)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"><title>mandibula</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,228 C82,266 96,300 124,326 L116,350 C74,326 46,290 38,234 Z" class="rg"/></g><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"><title>zigoma</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M78,193 C92,187 112,192 126,203 C124,212 118,216 110,212 C98,206 86,203 77,203 Z" class="rg"/></g><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"><title>temporal</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M96,122 C94,142 93,162 95,182 L75,188 C69,168 67,144 71,124 Z" class="rg"/></g><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"><title>nasolabial</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M132,217 C124,229 118,246 120,266 L131,268 C129,250 132,234 140,224 Z" class="rg"/></g><path d="M129,295 C139,290 161,290 171,295 C172,316 163,331 150,336 C137,331 128,316 129,295 Z" class="rg"><title>mento</title></path></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg><p>Roxo com segunda cor: sustenta com mais curva e mais corpo. Volume estrutural, não projeção focal.</p></figure><figure class="usocard"><figcaption><span class="chip" style="width:12px;height:12px;background:var(--fam-r)"></span><span class="chip" style="width:12px;height:12px;background:var(--sf)"></span><b>OLHEIRA</b></figcaption><svg class="facereg" viewBox="0 0 300 400" role="img" style="width:150px;--rg-f:var(--fam-r);--rg-s:var(--sf)" aria-label="regiões faciais do grupo 3: OLHEIRA"><defs><clipPath id="fr3"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs>
+</g><path class="rgld" d="M212,155 L114,155 L102,155 L90,155"/><circle class="rgan" cx="217" cy="155" r="2.8"/><text class="rglb" x="86" y="155" dy="3.5" text-anchor="end">têmpora</text><path class="rgld" d="M228,202 L114,202 L102,202 L90,202"/><circle class="rgan" cx="233" cy="202" r="2.8"/><text class="rglb" x="86" y="202" dy="3.5" text-anchor="end">zigomático</text><path class="rgld" d="M254,245 L114,245 L102,245 L90,245"/><circle class="rgan" cx="259" cy="245" r="2.8"/><text class="rglb" x="86" y="245" dy="3.5" text-anchor="end">nasolabial</text><path class="rgld" d="M219,291 L114,291 L102,291 L90,291"/><circle class="rgan" cx="224" cy="291" r="2.8"/><text class="rglb" x="86" y="291" dy="3.5" text-anchor="end">mandíbula</text><path class="rgld" d="M287,316 L450,316 L462,316 L474,316"/><circle class="rgan" cx="282" cy="316" r="2.8"/><text class="rglb" x="478" y="316" dy="3.5" text-anchor="start">mento</text></svg><p>Roxo com segunda cor: sustenta com mais curva e mais corpo. Volume estrutural, não projeção focal.</p></figure><figure class="usocard"><figcaption><span class="chip" style="width:12px;height:12px;background:var(--fam-r)"></span><span class="chip" style="width:12px;height:12px;background:var(--sf)"></span><b>OLHEIRA</b></figcaption><svg class="facereg" viewBox="0 0 554 400" role="img" style="width:352px;--rg-f:var(--fam-r);--rg-s:var(--sf)" aria-label="regiões faciais do grupo 3: OLHEIRA"><defs><clipPath id="fcFaceClip"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><defs><clipPath id="fr32496"><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/></clipPath></defs><g transform="translate(132,0)">
 <defs>
- <radialGradient id="fcSkin" cx="50%" cy="32%" r="78%">
+ <radialGradient id="fcSkin" cx="50%" cy="30%" r="80%">
   <stop offset="0%" stop-color="var(--face-hi)"/>
-  <stop offset="60%" stop-color="var(--face-fill)"/>
+  <stop offset="55%" stop-color="var(--face-fill)"/>
   <stop offset="100%" stop-color="var(--face-sh)"/>
  </radialGradient>
  <linearGradient id="fcHair" x1="0" y1="0" x2="0" y2="1">
   <stop offset="0%" stop-color="var(--hair-2)"/>
   <stop offset="100%" stop-color="var(--hair-1)"/>
  </linearGradient>
+ <filter id="fcSoft" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="4.2"/>
+ </filter>
+ <filter id="fcSoft2" x="-40%" y="-40%" width="180%" height="180%">
+  <feGaussianBlur stdDeviation="2.4"/>
+ </filter>
 </defs>
 <g class="fc-body">
  <path class="fc-neck" d="M124,322 C125,345 122,357 116,367 C99,374 80,381 67,391
   C62,395 59,398 58,400 L242,400 C241,398 238,395 233,391 C220,381 201,374 184,367
   C178,357 175,345 176,322 Z"/>
+ <path class="fc-necksh" d="M126,326 C133,342 167,342 174,326 C176,344 172,357 165,364
+  C156,369 144,369 135,364 C128,357 124,344 126,326 Z"/>
  <path class="fc-sh" d="M150,369 C139,369 129,367 121,363 C115,373 111,386 109,400
   L191,400 C189,386 185,373 179,363 C171,367 161,369 150,369 Z"/>
 </g>
@@ -1478,26 +1836,84 @@ figure.figura figcaption b{color:var(--ink)}
  C106,100 84,130 80,178 C78,215 83,252 92,284 L78,293 C73,284 69,273 66,260
  C59,228 56,192 57,157 C59,97 95,60 150,60 Z"/>
 <path class="fc-face" d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z"/>
+
+<!-- relevo anatomico: e o que da apoio visual as regioes -->
+<g class="fc-model" clip-path="url(#fcFaceClip)">
+ <!-- fossa temporal -->
+ <path class="fm-sh" d="M81,140 C91,149 97,166 96,188 C87,193 79,186 76,171
+  C74,158 76,146 81,140 Z"/>
+ <path class="fm-sh" d="M219,140 C209,149 203,166 204,188 C213,193 221,186 224,171
+  C226,158 224,146 219,140 Z"/>
+ <!-- sulco infraorbitario -->
+ <path class="fm-sh2" d="M105,182 C115,179 131,181 139,187 C133,197 114,199 106,192 Z"/>
+ <path class="fm-sh2" d="M195,182 C185,179 169,181 161,187 C167,197 186,199 194,192 Z"/>
+ <!-- saliencia malar / arco zigomatico -->
+ <ellipse class="fm-hi" cx="103" cy="204" rx="22" ry="12" transform="rotate(-14 103 204)"/>
+ <ellipse class="fm-hi" cx="197" cy="204" rx="22" ry="12" transform="rotate(14 197 204)"/>
+ <!-- concavidade submalar -->
+ <path class="fm-sh" d="M93,217 C105,216 119,224 125,236 C117,250 100,252 91,241
+  C87,232 88,223 93,217 Z"/>
+ <path class="fm-sh" d="M207,217 C195,216 181,224 175,236 C183,250 200,252 209,241
+  C213,232 212,223 207,217 Z"/>
+ <!-- sulco nasolabial -->
+ <path class="fm-ln" d="M138,223 C132,233 128,249 129,267"/>
+ <path class="fm-ln" d="M162,223 C168,233 172,249 171,267"/>
+ <!-- ramo e corpo da mandibula -->
+ <path class="fm-ln2" d="M80,229 C84,264 97,297 123,323"/>
+ <path class="fm-ln2" d="M220,229 C216,264 203,297 177,323"/>
+ <!-- sulco pre-jowl -->
+ <path class="fm-sh2" d="M110,299 C119,295 129,300 133,308 C127,318 113,318 108,310 Z"/>
+ <path class="fm-sh2" d="M190,299 C181,295 171,300 167,308 C173,318 187,318 192,310 Z"/>
+ <!-- sulco labiomentual -->
+ <path class="fm-sh2" d="M133,282 C141,277 159,277 167,282 C160,290 140,290 133,282 Z"/>
+ <!-- eminencia mentual -->
+ <ellipse class="fm-hi" cx="150" cy="312" rx="17" ry="14"/>
+ <!-- fronte: luz central e leve sombra lateral -->
+ <ellipse class="fm-hi" cx="150" cy="128" rx="34" ry="20"/>
+ <!-- filtro nasal -->
+ <path class="fm-ln3" d="M145,232 C145,239 145,244 146,247"/>
+ <path class="fm-ln3" d="M155,232 C155,239 155,244 154,247"/>
+ <!-- dorso nasal: sombra de um lado, luz do outro -->
+ <path class="fm-sh2" d="M143,180 C141,195 140,208 139,217 C143,219 145,218 146,216
+  C146,204 146,191 147,180 Z"/>
+ <ellipse class="fm-hi" cx="152" cy="215" rx="7" ry="5"/>
+</g>
+<g class="fc-blush"><ellipse cx="102" cy="212" rx="15" ry="9"/><ellipse cx="198" cy="212" rx="15" ry="9"/></g>
+<g clip-path="url(#fr32496)"><path d="M103,181 C113,177 132,179 141,186 C135,199 112,202 104,193 Z" class="rg"><title>infraorbitária</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M103,181 C113,177 132,179 141,186 C135,199 112,202 104,193 Z" class="rg"><title>infraorbitária</title></path></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/>
 <path class="fc-hairf" d="M87,152 C89,112 114,86 150,86 C188,86 216,109 221,152
  C213,129 197,114 177,110 C157,129 116,133 95,124 C91,132 88,141 87,152 Z"/>
-<g class="fc-blush"><ellipse cx="102" cy="209" rx="15" ry="9"/><ellipse cx="198" cy="209" rx="15" ry="9"/></g>
+<g class="fc-hairln">
+ <path d="M96,126 C104,132 118,135 133,133"/>
+ <path d="M176,111 C168,120 156,127 142,131"/>
+ <path d="M209,132 C213,141 216,150 218,160"/>
+ <path d="M84,140 C82,152 81,164 81,176"/>
+</g>
 <g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
+ <path class="fc-brow-f" d="M99,155 C106,144 121,138 134,141 C139,142 143,146 146,150
+  C141,147 136,146 131,146 C120,146 107,150 100,158 Z"/>
+ <path class="fc-brow-f" d="M201,155 C194,144 179,138 166,141 C161,142 157,146 154,150
+  C159,147 164,146 169,146 C180,146 193,150 200,158 Z"/>
+ <path class="fc-eye" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170
+  C130,180 112,181 104,170 Z"/>
+ <path class="fc-eye" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170
+  C170,180 188,181 196,170 Z"/>
+ <path class="fc-lid" d="M104,170 C110,158 126,154 134,161 C137,164 138,167 138,170"/>
+ <path class="fc-lid" d="M196,170 C190,158 174,154 166,161 C163,164 162,167 162,170"/>
+ <path class="fc-lidlo" d="M106,173 C113,180 128,180 137,172"/>
+ <path class="fc-lidlo" d="M194,173 C187,180 172,180 163,172"/>
+ <path class="fc-crease" d="M105,160 C113,150 131,148 139,157"/>
+ <path class="fc-crease" d="M195,160 C187,150 169,148 161,157"/>
+ <path class="fc-nose" d="M139,225 C133,221 134,212 141,210"/>
+ <path class="fc-nose" d="M161,225 C167,221 166,212 159,210"/>
+ <path class="fc-nose" d="M147,229 C148,232 152,232 153,229"/>
+ <g class="fc-nostril"><ellipse cx="143.5" cy="225" rx="2.6" ry="1.7"/>
+  <ellipse cx="156.5" cy="225" rx="2.6" ry="1.7"/></g>
+ <path class="fc-lipup" d="M126,257 C133,247 143,245 150,251 C157,245 167,247 174,257
+  C166,259 158,258 150,258 C142,258 134,259 126,257 Z"/>
+ <path class="fc-liplo" d="M126,257 C134,258 142,259 150,259 C158,259 166,258 174,257
+  C167,272 133,272 126,257 Z"/>
+ <path class="fc-lipline" d="M126,257 C140,259 160,259 174,257"/>
+ <ellipse class="fc-liphi" cx="150" cy="266" rx="9" ry="3"/>
 </g>
 <g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
 <g class="fc-pupil">
@@ -1508,34 +1924,7 @@ figure.figura figcaption b{color:var(--ink)}
  <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
  <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
 </g>
-<g clip-path="url(#fr3)"><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"><title>infraorb</title></path><g transform="translate(300,0) scale(-1,1)"><path d="M101,182 C110,177 130,178 139,184 C134,199 112,202 102,192 Z" class="rg"/></g></g><path d="M150,344 C174,341 193,326 205,305 C216,287 223,262 225,231 C227,201 226,171 222,147 C218,120 202,102 181,94 C171,90 161,88 150,88 C139,88 129,90 119,94 C98,102 82,120 78,147 C74,171 73,201 75,231 C77,262 84,287 95,305 C107,326 126,341 150,344 Z" class="fc-edge"/><g class="fc-feat">
- <path class="fc-brow" d="M101,152 C112,141 132,139 143,148"/>
- <path class="fc-brow" d="M157,148 C168,139 188,141 199,152"/>
- <path class="fc-eye" d="M104,170 C112,157 130,155 136,171 C129,181 112,182 104,170 Z"/>
- <path class="fc-eye" d="M164,171 C170,155 188,157 196,170 C188,182 171,181 164,171 Z"/>
- <path class="fc-lid" d="M104,170 C112,157 130,155 136,171"/>
- <path class="fc-lid" d="M164,171 C170,155 188,157 196,170"/>
- <path class="fc-crease" d="M105,161 C113,151 131,149 139,158"/>
- <path class="fc-crease" d="M161,158 C169,149 187,151 195,161"/>
- <path class="fc-nose" d="M151,180 C150,196 148,208 147,216"/>
- <path class="fc-nose" d="M139,224 C144,230 156,230 161,224"/>
- <path class="fc-nose" d="M139,224 C133,220 134,212 140,210"/>
- <path class="fc-nose" d="M161,224 C167,220 166,212 160,210"/>
- <path class="fc-lip" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257
-  C165,276 135,276 125,257 Z"/>
- <path class="fc-lipline" d="M125,257 C134,246 144,244 150,250 C156,244 166,246 175,257"/>
- <path class="fc-chin" d="M142,300 C146,303 154,303 158,300"/>
-</g>
-<g class="fc-iris"><circle cx="120" cy="169" r="6.6"/><circle cx="180" cy="169" r="6.6"/></g>
-<g class="fc-pupil">
- <circle cx="120" cy="169" r="2.8"/><circle cx="180" cy="169" r="2.8"/>
- <circle class="fc-glint" cx="122.4" cy="166.6" r="1.7"/><circle class="fc-glint" cx="182.4" cy="166.6" r="1.7"/>
-</g>
-<g class="fc-lash">
- <path d="M104,170 C105,174 106,177 107,179"/><path d="M110,176 C111,180 112,182 113,184"/>
- <path d="M196,170 C195,174 194,177 193,179"/><path d="M190,176 C189,180 188,182 187,184"/>
-</g>
-</svg><p>Alto G′ de <b>baixo swelling factor</b> — baixa concentração de AH e partículas grandes. É a exceção que a família comporta: estrutura numa região que não tolera inchaço. 💧</p></figure></div>
+</g><path class="rgld" d="M248,190 L114,190 L102,190 L90,190"/><circle class="rgan" cx="253" cy="190" r="2.8"/><text class="rglb" x="86" y="190" dy="3.5" text-anchor="end">infraorbitária</text></svg><p>Alto G′ de <b>baixo swelling factor</b> — baixa concentração de AH e partículas grandes. É a exceção que a família comporta: estrutura numa região que não tolera inchaço. 💧</p></figure></div>
 <div class="box"><p style="margin:0"><b>O terceiro uso merece atenção.</b> A região infraorbitária não tolera inchaço: ali um gel que capte muita água produz edema visível e resultado imprevisível. A resposta não é usar um gel fraco — é usar um gel de <b>alto G′ com baixo swelling factor</b>, tipicamente de baixa concentração de ácido hialurônico e partículas grandes. É a família roxa entrando numa região que, à primeira vista, pediria a azul. <b>💧 O swelling factor não foi medido neste estudo</b>: os produtos deste uso são identificados por declaração de fabricante e pela experiência clínica do autor, nunca por dedução a partir do G′.</p></div>
 <p class="qt">A regra que atravessa o mapa: <b>o gel é escolhido para a tarefa, não para a região</b>. Um sulco nasolabial raso e um sulco nasolabial muito profundo estão em famílias diferentes — azul e roxa — apesar de terem o mesmo nome anatômico.</p>
 </section>
